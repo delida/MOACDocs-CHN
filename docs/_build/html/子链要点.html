@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>欢迎来到墨客子链中文文档 &mdash; MOACdocs-chn  documentation</title>
+  <title>子链要点 &mdash; MOACdocs-chn  documentation</title>
   
 
   
@@ -28,7 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="名词解释" href="名词解释.html" /> 
+    <link rel="next" title="部署子链前的准备工作" href="部署子链前的准备工作.html" />
+    <link rel="prev" title="名词解释" href="名词解释.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -47,7 +48,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> MOACdocs-chn
+            <a href="index.html" class="icon icon-home"> MOACdocs-chn
           
 
           
@@ -78,9 +79,9 @@
             
             
               <p class="caption"><span class="caption-text">目录:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="名词解释.html">名词解释</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链要点.html">子链要点</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">子链要点</a></li>
 <li class="toctree-l1"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链业务逻辑的部署.html">子链业务逻辑的部署</a></li>
@@ -102,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">MOACdocs-chn</a>
+          <a href="index.html">MOACdocs-chn</a>
         
       </nav>
 
@@ -131,15 +132,15 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>欢迎来到墨客子链中文文档</li>
+      <li>子链要点</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/子链要点.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -153,36 +154,20 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>欢迎来到墨客子链中文文档<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">目录:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="名词解释.html">名词解释</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#vnode">Vnode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#scs">Scs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#id2">子链矿工池</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#id3">vnode代理池</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#id4">子链控制合约</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="子链要点.html">子链要点</a></li>
-<li class="toctree-l1"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链业务逻辑的部署.html">子链业务逻辑的部署</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链节点的更替.html">子链节点的更替</a></li>
-<li class="toctree-l1"><a class="reference internal" href="关闭子链.html">关闭子链</a></li>
-<li class="toctree-l1"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
-</ul>
-</div>
-</div>
-<div class="section" id="id2">
-<h1>其他<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
-</ul>
+<h1>子链要点<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>子链是在母链之上的独立的区块链系统，子链中的每个节点称为scs，scs的通讯通过母链，并定期向母链进行数据背书。子链上可以单独跑业务逻辑，母链无需知道。</p>
+<p>母链上可以跑多条子链，墨客采用分片技术，随机将scs分配给不同的子链。</p>
+<p>子链需要依赖于母链来运行，因此，运行一条子链需要M个母链节点（vnode）和N个子链节点（scs）。</p>
+<p>普通子链节点scs可以称作子链矿工，其主要负责子链的出块，是维持一条子链稳定安全运行的根本。</p>
+<p>子链矿工在提供子链服务前，需要先带押金（MOAC）注册进子链矿工池，当该矿工节点被子链选中后，将会扣除一部分押金。</p>
+<p>子链节点下的母链节点，需要选取一部分注册成vnode代理的节点，vnode代理节点的作用是用于维护子链稳定运行，vnode代理节点同样有一个代理矿工池</p>
+<p>部署子链控制合约时需要指定以上两个池子的地址。</p>
+<p>子链合约部署完后，即可调用registeropen来召唤池子里的scs注册；当数量达到预期后，就可以调用registerclose来初始化子链区块，让子链开始运行。</p>
+<p>子链需要每隔一段时间发起flush操作，将关键状态写入母链进行背书。除此之外，flush还将完成节点收益分配和有币区块链的母子链充提操作。</p>
+<p>可以调用子链控制合约里的registerasmonitor来将一个子链节点注册成一个侦听节点。侦听节点只负责信息查询，不参与普通子链节点的服务，适合dapp用户部署来监控子链运行状态。</p>
+<p>如果普通子链节点状态不稳定或弄虚作假，在flush的时候，有几率被没收押金，强制退出这条子链的服务。这时，可以调用子链控制合约的backup方法，将scs池子里的其他scs召唤来为这条子链服务。</p>
+<p>部署子链方可以调用子链控制合约的close方法关闭这条子链。此时会进入清算状态，待所有子链收益结清后，即关闭子链。请注意，子链业务逻辑清算不包含。</p>
+<p>子链节点本身可以调用子链控制合约的withdraw方法来结束为某一子链服务，并得到返还的押金。</p>
 </div>
 
 
@@ -193,8 +178,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="名词解释.html" class="btn btn-neutral float-right" title="名词解释" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="部署子链前的准备工作.html" class="btn btn-neutral float-right" title="部署子链前的准备工作" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+      
+        <a href="名词解释.html" class="btn btn-neutral" title="名词解释" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
