@@ -1,2 +1,38 @@
 部署子链前的准备工作
 ^^^^^^^^^^^^^^^^^^^
+
+Vnode节点
+----------------------
+墨客主网节点  版本来源: https://github.com/MOACChain/moac-core/releases/
+此文档采用的版本： 1.0.5    环境：windows  
+在测试环境testnet启动节点： moac-windows-4.0-amd64.exe --testnet --rpc --rpcapi "chain3,mc,net,db,personal,admin,miner"
+
+验证： windows command 执行 moac-windows-4.0-amd64.exe attach \\.\pipe\moac.ipc
+	   运行concole命令 mc.blockNumber 检查是否同步到最新区块
+	   对应testnet浏览器： http://47.75.144.55:3000/home
+	   
+账号
+----------------------	
+可以运行concole命令 personal.newAccount() 创建账号； 
+		mc.accounts查看账号； 
+		mc.getBalance(mc.accounts[0]) 查看对应账号余额  （测试环境的公共提币地址：http://119.28.13.213:3000/）
+后续消耗gas的操作都需要执行personal.unlockAccount(mc.accounts[0]) 对应账号进行解锁				
+
+准备下列账号：（示例地址参考后续的命令操作）		
+	子链操作账号：进行创建合约，发起交易等基本操作 0x87e369172af1e817ebd8d63bcd9f685a513a6736
+	vnode 收益账号	0xf103bc1c054babcecd13e7ac1cf34f029647b08c
+	子链scs收益账号 0xa934198916cd993c73c1aa6e0c0e7b21ce7c735b
+					0x2e7c076dbf6e61207a0ddb1b942ef7da8fd139f0
+	
+	
+chain3 的 nodejs 环境	
+----------------------	
+npm install chain3
+验证:  
+	> chain3 = require('chain3')
+	> chain3 = new chain3();
+	> chain3.setProvider(new chain3.providers.HttpProvider('http://localhost:8545'));
+	> chain3.mc.blockNumber  检查是否获得当前区块
+				
+			   
+
