@@ -29,7 +29,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="子链的部署方法" href="子链的部署方法.html" />
-    <link rel="prev" title="子链的工作流程" href="子链的工作流程.html" /> 
+    <link rel="prev" title="子链要点" href="子链要点.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,14 +81,19 @@
               <p class="caption"><span class="caption-text">目录:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="名词解释.html">名词解释</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链简介.html">子链简介</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链的工作流程.html">子链的工作流程</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">部署子链前的准备工作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="子链要点.html">子链要点</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">部署子链前的准备工作</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vnode">Vnode节点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">各类账号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#chain3-nodejs">chain3 的 nodejs 环境</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链业务逻辑的部署.html">子链业务逻辑的部署</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链节点的更替.html">子链节点的更替</a></li>
 <li class="toctree-l1"><a class="reference internal" href="关闭子链.html">关闭子链</a></li>
+<li class="toctree-l1"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
 </ul>
 
             
@@ -155,6 +160,44 @@
             
   <div class="section" id="id1">
 <h1>部署子链前的准备工作<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="vnode">
+<h2>Vnode节点<a class="headerlink" href="#vnode" title="Permalink to this headline">¶</a></h2>
+<p>墨客主网节点  版本来源: <a class="reference external" href="https://github.com/MOACChain/moac-core/releases/">https://github.com/MOACChain/moac-core/releases/</a></p>
+<p>此文档采用的版本： 1.0.5    环境：windows   testnet浏览器： <a class="reference external" href="http://47.75.144.55:3000/home">http://47.75.144.55:3000/home</a></p>
+<dl class="docutils">
+<dt>在测试环境testnet启动节点：</dt>
+<dd>moac-windows-4.0-amd64.exe --testnet --rpc --rpcapi &quot;chain3,mc,net,db,personal,admin,miner&quot;</dd>
+</dl>
+<p>验证：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">windows</span> <span class="n">command</span> <span class="n">执行</span> <span class="n">moac</span><span class="o">-</span><span class="n">windows</span><span class="o">-</span><span class="mf">4.0</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">exe</span> <span class="n">attach</span> \\\\<span class="o">.</span>\\<span class="n">pipe</span>\\<span class="n">moac</span><span class="o">.</span><span class="n">ipc</span>
+<span class="n">运行concole命令</span> <span class="n">mc</span><span class="o">.</span><span class="n">blockNumber</span> <span class="n">检查是否同步到最新区块</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>各类账号<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>可以运行concole命令 personal.newAccount() 创建账号； mc.accounts查看账号；</p>
+<p>按序号查询余额：mc.getBalance(mc.accounts[0])</p>
+<p>测试环境的公共提币地址：<a class="reference external" href="http://119.28.13.213:3000/">http://119.28.13.213:3000/</a></p>
+<p>注意：后续消耗gas的操作都需要执行personal.unlockAccount(mc.accounts[0]) 对应账号进行解锁</p>
+<p>准备账号列表：（示例地址参考后续的命令操作）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>子链操作账号：进行创建合约，发起交易等基本操作： 0x87e369172af1e817ebd8d63bcd9f685a513a6736
+主链vnode收益账号：    0xf103bc1c054babcecd13e7ac1cf34f029647b08c
+子链scs收益账号：0xa934198916cd993c73c1aa6e0c0e7b21ce7c735b  0x2e7c076dbf6e61207a0ddb1b942ef7da8fd139f0
+</pre></div>
+</div>
+</div>
+<div class="section" id="chain3-nodejs">
+<h2>chain3 的 nodejs 环境<a class="headerlink" href="#chain3-nodejs" title="Permalink to this headline">¶</a></h2>
+<p>安装： npm install chain3</p>
+<p>验证:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;chain3&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">chain3</span><span class="p">();</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">setProvider</span><span class="p">(</span><span class="n">new</span> <span class="n">chain3</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">HttpProvider</span><span class="p">(</span><span class="s1">&#39;http://localhost:8545&#39;</span><span class="p">));</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">blockNumber</span>  <span class="n">检查是否获得当前区块</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -168,7 +211,7 @@
         <a href="子链的部署方法.html" class="btn btn-neutral float-right" title="子链的部署方法" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="子链的工作流程.html" class="btn btn-neutral" title="子链的工作流程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="子链要点.html" class="btn btn-neutral" title="子链要点" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

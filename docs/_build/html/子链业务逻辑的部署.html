@@ -81,14 +81,18 @@
               <p class="caption"><span class="caption-text">目录:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="名词解释.html">名词解释</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链简介.html">子链简介</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链的工作流程.html">子链的工作流程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="子链要点.html">子链要点</a></li>
 <li class="toctree-l1"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">子链业务逻辑的部署</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">子链业务逻辑的部署</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dapp">DAPP智能合约的部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">DAPP智能合约的调用</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链节点的更替.html">子链节点的更替</a></li>
 <li class="toctree-l1"><a class="reference internal" href="关闭子链.html">关闭子链</a></li>
+<li class="toctree-l1"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
 </ul>
 
             
@@ -155,6 +159,68 @@
             
   <div class="section" id="id1">
 <h1>子链业务逻辑的部署<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>同主链相同，业务逻辑的实现也通过智能合约的方式。</p>
+<div class="section" id="dapp">
+<h2>DAPP智能合约的部署<a class="headerlink" href="#dapp" title="Permalink to this headline">¶</a></h2>
+<p>DAPP智能合约也通过主链的sendTransaction发送交易到 proxy vnode 的方式进行部署。</p>
+<p>参数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>to: 子链控制合约subchainbase的地址
+gas: 不需要消耗gas费用，传值：0
+shardingflag：表示操作子链， 传值：0x1
+via: 对应 proxy vnode 的收益地址
+</pre></div>
+</div>
+<p>准备一个简单的合约 deorder.sol， 部署示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;chain3&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">solc</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;solc&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">chain3</span><span class="p">();</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">setProvider</span><span class="p">(</span><span class="n">new</span> <span class="n">chain3</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">HttpProvider</span><span class="p">(</span><span class="s1">&#39;http://localhost:8545&#39;</span><span class="p">));</span>
+<span class="o">&gt;</span> <span class="n">solfile</span> <span class="o">=</span> <span class="s1">&#39;deorder.sol&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">contract</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="n">solfile</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">output</span> <span class="o">=</span> <span class="n">solc</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">contract</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">abi</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:DeOrder&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">interface</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="nb">bin</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:DeOrder&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bytecode</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">via</span> <span class="o">=</span> <span class="s1">&#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">DeOrderContract</span> <span class="o">=</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">contract</span><span class="p">(</span><span class="n">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">abi</span><span class="p">));</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">({</span><span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">shardingFlag</span><span class="p">:</span> <span class="s2">&quot;0x1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">,</span> <span class="n">nonce</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">via</span><span class="p">,</span> <span class="p">});</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>验证:</dt>
+<dd>合约部署成功后，Nonce值应该是1
+可调用monitor的rpc接口ScsRPCMethod.GetNonce进行检查，具体详见子链接口调用部分。</dd>
+</dl>
+</div>
+<div class="section" id="id2">
+<h2>DAPP智能合约的调用<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>DAPP智能合约的调用也通过主链的sendTransaction发送交易到 proxy vnode 的方式进行。</p>
+<p>例如 deorder.sol有个方法 createOrder(string ordernum)</p>
+<p>参数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>to: 子链控制合约subchainbase的地址
+nonce：调用monitor的rpc接口ScsRPCMethod.GetNonce获得
+gas: 0 不需要消耗gas费用
+shardingflag： 0x1  表示操作子链
+via: 对应 proxy vnode 的收益地址
+data: chain3.sha3(&quot;createOrder(string)&quot;) 取前4个字节 0x03b7c764，加上传值凑足32个字节
+</pre></div>
+</div>
+<p>调用示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;0x03b7c7640000000000000000000000000000000000000000000000000000000001000001&#39;</span>
+<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">via</span> <span class="o">=</span> <span class="s1">&#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">nonce</span><span class="p">:</span> <span class="n">nonce</span><span class="p">,</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">shardingFlag</span><span class="p">:</span><span class="s1">&#39;0x1&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">via</span><span class="p">,});</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>验证：</dt>
+<dd>每次操作成功后，Nonce会自动增加1
+或者直接调用monitor的rpc接口ScsRPCMethod.GetContractInfo获得合约变量的方式进行验证。</dd>
+</dl>
+</div>
 </div>
 
 

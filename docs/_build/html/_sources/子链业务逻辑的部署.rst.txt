@@ -1,2 +1,68 @@
 子链业务逻辑的部署
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+同主链相同，业务逻辑的实现也通过智能合约的方式。
+
+DAPP智能合约的部署
+----------------------
+
+DAPP智能合约也通过主链的sendTransaction发送交易到 proxy vnode 的方式进行部署。
+
+参数：
+::
+	to: 子链控制合约subchainbase的地址
+	gas: 不需要消耗gas费用，传值：0
+	shardingflag：表示操作子链， 传值：0x1  
+	via: 对应 proxy vnode 的收益地址
+	
+准备一个简单的合约 deorder.sol， 部署示例
+::
+	> chain3 = require('chain3')
+	> solc = require('solc')
+	> chain3 = new chain3();
+	> chain3.setProvider(new chain3.providers.HttpProvider('http://localhost:8545'));
+	> solfile = 'deorder.sol';
+	> contract = fs.readFileSync(solfile, 'utf8');
+	> output = solc.compile(contract, 1);                    
+	> abi = output.contracts[':DeOrder'].interface;
+	> bin = output.contracts[':DeOrder'].bytecode;
+	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
+	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c';    
+	> DeOrderContract = chain3.mc.contract(JSON.parse(abi));
+	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
+	> chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag: "0x1", data: '0x' + bin, nonce: 0, via: via, });
+			
+验证: 
+	合约部署成功后，Nonce值应该是1   
+	可调用monitor的rpc接口ScsRPCMethod.GetNonce进行检查，具体详见子链接口调用部分。
+		
+
+DAPP智能合约的调用
+----------------------
+
+DAPP智能合约的调用也通过主链的sendTransaction发送交易到 proxy vnode 的方式进行。
+
+例如 deorder.sol有个方法 createOrder(string ordernum)
+
+参数：
+::
+	to: 子链控制合约subchainbase的地址
+	nonce：调用monitor的rpc接口ScsRPCMethod.GetNonce获得
+	gas: 0 不需要消耗gas费用
+	shardingflag： 0x1  表示操作子链
+	via: 对应 proxy vnode 的收益地址
+	data: chain3.sha3("createOrder(string)") 取前4个字节 0x03b7c764，加上传值凑足32个字节
+	
+调用示例：
+::
+	> nonce = 1	
+	> data = '0x03b7c7640000000000000000000000000000000000000000000000000000000001000001'			
+	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
+	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c';
+	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
+	> chain3.mc.sendTransaction( { nonce: nonce, from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag:'0x1', data: data, via: via,});
+	
+验证：
+	每次操作成功后，Nonce会自动增加1
+	或者直接调用monitor的rpc接口ScsRPCMethod.GetContractInfo获得合约变量的方式进行验证。
+		
