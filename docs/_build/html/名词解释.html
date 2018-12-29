@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="子链简介" href="子链要点.html" />
+    <link rel="next" title="子链要点" href="子链要点.html" />
     <link rel="prev" title="欢迎来到墨客子链中文文档" href="index.html" /> 
 
   
@@ -86,15 +86,18 @@
 <li class="toctree-l2"><a class="reference internal" href="#id2">子链矿工池</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">vnode代理池</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">子链控制合约</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#monitor">监听节点（Monitor）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#flush">flush</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="子链要点.html">子链简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="子链要点.html">子链要点</a></li>
 <li class="toctree-l1"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链业务逻辑的部署.html">子链业务逻辑的部署</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链节点的更替.html">子链节点的更替</a></li>
 <li class="toctree-l1"><a class="reference internal" href="关闭子链.html">关闭子链</a></li>
+<li class="toctree-l1"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
 </ul>
 
             
@@ -181,6 +184,14 @@
 <h2>子链控制合约<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>用于控制整个子链的流程</p>
 </div>
+<div class="section" id="monitor">
+<h2>监听节点（Monitor）<a class="headerlink" href="#monitor" title="Permalink to this headline">¶</a></h2>
+<p>监听节点是一个特殊的Scs节点，可以用来监听某条子链的运行情况，当一个节点成为监听节点后，其只负责同步该子链的区块信息，不参与子链出块。Dapp用户可以通过该节点监控子链运行情况</p>
+</div>
+<div class="section" id="flush">
+<h2>flush<a class="headerlink" href="#flush" title="Permalink to this headline">¶</a></h2>
+<p>子链的一个特殊操作，每条正常运行的子链每隔一段时间需要向母链进行状态刷新，并且同时完成：Scs矿工的收益发放；有币子链和母链之间的货币充提等操作</p>
+</div>
 </div>
 
 
@@ -191,7 +202,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="子链要点.html" class="btn btn-neutral float-right" title="子链简介" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="子链要点.html" class="btn btn-neutral float-right" title="子链要点" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="欢迎来到墨客子链中文文档" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
