@@ -209,7 +209,7 @@ vnode 设置代理并加入矿池
 ::		
 	> chain3.mc.getBalance('0x1195cd9769692a69220312e95192e0dcb6a4ec09')
 		
-然后调用  调用合约里的函数registerOpen 开放注册
+然后调用  调用合约里的函数registerOpen 开放注册 (按子链矿池合约中SCS注册先后排序进行选取)
 ::
 	根据ABI chain3.sha3("registerOpen()") = 0x5defc56ce78f178d760a165a5528a8e8974797e616a493970df1c0918c13a175
 		取前4个字节 0x5defc56c 
@@ -225,7 +225,7 @@ vnode 设置代理并加入矿池
 子链关闭注册
 ----------------------
 
-等到两个scs都注册完毕后，调用子链合约里的函数 registerClose关闭注册
+等到两个scs都注册完毕后，即注册SCS数目大于等于子链要求的最小数目时，调用子链合约里的函数 registerClose关闭注册
 ::
 	根据ABI chain3.sha3("registerClose()") = 0x69f3576fc10c82561bd84b0045ee48d80d59a866174f2513fdef43d65702bf70
 		取前4个字节 0x69f3576f 
@@ -235,6 +235,6 @@ vnode 设置代理并加入矿池
 			
 验证：  访问子链合约的 registerFlag 为 0
 	> chain3.mc.getStorageAt(subchainaddr,0x14)	
-	
-最后观察scs的concole界面，scs开始出块即成功完成部署子链。
+
+SCS自身完成初始化并开始子链运行，可观察scs的concole界面，scs开始出块即成功完成部署子链。
 

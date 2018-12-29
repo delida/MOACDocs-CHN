@@ -12,7 +12,7 @@ Vnode节点
 
 验证： 
 ::
-	windows command 执行 moac-windows-4.0-amd64.exe attach \\\\.\\pipe\\moac.ipc  
+	windows command 执行 moac-windows-4.0-amd64.exe attach \\.\pipe\moac.ipc  
 	运行concole命令 mc.blockNumber 检查是否同步到最新区块
 	   
 各类账号
