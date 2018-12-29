@@ -81,14 +81,24 @@
               <p class="caption"><span class="caption-text">目录:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="名词解释.html">名词解释</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链简介.html">子链简介</a></li>
-<li class="toctree-l1"><a class="reference internal" href="子链的工作流程.html">子链的工作流程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="子链要点.html">子链要点</a></li>
 <li class="toctree-l1"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">子链的部署方法</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">子链的部署方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vnode">部署Vnode矿池合约</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">vnode 设置代理并加入矿池</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">部署子链矿池</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scs">设置启动scs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">将scs加入子链矿池</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">部署子链合约</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">子链开放注册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">子链关闭注册</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="子链业务逻辑的部署.html">子链业务逻辑的部署</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链节点的更替.html">子链节点的更替</a></li>
 <li class="toctree-l1"><a class="reference internal" href="关闭子链.html">关闭子链</a></li>
+<li class="toctree-l1"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
 </ul>
 
             
@@ -155,6 +165,222 @@
             
   <div class="section" id="id1">
 <h1>子链的部署方法<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="vnode">
+<h2>部署Vnode矿池合约<a class="headerlink" href="#vnode" title="Permalink to this headline">¶</a></h2>
+<p>首先部署vnode矿池合约，VnodeProtocolBase，如果加入现成的vnode矿池，则可以忽略此步骤。</p>
+<p>加入矿池的代理Vnode节点被用于提供子链调用服务和子链历史数据中转服务的节点。</p>
+<p>以下为nodejs部署示例：最低保证金为 2 moac</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;chain3&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">solc</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;solc&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">chain3</span><span class="p">();</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">setProvider</span><span class="p">(</span><span class="n">new</span> <span class="n">chain3</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">HttpProvider</span><span class="p">(</span><span class="s1">&#39;http://localhost:8545&#39;</span><span class="p">));</span>
+<span class="o">&gt;</span> <span class="n">solfile</span> <span class="o">=</span> <span class="s1">&#39;VnodeProtocolBase.sol&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">contract</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="n">solfile</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">output</span> <span class="o">=</span> <span class="n">solc</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">contract</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">abi</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:VnodeProtocolBase&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">interface</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="nb">bin</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:VnodeProtocolBase&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bytecode</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">VnodeProtocolBaseContract</span> <span class="o">=</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">contract</span><span class="p">(</span><span class="n">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">abi</span><span class="p">));</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">VnodeProtocolBase</span> <span class="o">=</span> <span class="n">VnodeProtocolBaseContract</span><span class="o">.</span><span class="n">new</span><span class="p">(</span> <span class="mi">2</span><span class="p">,</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">,</span>  <span class="n">gas</span><span class="p">:</span> <span class="s1">&#39;5000000&#39;</span><span class="p">});</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">getTransactionReceipt</span><span class="p">(</span><span class="n">VnodeProtocolBase</span><span class="o">.</span><span class="n">transactionHash</span><span class="p">)</span><span class="o">.</span><span class="n">contractAddress</span>
+</pre></div>
+</div>
+<p>部署完毕后，获得 vnode矿池合约地址  0x22f141dcc59850707708bc90e256318a5fe0b928</p>
+<p>注意：gas 不要设置太大， 不然会触发错误 exceeds block gas limit undefined</p>
+</div>
+<div class="section" id="id2">
+<h2>vnode 设置代理并加入矿池<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>修改vnode目录配置文件vnodeconfig.json: VnodeBeneficialAddress里设置收益账号：  0xf103bc1c054babcecd13e7ac1cf34f029647b08c</p>
+<p>这个账号也作为vnode的address，矿池中对应这个vnode的唯一编号</p>
+<p>调用vnode矿池合约register方法加入矿池</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>from： 子链测试账号
+value：押金，必须大于矿池合约的设置值
+to: vnode矿池合约地址
+data: register(address,string)
+</pre></div>
+</div>
+<p>关于data传递调用register参数说明:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>根据ABI chain3.sha3(&quot;register(address,string)&quot;) = 0x32434a2e90725ed590daff07a244305001c58c49f7bef73ce5e7249acf69f561
+        取前4个字节 0x32434a2e
+第一个参数address 传  vnodeconfig.json的VnodeBeneficialAddress  （前面补24个0， 凑足32个字节）
+        000000000000000000000000f103bc1c054babcecd13e7ac1cf34f029647b08c
+第二个参数string传 vnode提供给子链的调用地址 192.168.10.209:50062
+端口号对应vnodeconfig.json的VnodeServiceCfg
+        string数据类型 + string数据长度 + string内容
+        string数据类型： 0000000000000000000000000000000000000000000000000000000000000040
+        string内容： data = new Buffer(&#39;192.168.10.209:50062&#39;, &#39;utf8&#39;).toString(&#39;hex&#39;);
+                后面补0， 凑足32个字节   3139322e3136382e31302e3230393a3530303632000000000000000000000000
+        string数据长度:     3139322e3136382e31302e3230393a3530303632        20字节
+                0000000000000000000000000000000000000000000000000000000000000014
+        data = &#39;0x32434a2e000000000000000000000000f103bc1c054babcecd13e7ac1cf34f029647b08c000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000143139322e3136382e31302e3230393a3530303632000000000000000000000000&#39;
+</pre></div>
+</div>
+<p>调用示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">amount</span> <span class="o">=</span> <span class="n">chain3</span><span class="o">.</span><span class="n">toSha</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;mc&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;0x32434a2e000000000000000000000000f103bc1c054babcecd13e7ac1cf34f029647b08c000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000143139322e3136382e31302e3230393a3530303632000000000000000000000000&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">({</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="n">amount</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="s1">&#39;0x22f141dcc59850707708bc90e256318a5fe0b928&#39;</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;5000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">data</span> <span class="p">});</span>
+</pre></div>
+</div>
+<p>验证： 访问Vnode矿池合约的vnodeCount</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">getStorageAt</span><span class="p">(</span><span class="s2">&quot;0x22f141dcc59850707708bc90e256318a5fe0b928&quot;</span><span class="p">,</span><span class="mh">0x02</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>部署子链矿池<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>目前针对不同的共识协议，可以创建对应的子链矿池，接受对应SCS的注册，并缴纳保证金，进入矿池后，成为子链的候选节点</p>
+<p>如果加入现成的子链矿池，则可以忽略此步骤</p>
+<p>部署SubChainProtocolBase.sol示例:    共识:POR  最低保证金: 2moac</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;chain3&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">solc</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;solc&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">chain3</span><span class="p">();</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">setProvider</span><span class="p">(</span><span class="n">new</span> <span class="n">chain3</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">HttpProvider</span><span class="p">(</span><span class="s1">&#39;http://localhost:8545&#39;</span><span class="p">));</span>
+<span class="o">&gt;</span> <span class="n">solfile</span> <span class="o">=</span> <span class="s1">&#39;SubChainProtocolBase.sol&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">contract</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="n">solfile</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">output</span> <span class="o">=</span> <span class="n">solc</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">contract</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">abi</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:SubChainProtocolBase&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">interface</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="nb">bin</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:SubChainProtocolBase&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bytecode</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">subchainprotocolbaseContract</span> <span class="o">=</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">contract</span><span class="p">(</span><span class="n">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">abi</span><span class="p">));</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">subchainprotocolbase</span> <span class="o">=</span> <span class="n">subchainprotocolbaseContract</span><span class="o">.</span><span class="n">new</span><span class="p">(</span> <span class="s2">&quot;POR&quot;</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">,</span>  <span class="n">gas</span><span class="p">:</span> <span class="s1">&#39;5000000&#39;</span><span class="p">});</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">getTransactionReceipt</span><span class="p">(</span><span class="n">subchainprotocolbase</span><span class="o">.</span><span class="n">transactionHash</span><span class="p">)</span><span class="o">.</span><span class="n">contractAddress</span>
+</pre></div>
+</div>
+<p>部署完毕后，获得子链矿池合约地址  0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac</p>
+</div>
+<div class="section" id="scs">
+<h2>设置启动scs<a class="headerlink" href="#scs" title="Permalink to this headline">¶</a></h2>
+<p>这里我们设置两个scs节点</p>
+<p>确认 userconfig.json配置</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VnodeServiceCfg为代理vnode地址</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.209</span><span class="p">:</span><span class="mi">50062</span>
+<span class="n">Beneficiary为收益账号</span><span class="p">:</span>
+        <span class="mh">0xa934198916cd993c73c1aa6e0c0e7b21ce7c735b</span>
+        <span class="mh">0x2e7c076dbf6e61207a0ddb1b942ef7da8fd139f0</span>
+</pre></div>
+</div>
+<p>分别通过命令启动  scsserver-windows-4.0-amd64 --password &quot;123456&quot;   （生成scs keystore的密码）</p>
+<p>然后在生成的keystore文件中分别获得 scs 地址</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d4057328a35f34507dbcd295d43ed0cccf9c368a</span>
+<span class="mh">0x3e21ba36b396936c6cc9adc3674655b912e5fa54</span>
+</pre></div>
+</div>
+<p>最后给scs转入moac以支付必要的交易费用</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">amount</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">scsaddr</span> <span class="o">=</span> <span class="s1">&#39;0xd4057328a35f34507dbcd295d43ed0cccf9c368a&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="n">chain3</span><span class="o">.</span><span class="n">toSha</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span><span class="s1">&#39;mc&#39;</span><span class="p">),</span> <span class="n">to</span><span class="p">:</span> <span class="n">scsaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;2000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">});</span>
+<span class="o">&gt;</span> <span class="n">scsaddr</span> <span class="o">=</span> <span class="s1">&#39;0x3e21ba36b396936c6cc9adc3674655b912e5fa54&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="n">chain3</span><span class="o">.</span><span class="n">toSha</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span><span class="s1">&#39;mc&#39;</span><span class="p">),</span> <span class="n">to</span><span class="p">:</span> <span class="n">scsaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;2000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>可以通过查询余额进行验证</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">getBalance</span><span class="p">(</span><span class="s1">&#39;0xd4057328a35f34507dbcd295d43ed0cccf9c368a&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">getBalance</span><span class="p">(</span><span class="s1">&#39;0x3e21ba36b396936c6cc9adc3674655b912e5fa54&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>将scs加入子链矿池<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>调用子链矿池合约register方法加入矿池</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>from： 子链测试账号
+value：押金，必须大于矿池合约的设置值
+to: 子链矿池合约地址
+data: register(address)
+</pre></div>
+</div>
+<p>关于data传递调用register参数说明:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>根据ABI chain3.sha3(&quot;register(address)&quot;) = 0x4420e4869750c98a56ac621854d2d00e598698ac87193cdfcbb6ed1164e9cbcd
+        取前4个字节 0x4420e486
+参数address传scs 地址    d4057328a35f34507dbcd295d43ed0cccf9c368a  （前面补24个0， 凑足32个字节）
+        000000000000000000000000d4057328a35f34507dbcd295d43ed0cccf9c368a
+data = &#39;0x4420e486000000000000000000000000d4057328a35f34507dbcd295d43ed0cccf9c368a&#39;
+</pre></div>
+</div>
+<p>调用示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">amount</span> <span class="o">=</span> <span class="n">chain3</span><span class="o">.</span><span class="n">toSha</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;mc&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;0x4420e486000000000000000000000000d4057328a35f34507dbcd295d43ed0cccf9c368a&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">({</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="n">amount</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="s1">&#39;0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac&#39;</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;5000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">data</span> <span class="p">});</span>
+</pre></div>
+</div>
+<p>验证： 访问子链矿池合约的scsCount</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">getStorageAt</span><span class="p">(</span><span class="s2">&quot;0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac&quot;</span><span class="p">,</span><span class="mh">0x02</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>同上将另一个scs（0x3e21ba36b396936c6cc9adc3674655b912e5fa54）也加入子链矿池</p>
+</div>
+<div class="section" id="id5">
+<h2>部署子链合约<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>现在我们可以部署一个子链合约，并准备将两个scs</p>
+<p>部署SubChainBase.sol示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;chain3&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">solc</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;solc&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">chain3</span><span class="p">();</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">setProvider</span><span class="p">(</span><span class="n">new</span> <span class="n">chain3</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">HttpProvider</span><span class="p">(</span><span class="s1">&#39;http://localhost:8545&#39;</span><span class="p">));</span>
+<span class="o">&gt;</span> <span class="nb">input</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="n">fs</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s1">&#39;SubChainBase.sol&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">),</span> <span class="s1">&#39;SubChainProtocolBase.sol&#39;</span><span class="p">:</span> <span class="n">fs</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s1">&#39;SubChainProtocolBase.sol&#39;</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)};</span>
+<span class="o">&gt;</span> <span class="n">output</span> <span class="o">=</span> <span class="n">solc</span><span class="o">.</span><span class="n">compile</span><span class="p">({</span><span class="n">sources</span><span class="p">:</span> <span class="nb">input</span><span class="p">},</span> <span class="mi">1</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">abi</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:SubChainBase&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">interface</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="nb">bin</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:SubChainBase&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bytecode</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">proto</span> <span class="o">=</span> <span class="s1">&#39;0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac&#39;</span> <span class="p">;</span>    <span class="o">//</span> <span class="n">子链矿池合约</span>
+<span class="o">&gt;</span> <span class="n">vnodeProtocolBaseAddr</span> <span class="o">=</span> <span class="s1">&#39;0x22f141dcc59850707708bc90e256318a5fe0b928&#39;</span> <span class="p">;</span>       <span class="o">//</span> <span class="n">Vnode矿池合约</span>
+<span class="o">&gt;</span> <span class="nb">min</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">;</span>                     <span class="o">//</span> <span class="n">子链需要SCS的最小数量</span>
+<span class="o">&gt;</span> <span class="nb">max</span> <span class="o">=</span> <span class="mi">10</span> <span class="p">;</span>            <span class="o">//</span> <span class="n">子链需要SCS的最大数量</span>
+<span class="o">&gt;</span> <span class="n">thousandth</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">;</span>                      <span class="o">//</span> <span class="n">千分之几</span>
+<span class="o">&gt;</span> <span class="n">flushRound</span> <span class="o">=</span> <span class="mi">40</span> <span class="p">;</span>             <span class="o">//</span> <span class="n">子链刷新周期</span>  <span class="n">单位是主链block生成对应数量的时间</span>
+<span class="o">&gt;</span> <span class="n">SubChainBaseContract</span> <span class="o">=</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">contract</span><span class="p">(</span><span class="n">JSON</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">abi</span><span class="p">));</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">SubChainBase</span> <span class="o">=</span> <span class="n">SubChainBaseContract</span><span class="o">.</span><span class="n">new</span><span class="p">(</span> <span class="n">proto</span><span class="p">,</span> <span class="n">vnodeProtocolBaseAddr</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">,</span> <span class="n">thousandth</span><span class="p">,</span> <span class="n">flushRound</span><span class="p">,{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">,</span>  <span class="n">gas</span><span class="p">:</span><span class="s1">&#39;9000000&#39;</span><span class="p">}</span> <span class="p">,</span> <span class="n">function</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">contract</span><span class="p">){</span><span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Contract address: &#39;</span> <span class="o">+</span> <span class="n">contract</span><span class="o">.</span><span class="n">address</span> <span class="o">+</span> <span class="s1">&#39; transactionHash: &#39;</span> <span class="o">+</span> <span class="n">contract</span><span class="o">.</span><span class="n">transactionHash</span><span class="p">);</span> <span class="p">});</span>
+</pre></div>
+</div>
+<p>部署完毕后, 获得子链合约地址  0x1195cd9769692a69220312e95192e0dcb6a4ec09</p>
+</div>
+<div class="section" id="id6">
+<h2>子链开放注册<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>首先子链合约需要最终提供gas费给scs，需要给子链控制合约发送一定量的moac，调用合约里的函数addFund</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">根据ABI</span> <span class="n">chain3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s2">&quot;addFund()&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0xa2f09dfa891d1ba530cdf00c7c12ddd9f6e625e5368fff9cdf23c9dc0ad433b1</span>
+        <span class="n">取前4个字节</span> <span class="mh">0xa2f09dfa</span>
+<span class="o">&gt;</span> <span class="n">amount</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="n">chain3</span><span class="o">.</span><span class="n">toSha</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span><span class="s1">&#39;mc&#39;</span><span class="p">),</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;2000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0xa2f09dfa&#39;</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>可以通过查询余额进行验证</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">getBalance</span><span class="p">(</span><span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>然后调用  调用合约里的函数registerOpen 开放注册 (按子链矿池合约中SCS注册先后排序进行选取)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">根据ABI</span> <span class="n">chain3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s2">&quot;registerOpen()&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x5defc56ce78f178d760a165a5528a8e8974797e616a493970df1c0918c13a175</span>
+        <span class="n">取前4个字节</span> <span class="mh">0x5defc56c</span>
+<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;2000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x5defc56c&#39;</span><span class="p">});</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>验证：  访问子链合约的 registerFlag 为 1 ， 等待scs注册 (vnode 一个 flush周期后 ) ， 访问子链合约的 nodeCount</dt>
+<dd>&gt; chain3.mc.getStorageAt(subchainaddr,0x14)
+&gt; chain3.mc.getStorageAt(subchainaddr,0x0e)</dd>
+</dl>
+</div>
+<div class="section" id="id7">
+<h2>子链关闭注册<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>等到两个scs都注册完毕后，即注册SCS数目大于等于子链要求的最小数目时，调用子链合约里的函数 registerClose关闭注册</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">根据ABI</span> <span class="n">chain3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s2">&quot;registerClose()&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x69f3576fc10c82561bd84b0045ee48d80d59a866174f2513fdef43d65702bf70</span>
+        <span class="n">取前4个字节</span> <span class="mh">0x69f3576f</span>
+<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;2000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x69f3576f&#39;</span><span class="p">});</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>验证：  访问子链合约的 registerFlag 为 0</dt>
+<dd>&gt; chain3.mc.getStorageAt(subchainaddr,0x14)</dd>
+</dl>
+<p>SCS自身完成初始化并开始子链运行，可观察scs的concole界面，scs开始出块即成功完成部署子链。</p>
+</div>
 </div>
 
 
