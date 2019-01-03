@@ -173,6 +173,9 @@
         取前4个字节 0x4e592e2f
 参数address传scs keystore文件中的地址 （前面补24个0， 凑足32个字节）
 data = &#39;0x4e592e2f000000000000000000000000d135afa5c8d96ba11c40cf0b52952d54bce57363&#39;
+
+注意registerAsMonitor不同版本参数
+&gt; data = contractInstance.registerAsMonitor.getData(&#39;0xd135afa5c8d96ba11c40cf0b52952d54bce57363&#39;,&#39;127.0.0.1&#39;)
 </pre></div>
 </div>
 <p>调用示例:</p>
@@ -182,7 +185,12 @@ data = &#39;0x4e592e2f000000000000000000000000d135afa5c8d96ba11c40cf0b52952d54bc
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">({</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="n">amount</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;5000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">data</span> <span class="p">});</span>
 </pre></div>
 </div>
-<p>验证： 观察SCS monitor concole界面开始同步子链区块</p>
+<p>验证： 观察SCS monitor concole界面开始同步子链区块，或者调用子链合约的getMonitorInfo方法</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">contractInstance</span> <span class="o">=</span> <span class="n">SubChainBaseContract</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s1">&#39;0xb877bf4e4cc94fd9168313e00047b77217760930&#39;</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="n">contractInstance</span><span class="o">.</span><span class="n">getMonitorInfo</span><span class="o">.</span><span class="n">call</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="rpc">
 <h2>子链RPC接口<a class="headerlink" href="#rpc" title="Permalink to this headline">¶</a></h2>
@@ -214,7 +222,7 @@ post返回结果：
 <p>以下是几个常用的RPC接口及调用body示例</p>
 <p>GetNonce：获得子链的nonce，这是调用子链DAPP合约的必要参数之一，每当子链交易发送后会自动加1</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
-Sender：子链合约地址创建者地址
+Sender：查询账号， 每个账号在子链有不同的nonce
 Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetNonce&quot;,
                         &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
                                 &quot;Sender&quot;:&quot;0x87e369172af1e817ebd8d63bcd9f685a513a6736&quot;

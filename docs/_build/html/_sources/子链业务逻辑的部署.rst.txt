@@ -27,8 +27,7 @@ DAPP智能合约也通过主链的sendTransaction发送交易到 proxy vnode 的
 	> abi = output.contracts[':DeOrder'].interface;
 	> bin = output.contracts[':DeOrder'].bytecode;
 	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
-	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c';    
-	> DeOrderContract = chain3.mc.contract(JSON.parse(abi));
+	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c';  
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
 	> chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag: "0x1", data: '0x' + bin, nonce: 0, via: via, });
 			

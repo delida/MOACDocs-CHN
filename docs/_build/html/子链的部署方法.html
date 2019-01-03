@@ -224,7 +224,7 @@ data: register(address,string)
 </pre></div>
 </div>
 <p>验证： 访问Vnode矿池合约的vnodeCount</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">getStorageAt</span><span class="p">(</span><span class="s2">&quot;0x22f141dcc59850707708bc90e256318a5fe0b928&quot;</span><span class="p">,</span><span class="mh">0x02</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt; chain3.mc.getStorageAt(&quot;0x22f141dcc59850707708bc90e256318a5fe0b928&quot;,0x02)   // 注意vnodeCount变量在合约中变量定义的位置（16进制）
 </pre></div>
 </div>
 </div>
@@ -306,7 +306,7 @@ data = &#39;0x4420e486000000000000000000000000d4057328a35f34507dbcd295d43ed0cccf
 </pre></div>
 </div>
 <p>验证： 访问子链矿池合约的scsCount</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">getStorageAt</span><span class="p">(</span><span class="s2">&quot;0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac&quot;</span><span class="p">,</span><span class="mh">0x02</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt; chain3.mc.getStorageAt(&quot;0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac&quot;,0x02)     // 注意scsCount变量在合约中变量定义的位置（16进制）
 </pre></div>
 </div>
 <p>同上将另一个scs（0x3e21ba36b396936c6cc9adc3674655b912e5fa54）也加入子链矿池</p>
@@ -361,8 +361,8 @@ data = &#39;0x4420e486000000000000000000000000d4057328a35f34507dbcd295d43ed0cccf
 </div>
 <dl class="docutils">
 <dt>验证：  访问子链合约的 registerFlag 为 1 ， 等待scs注册 (vnode 一个 flush周期后 ) ， 访问子链合约的 nodeCount</dt>
-<dd>&gt; chain3.mc.getStorageAt(subchainaddr,0x14)
-&gt; chain3.mc.getStorageAt(subchainaddr,0x0e)</dd>
+<dd>&gt; chain3.mc.getStorageAt(subchainaddr,0x14)  // 注意registerFlag变量在合约中变量定义的位置（16进制）
+&gt; chain3.mc.getStorageAt(subchainaddr,0x0e)  // 注意nodeCount变量在合约中变量定义的位置（16进制）</dd>
 </dl>
 </div>
 <div class="section" id="id7">
@@ -377,7 +377,7 @@ data = &#39;0x4420e486000000000000000000000000d4057328a35f34507dbcd295d43ed0cccf
 </div>
 <dl class="docutils">
 <dt>验证：  访问子链合约的 registerFlag 为 0</dt>
-<dd>&gt; chain3.mc.getStorageAt(subchainaddr,0x14)</dd>
+<dd>&gt; chain3.mc.getStorageAt(subchainaddr,0x14)      // 注意registerFlag变量在合约中变量定义的位置（16进制）</dd>
 </dl>
 <p>SCS自身完成初始化并开始子链运行，可观察scs的concole界面，scs开始出块即成功完成部署子链。</p>
 </div>

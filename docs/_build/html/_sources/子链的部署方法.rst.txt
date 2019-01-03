@@ -69,7 +69,7 @@ vnode 设置代理并加入矿池
 
 验证： 访问Vnode矿池合约的vnodeCount
 ::
-	> chain3.mc.getStorageAt("0x22f141dcc59850707708bc90e256318a5fe0b928",0x02)   
+	> chain3.mc.getStorageAt("0x22f141dcc59850707708bc90e256318a5fe0b928",0x02)   // 注意vnodeCount变量在合约中变量定义的位置（16进制）
 	
 部署子链矿池  
 ----------------------
@@ -158,7 +158,7 @@ vnode 设置代理并加入矿池
 	
 验证： 访问子链矿池合约的scsCount
 ::		
-	> chain3.mc.getStorageAt("0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac",0x02)	
+	> chain3.mc.getStorageAt("0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac",0x02)	// 注意scsCount变量在合约中变量定义的位置（16进制）
 
 同上将另一个scs（0x3e21ba36b396936c6cc9adc3674655b912e5fa54）也加入子链矿池
 
@@ -219,8 +219,8 @@ vnode 设置代理并加入矿池
 
 	
 验证：  访问子链合约的 registerFlag 为 1 ， 等待scs注册 (vnode 一个 flush周期后 ) ， 访问子链合约的 nodeCount
-	> chain3.mc.getStorageAt(subchainaddr,0x14)
-	> chain3.mc.getStorageAt(subchainaddr,0x0e)
+	> chain3.mc.getStorageAt(subchainaddr,0x14)  // 注意registerFlag变量在合约中变量定义的位置（16进制）
+	> chain3.mc.getStorageAt(subchainaddr,0x0e)  // 注意nodeCount变量在合约中变量定义的位置（16进制）
 
 子链关闭注册
 ----------------------
@@ -234,7 +234,7 @@ vnode 设置代理并加入矿池
 	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: '0x69f3576f'});
 			
 验证：  访问子链合约的 registerFlag 为 0
-	> chain3.mc.getStorageAt(subchainaddr,0x14)	
+	> chain3.mc.getStorageAt(subchainaddr,0x14)	 // 注意registerFlag变量在合约中变量定义的位置（16进制）
 
 SCS自身完成初始化并开始子链运行，可观察scs的concole界面，scs开始出块即成功完成部署子链。
 
