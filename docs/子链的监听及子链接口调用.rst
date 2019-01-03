@@ -21,6 +21,10 @@ Monitor不参与子链的交易共识，只是同步区块数据，提供数据�
 		取前4个字节 0x4e592e2f  
 	参数address传scs keystore文件中的地址 （前面补24个0， 凑足32个字节）  
 	data = '0x4e592e2f000000000000000000000000d135afa5c8d96ba11c40cf0b52952d54bce57363'		
+	
+	注意registerAsMonitor不同版本参数
+	> data = contractInstance.registerAsMonitor.getData('0xd135afa5c8d96ba11c40cf0b52952d54bce57363','127.0.0.1')   
+	
 
 调用示例:
 ::
@@ -29,7 +33,11 @@ Monitor不参与子链的交易共识，只是同步区块数据，提供数据�
 	> data = '0x4e592e2f000000000000000000000000d135afa5c8d96ba11c40cf0b52952d54bce57363';
 	> chain3.mc.sendTransaction({ from: chain3.mc.accounts[0], value:amount, to: subchainaddr, gas: "5000000", gasPrice: chain3.mc.gasPrice, data: data });
 
-验证： 观察SCS monitor concole界面开始同步子链区块
+验证： 观察SCS monitor concole界面开始同步子链区块，或者调用子链合约的getMonitorInfo方法
+::
+	> contractInstance = SubChainBaseContract.at('0xb877bf4e4cc94fd9168313e00047b77217760930')
+	
+	> contractInstance.getMonitorInfo.call()
 
 子链RPC接口
 ----------------------
@@ -67,7 +75,7 @@ Monitor不参与子链的交易共识，只是同步区块数据，提供数据�
 GetNonce：获得子链的nonce，这是调用子链DAPP合约的必要参数之一，每当子链交易发送后会自动加1
 ::
 	SubChainAddr: 子链合约地址
-	Sender：子链合约地址创建者地址
+	Sender：查询账号， 每个账号在子链有不同的nonce
 	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetNonce",
 				"params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
 					"Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"
