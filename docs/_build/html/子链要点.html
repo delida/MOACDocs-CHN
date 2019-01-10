@@ -84,6 +84,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">子链要点</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">概述</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#moac">子链中的MOAC押金和消耗</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">子链部署的注意点</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
@@ -183,6 +184,11 @@
 <p>4、押金一般不会扣除，但在flush时，如果有企图作弊的节点，将会按照规则踢出子链，并扣除押金，不再返还；</p>
 <p>子链中的MOAC消耗：</p>
 <p>首先，调用子链方法不会消耗任何gas，但是，dapp运营方需要向子链控制合约地址打入一定量的MOAC维持子链运行，这部分MOAC将会消耗在给子链矿工费用和主链充提gas返还上。</p>
+</div>
+<div class="section" id="id3">
+<h2>子链部署的注意点<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>1、子链scs的vnode需要互相addPeer以保证通讯畅通。同时，这些vnode建议尽量add外面的节点以保证主链高度一致。</p>
+<p>2、子链scs的时钟请同步互联网标准时间。</p>
 </div>
 </div>
 
