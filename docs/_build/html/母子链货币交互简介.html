@@ -333,7 +333,14 @@
 </div>
 <div class="section" id="dapp">
 <h3>dapp合约部署<a class="headerlink" href="#dapp" title="Permalink to this headline">¶</a></h3>
-<p>部署 dapp合约，dechat是一个官方示例，注意合约有两个参数，分别是版主的账号和开发者的账号</p>
+<p>按照多合约部署步骤，需要首先部署dappbase合约，方法请参见&quot;子链业务逻辑的部署&quot;。
+验证:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">合约部署成功后，Nonce值应该是1</div>
+</div>
+</div></blockquote>
+<p>部署 dapp合约，dechat是一个官方示例，注意合约有两个参数，分别是版主的账号和开发者的账号。</p>
 <p>部署示例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;chain3&#39;</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">solc</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;solc&#39;</span><span class="p">)</span>
@@ -350,14 +357,15 @@
 <span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0xe9463e215315d6f1e5387a161868d7d0a4db89e8&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">via</span> <span class="o">=</span> <span class="s1">&#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
-<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">({</span><span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">shardingFlag</span><span class="p">:</span> <span class="s2">&quot;0x1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">,</span> <span class="n">nonce</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">via</span><span class="p">,</span> <span class="p">});</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">({</span><span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">shardingFlag</span><span class="p">:</span> <span class="s2">&quot;0x3&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">,</span> <span class="n">nonce</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">via</span><span class="p">,</span> <span class="p">});</span>
 </pre></div>
 </div>
 <dl class="docutils">
 <dt>验证:</dt>
-<dd><div class="first last line-block">
-<div class="line">合约部署成功后，Nonce值应该是1</div>
+<dd><div class="first line-block">
+<div class="line">合约部署成功后，Nonce值应该是2</div>
 </div>
+<p class="last">部署完dapp合约，需要将合约注册入dappbase。</p>
 </dd>
 </dl>
 </div>
@@ -399,8 +407,9 @@
 </div>
 <div class="section" id="id5">
 <h3>dapp 提币<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p><strong>请注意data前需要加上dapp合约地址</strong></p>
 <dl class="docutils">
-<dt>调用 dapp合约 的 redeemFromMicroChain方法， 用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数</dt>
+<dt>调用 dapp合约 的 redeemFromMicroChain方法，用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数</dt>
 <dd><div class="first line-block">
 <div class="line">redeemFromMicroChain方法将用户账号和对应token数量加入推送结构体redeem，等待一轮flush后，自动会调用子链合约的redeemFromMicroChain方法</div>
 </div>
@@ -413,13 +422,14 @@
 </dd>
 </dl>
 <p>调用示例：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">根据ABI</span> <span class="n">chain3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s2">&quot;redeemFromMicroChain()&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x89739c5bf1ef36273bf0e7aeb59ffe71213a58e1f01965e75662cb21b03abb13</span>
-<span class="n">取前4个字节</span> <span class="mh">0x89739c5b</span>
-<span class="o">&gt;</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">1</span>       <span class="o">//</span> <span class="n">调用ScsRPCMethod</span><span class="o">.</span><span class="n">GetNonce获得</span>
-<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="n">via</span> <span class="o">=</span> <span class="s1">&#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
-<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">nonce</span><span class="p">:</span> <span class="n">nonce</span><span class="p">,</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">shardingFlag</span><span class="p">:</span><span class="s1">&#39;0x1&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x89739c5b&#39;</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">via</span><span class="p">,});</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>根据ABI chain3.sha3(&quot;redeemFromMicroChain()&quot;) = 0x89739c5bf1ef36273bf0e7aeb59ffe71213a58e1f01965e75662cb21b03abb13
+取前4个字节 0x89739c5b
+调用dapp合约方法，需要再data前加入dappaddr
+&gt; nonce = 1       // 调用ScsRPCMethod.GetNonce获得
+&gt; subchainaddr = &#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;;
+&gt; via = &#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;;
+&gt; chain3.personal.unlockAccount(chain3.mc.accounts[0], &#39;123456&#39;);
+&gt; chain3.mc.sendTransaction( { nonce: nonce, from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag:&#39;0x1&#39;, data: dappaddr + &#39;0x89739c5b&#39;, via: via,});
 </pre></div>
 </div>
 <dl class="docutils">
@@ -553,6 +563,13 @@
 </div>
 <div class="section" id="id11">
 <h3>dapp合约部署<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>按照多合约部署步骤，需要首先部署dappbase合约，方法请参见&quot;子链业务逻辑的部署&quot;。
+验证:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line">合约部署成功后，Nonce值应该是1</div>
+</div>
+</div></blockquote>
 <p>部署 dapp合约，dechat是一个官方示例，注意合约有两个参数，分别是版主的账号和开发者的账号</p>
 <p>部署示例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt; chain3 = require(&#39;chain3&#39;)
@@ -570,7 +587,7 @@
 &gt; subchainaddr = &#39;0xb877bf4e4cc94fd9168313e00047b77217760930&#39;;
 &gt; via = &#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;;
 &gt; chain3.personal.unlockAccount(chain3.mc.accounts[0], &#39;123456&#39;);
-&gt; chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:amount, to: subchainaddr, gas:0, shardingFlag: &quot;0x1&quot;, data: &#39;0x&#39; + bin, nonce: 0, via: via, });
+&gt; chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:amount, to: subchainaddr, gas:0, shardingFlag: &quot;0x3&quot;, data: &#39;0x&#39; + bin, nonce: 0, via: via, });
 </pre></div>
 </div>
 <dl class="docutils">
@@ -612,8 +629,9 @@
 </div>
 <div class="section" id="id13">
 <h3>dapp 提币<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p><strong>请注意data前需要加上dapp合约地址</strong></p>
 <dl class="docutils">
-<dt>调用 dapp合约 的 redeemFromMicroChain方法， 用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数</dt>
+<dt>调用 dapp合约 的 redeemFromMicroChain方法，用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数</dt>
 <dd><div class="first line-block">
 <div class="line">redeemFromMicroChain方法将用户账号和对应token数量加入推送结构体redeem，等待一轮flush后，自动会调用子链合约的redeemFromMicroChain方法</div>
 </div>
@@ -623,13 +641,14 @@
 </dd>
 </dl>
 <p>调用示例：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">根据ABI</span> <span class="n">chain3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s2">&quot;redeemFromMicroChain()&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x89739c5bf1ef36273bf0e7aeb59ffe71213a58e1f01965e75662cb21b03abb13</span>
-<span class="n">取前4个字节</span> <span class="mh">0x89739c5b</span>
-<span class="o">&gt;</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">1</span>       <span class="o">//</span> <span class="n">调用ScsRPCMethod</span><span class="o">.</span><span class="n">GetNonce获得</span>
-<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0xb877bf4e4cc94fd9168313e00047b77217760930&#39;</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="n">via</span> <span class="o">=</span> <span class="s1">&#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
-<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">nonce</span><span class="p">:</span> <span class="n">nonce</span><span class="p">,</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">shardingFlag</span><span class="p">:</span><span class="s1">&#39;0x1&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x89739c5b&#39;</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">via</span><span class="p">,});</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>根据ABI chain3.sha3(&quot;redeemFromMicroChain()&quot;) = 0x89739c5bf1ef36273bf0e7aeb59ffe71213a58e1f01965e75662cb21b03abb13
+取前4个字节 0x89739c5b
+调用dapp方法，需要再data前加入dappaddr
+&gt; nonce = 1       // 调用ScsRPCMethod.GetNonce获得
+&gt; subchainaddr = &#39;0xb877bf4e4cc94fd9168313e00047b77217760930&#39;;
+&gt; via = &#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;;
+&gt; chain3.personal.unlockAccount(chain3.mc.accounts[0], &#39;123456&#39;);
+&gt; chain3.mc.sendTransaction( { nonce: nonce, from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag:&#39;0x1&#39;, data: dappaddr + &#39;0x89739c5b&#39;, via: via,});
 </pre></div>
 </div>
 <dl class="docutils">

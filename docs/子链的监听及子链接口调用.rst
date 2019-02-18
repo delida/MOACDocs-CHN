@@ -144,9 +144,62 @@ getContractInfo：获得子链DAPP智能合约全局变量
 	}
 
 
-![rpc_getnonce](../image/rpc_getblock.png)
+AnyCall: 获取dapp合约函数的返回值，**调用此接口前必须将dapp注册入dappbase**
 
+Params： 第一个参数是调用的方法，之后是方法传入参数
+::
+	SubChainAddr: 子链合约地址
+	Sender：查询账号
+	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.AnyCall",
+			"params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
+				"Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"， "Params" :["funcA", "param1", param2]
+				}
+		  }
 
+GetBlocks: 获取某一区间内的区块信息
+::
+	SubChainAddr: 子链合约地址
+	Start: 开始block
+	End： 结束block
+	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetBlocks",
+			"params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"
+				"Start":10, "End":20}
+		  }
 
+GetTransactionByNonce: 通过账号和Nonce获取子链的tx信息
+::
+	SubChainAddr: 子链合约地址
+	Sender：查询账号
+	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetTransactionByNonce",
+			"params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
+				"Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"， "Nonce":9,
+				}
+		  }
 
+GetTransactionByHash: 通过交易hash获取子链的tx信息
+::
+	SubChainAddr: 子链合约地址
+	Hash: 交易hash
+	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetTransactionByHash",
+			"params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
+				"Hash":"0x87e369172af1e817ebd8d63bcd9f685a513a6736fsne3lkgkvu65kkwlcd"
+				}
+		  }
 
+GetReceipts: 通过账号和Nonce获取子链的tx执行结果
+::
+	SubChainAddr: 子链合约地址
+	Sender：查询账号
+	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetReceipts",
+			"params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
+				"Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"， "Nonce":9
+				}
+		  }
+
+GetDappAddrList: 通过subchainaddr获取子链内所有多合约的地址列表
+::
+	SubChainAddr: 子链合约地址
+	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetDappAddrList",
+			"params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
+				}
+		  }

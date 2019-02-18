@@ -291,6 +291,65 @@ Structformat：针对结构体变量，1：single（简单类型变量单倍长�
 }
 </pre></div>
 </div>
+<p>AnyCall: 获取dapp合约函数的返回值，<strong>调用此接口前必须将dapp注册入dappbase</strong></p>
+<p>Params： 第一个参数是调用的方法，之后是方法传入参数</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
+Sender：查询账号
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.AnyCall&quot;,
+                &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
+                        &quot;Sender&quot;:&quot;0x87e369172af1e817ebd8d63bcd9f685a513a6736&quot;， &quot;Params&quot; :[&quot;funcA&quot;, &quot;param1&quot;, param2]
+                        }
+          }
+</pre></div>
+</div>
+<p>GetBlocks: 获取某一区间内的区块信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
+Start: 开始block
+End： 结束block
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetBlocks&quot;,
+                &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;
+                        &quot;Start&quot;:10, &quot;End&quot;:20}
+          }
+</pre></div>
+</div>
+<p>GetTransactionByNonce: 通过账号和Nonce获取子链的tx信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
+Sender：查询账号
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetTransactionByNonce&quot;,
+                &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
+                        &quot;Sender&quot;:&quot;0x87e369172af1e817ebd8d63bcd9f685a513a6736&quot;， &quot;Nonce&quot;:9,
+                        }
+          }
+</pre></div>
+</div>
+<p>GetTransactionByHash: 通过交易hash获取子链的tx信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SubChainAddr</span><span class="p">:</span> <span class="n">子链合约地址</span>
+<span class="n">Hash</span><span class="p">:</span> <span class="n">交易hash</span>
+<span class="n">Body</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">,</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;ScsRPCMethod.GetTransactionByHash&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;params&quot;</span><span class="p">:{</span><span class="s2">&quot;SubChainAddr&quot;</span><span class="p">:</span><span class="s2">&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Hash&quot;</span><span class="p">:</span><span class="s2">&quot;0x87e369172af1e817ebd8d63bcd9f685a513a6736fsne3lkgkvu65kkwlcd&quot;</span>
+                        <span class="p">}</span>
+          <span class="p">}</span>
+</pre></div>
+</div>
+<p>GetReceipts: 通过账号和Nonce获取子链的tx执行结果</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
+Sender：查询账号
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetReceipts&quot;,
+                &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
+                        &quot;Sender&quot;:&quot;0x87e369172af1e817ebd8d63bcd9f685a513a6736&quot;， &quot;Nonce&quot;:9
+                        }
+          }
+</pre></div>
+</div>
+<p>GetDappAddrList: 通过subchainaddr获取子链内所有多合约的地址列表</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SubChainAddr</span><span class="p">:</span> <span class="n">子链合约地址</span>
+<span class="n">Body</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">,</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;ScsRPCMethod.GetDappAddrList&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;params&quot;</span><span class="p">:{</span><span class="s2">&quot;SubChainAddr&quot;</span><span class="p">:</span><span class="s2">&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;</span><span class="p">,</span>
+                        <span class="p">}</span>
+          <span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 
