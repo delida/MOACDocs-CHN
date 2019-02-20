@@ -8,7 +8,7 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: 子链:
+   :caption: 目录:
 
    名词解释
    子链要点

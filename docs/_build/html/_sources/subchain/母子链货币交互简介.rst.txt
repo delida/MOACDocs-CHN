@@ -232,9 +232,9 @@ dapp 充值
 dapp 提币
 ================	
 
-**请注意data前需要加上dapp合约地址**				
+**请注意data前需要加上dappbase合约地址**			
 
-调用 dapp合约 的 redeemFromMicroChain方法，用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
+调用 dappbase合约 的 redeemFromMicroChain方法，用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
  | redeemFromMicroChain方法将用户账号和对应token数量加入推送结构体redeem，等待一轮flush后，自动会调用子链合约的redeemFromMicroChain方法
  
  | 然后子链合约自动调用DirectExchangeToke对象的 redeemFromMicroChain 方法，扣除DirectExchangeToke合约本身的token数量，增加用户账号对应token的数量 
@@ -451,9 +451,9 @@ dapp 充值
 dapp 提币
 ================					
 
-**请注意data前需要加上dapp合约地址**
+**请注意data前需要加上dappbase合约地址**
 
-调用 dapp合约 的 redeemFromMicroChain方法，用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
+调用 dappbase合约 的 redeemFromMicroChain方法，用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
  | redeemFromMicroChain方法将用户账号和对应token数量加入推送结构体redeem，等待一轮flush后，自动会调用子链合约的redeemFromMicroChain方法
  
  | 调用erc20合约的transfer给用户账号转对应的token数量

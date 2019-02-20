@@ -8,7 +8,7 @@ Restful API
 
 .. toctree::
    :maxdepth: 2
-   :caption: Restful API:
+   :caption: Restful API目录:
 
    RestfulAPI简介
    RestfulAPI接口
