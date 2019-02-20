@@ -3,22 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-欢迎来到墨客子链中文文档
+Restful API
 ========================================
 
 .. toctree::
    :maxdepth: 2
-   :caption: 目录:
+   :caption: Restful API:
 
-   subchain/index
-   restapi/index
+   RestfulAPI简介
+   RestfulAPI接口
 
-
-
-
-其他
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
