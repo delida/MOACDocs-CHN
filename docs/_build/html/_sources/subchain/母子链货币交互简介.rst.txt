@@ -220,9 +220,10 @@ dapp 充值
 	根据ABI chain3.sha3("buyMintToken()") = 0x6bbded701cd78dee9626653dc2b2e76d3163cc5a6f81ac3b8e69da6a057824cb
 		取前4个字节 0x6bbded70
 	> amount = 100;
+	> nonce = 1	  // 调用ScsRPCMethod.GetNonce获得
 	> subchainaddr = '0xe9463e215315d6f1e5387a161868d7d0a4db89e8';
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
-	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value: chain3.toSha(amount,'mc'), to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: '0x6bbded70'});
+	> chain3.mc.sendTransaction( { nonce: nonce, from: chain3.mc.accounts[0], value: chain3.toSha(amount,'mc'), to: subchainaddr, gas:0, shardingFlag:'0x1',  data: '0x6bbded70', via: via});
 			
 验证：  
  | 检查账号的moac是否减少:    > chain3.mc.getBalance(chain3.mc.accounts[0])

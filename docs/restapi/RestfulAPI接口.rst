@@ -1,8 +1,58 @@
 Restful API 接口
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
-钱包模块
+管理模块
 ---------------------------
 
-**接口1**： 
+API认证接口
+
+请求访问token，提供权限调用API的其他接口
+
+方法：auth
+
+参数:
+::
+	account： 授权账号
+	pwd：授权账号密码
+	
+调用示例：
+::
+	POST: http://139.198.126.104:8080/auth
+	PODY：account=******&pwd=******
+
+返回数据示例	
+::	
+	{
+		"success": true,
+		"message": "",
+		"data": "token内容"
+	}
+
+
+主网模块
+---------------------------
+
+获得账户余额
+
+方法：getBalance
+
+参数:
+::
+	vnodeip： 	vnode节点地址
+	vnodeport：	vnode节点端口
+	address：	账号地址
+	token：		auth返回的授权token
+	
+	
+调用示例：
+::
+	POST: http://139.198.126.104:8080/getBalance
+	PODY：vnodeip=127.0.0.1&vnodeport=8545&address=0x******&token=********************************
+
+返回数据示例	
+::	
+	{
+		"success": true,
+		"message": "",
+		"data": 账户余额
+	}

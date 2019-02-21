@@ -83,8 +83,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../subchain/index.html">子链</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Restful API</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Restful API 简介</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">Restful API访问方式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#restfulapi">RestfulAPI接口格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#url">URL设计</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">结构返回</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">接口访问控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">节点控制</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="RestfulAPI接口.html">Restful API 接口</a></li>
@@ -158,13 +160,41 @@
             
   <div class="section" id="restful-api">
 <h1>Restful API 简介<a class="headerlink" href="#restful-api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2>Restful API访问方式<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p><strong>测试网</strong></p>
-<p><strong>正式网</strong></p>
+<p>MOAC以Restful API提供给用户的一种接入方式。包括了对钱包，主链，主链，各交易查询的一系列封装。</p>
+<p>DAPP用户当调用客户端SDK有困难时，可以通过服务端调用的方式实现对MOAC的接入。</p>
+<div class="section" id="url">
+<h2>URL设计<a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h2>
+<p>使用http作为API的通信协议，目前采用较多的POST方法。</p>
+<p>url格式:    http(s)://server.com/api/{method}</p>
+<p>POST提交格式采用form表单参数  Content-Type: application/x-www-form-urlencoded (a=name&amp;b=666)</p>
 </div>
-<div class="section" id="restfulapi">
-<h2>RestfulAPI接口格式<a class="headerlink" href="#restfulapi" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h2>结构返回<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>返回体格式采用json格式</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{
+        &quot;success&quot;: true,
+        &quot;message&quot;: &quot;&quot;,
+        &quot;data&quot;: &quot;*********&quot;
+}
+success:  true - 成功    false - 失败
+message： 失败时的错误信息
+data：     接口返回数据
+</pre></div>
+</div>
+<p>相关状态码
+200 OK
+403 token权限受限</p>
+</div>
+<div class="section" id="id2">
+<h2>接口访问控制<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>API访问控制，需先请求访问的用户名和密码，先调用auth接口请求访问token。</p>
+<p>各api接口需要token参数调用，不然会返回403错误。</p>
+<p>token有过期机制，目前是2小时有效。</p>
+</div>
+<div class="section" id="id3">
+<h2>节点控制<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>目前设计需要vnode节点和monitor节点的相关API，先通过参数传入地址和端口的方式以区别测试环境和正式环境。</p>
+<p>以后可能扩展为请求token时一次性设置，并在整个token生命周期有效。</p>
 </div>
 </div>
 
