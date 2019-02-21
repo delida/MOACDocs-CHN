@@ -84,6 +84,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">子链要点</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">概述</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#moac">子链中的MOAC押金和消耗</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">子链部署的注意点</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
@@ -178,11 +179,16 @@
 <h2>子链中的MOAC押金和消耗<a class="headerlink" href="#moac" title="Permalink to this headline">¶</a></h2>
 <p>为了使子链安全稳定的运行，MOAC引入的押金机制，主要体现在以下几个方面：</p>
 <p>1、每个子链节点在第一次启动后，将会有一个唯一的墨客钱包地址，在部署子链前，需要在向这个地址打入1个MOAC作为运行费用；</p>
-<p>2、每个子链节点注册进入子链矿工池时，需要向矿工池缴纳一定的押金，最小值由子链控制合约设置，最大值不限。子链节点每被选中一次，将会扣除一定数额的押金，当押金被扣完后，该节点将不会再参与新的子链，退出子链时，可以第哦啊用方法取回押金；</p>
+<p>2、每个子链节点注册进入子链矿工池时，需要向矿工池缴纳一定的押金，最小值由子链控制合约设置，最大值不限。子链节点每被选中一次，将会扣除一定数额的押金，当押金被扣完后，该节点将不会再参与新的子链，退出子链时，可以调用方法取回押金；</p>
 <p>3、当一个子链节点注册成一个监听节点时，需要缴纳一定的押金；当退出子链时可以取回押金；</p>
 <p>4、押金一般不会扣除，但在flush时，如果有企图作弊的节点，将会按照规则踢出子链，并扣除押金，不再返还；</p>
 <p>子链中的MOAC消耗：</p>
 <p>首先，调用子链方法不会消耗任何gas，但是，dapp运营方需要向子链控制合约地址打入一定量的MOAC维持子链运行，这部分MOAC将会消耗在给子链矿工费用和主链充提gas返还上。</p>
+</div>
+<div class="section" id="id3">
+<h2>子链部署的注意点<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>1、子链scs的vnode需要互相addPeer以保证通讯畅通。同时，这些vnode建议尽量add外面的节点以保证主链高度一致。</p>
+<p>2、子链scs的时钟请同步互联网标准时间。</p>
 </div>
 </div>
 

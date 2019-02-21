@@ -85,8 +85,9 @@
 <li class="toctree-l1"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
 <li class="toctree-l1"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">子链业务逻辑的部署</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#dapp">DAPP智能合约的部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">DAPP智能合约的调用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">多合约部署准备工作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dapp">DAPP智能合约的部署（多合约版）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">DAPP智能合约的调用</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
@@ -160,17 +161,24 @@
   <div class="section" id="id1">
 <h1>子链业务逻辑的部署<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>同主链相同，业务逻辑的实现也通过智能合约的方式。</p>
+<p>在1.0.8版本中，加入的子链多合约的功能。子链多合约指的是在一条子链上部署多个子链业务逻辑合约。</p>
+<div class="section" id="id2">
+<h2>多合约部署准备工作<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>需要有一条已经在运行的子链，具体部署方法可参见“子链部署方法”。</p>
+<p>假设有两个业务逻辑合约dapp1.sol和dapp2.sol。</p>
+<p>从发布链接下载多合约基础合约dappbase.sol</p>
+</div>
 <div class="section" id="dapp">
-<h2>DAPP智能合约的部署<a class="headerlink" href="#dapp" title="Permalink to this headline">¶</a></h2>
+<h2>DAPP智能合约的部署（多合约版）<a class="headerlink" href="#dapp" title="Permalink to this headline">¶</a></h2>
 <p>DAPP智能合约也通过主链的sendTransaction发送交易到 proxy vnode 的方式进行部署。</p>
 <p>参数：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>to: 子链控制合约subchainbase的地址
 gas: 不需要消耗gas费用，传值：0
-shardingflag：表示操作子链， 传值：0x1
+shardingflag：表示操作子链， 传值：0x3，请注意，多合约版本部署任何合约shardingflag都为0x3
 via: 对应 proxy vnode 的收益地址
 </pre></div>
 </div>
-<p>准备一个简单的合约 deorder.sol， 部署示例</p>
+<p>STEP1：在子链上部署多合约基础合约 dappbase.sol， 部署示例</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;chain3&#39;</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">solc</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;solc&#39;</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">chain3</span><span class="p">();</span>
@@ -183,7 +191,7 @@ via: 对应 proxy vnode 的收益地址
 <span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">via</span> <span class="o">=</span> <span class="s1">&#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
-<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">({</span><span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">shardingFlag</span><span class="p">:</span> <span class="s2">&quot;0x1&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">,</span> <span class="n">nonce</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">via</span><span class="p">,</span> <span class="p">});</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">({</span><span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">shardingFlag</span><span class="p">:</span> <span class="s2">&quot;0x3&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">,</span> <span class="n">nonce</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">via</span><span class="p">,</span> <span class="p">});</span>
 </pre></div>
 </div>
 <dl class="docutils">
@@ -191,23 +199,28 @@ via: 对应 proxy vnode 的收益地址
 <dd>合约部署成功后，Nonce值应该是1
 可调用monitor的rpc接口ScsRPCMethod.GetNonce进行检查，具体详见子链接口调用部分。</dd>
 </dl>
+<p>STEP2：在子链上部署业务逻辑合约 dapp1.sol，部署方法和上面雷同</p>
+<p>STEP3：在子链上部署业务逻辑合约 dapp2.sol，部署方法和上面雷同</p>
 </div>
-<div class="section" id="id2">
-<h2>DAPP智能合约的调用<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>DAPP智能合约的调用<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>DAPP智能合约的调用也通过主链的sendTransaction发送交易到 proxy vnode 的方式进行。</p>
-<p>例如 deorder.sol有个方法 createOrder(string ordernum)</p>
+<p>在多合约版本中，调用dapp方法前，需要先调用dappbase中的registerDapp方法来注册每一个dapp，具体方式如下：</p>
+<p><strong>请注意，与母链调用不同，子链的任何调用需要在data前加上dapp的合约地址！！</strong></p>
+<p>dappbase.sol有个方法 registerDapp(address,address,string)</p>
 <p>参数：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>to: 子链控制合约subchainbase的地址
 nonce：调用monitor的rpc接口ScsRPCMethod.GetNonce获得
 gas: 0 不需要消耗gas费用
-shardingflag： 0x1  表示操作子链
+shardingflag： 0x1  表示子链调用操作
 via: 对应 proxy vnode 的收益地址
-data: chain3.sha3(&quot;createOrder(string)&quot;) 取前4个字节 0x03b7c764，加上传值凑足32个字节
+data: 调用合约地址 + chain3.sha3(&quot;registerDapp(address,address,string)&quot;) 取前4个字节 0xb5560a14，加上传值凑足32个字节
 </pre></div>
 </div>
+<p>registerDapp中，第一个参数是想要注册的dapp的地址（dapp1和dapp2的地址），可以通过RPC getReciipt方法获得部署时contract address；第二个参数是创建dappbase时的from，也就是只有创建dappbase的人才能调用此方法；第三个参数是这个dapp的ABI。</p>
 <p>调用示例：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;0x03b7c7640000000000000000000000000000000000000000000000000000000001000001&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;0x0xcc0D18E77748AeBe3cC6462be0EF724e391a4aDb5560a140000000000000000000000001105d71a3d23c5bc80fc4b76605d694a0f83bfab00000000000000000000000044c10f4c... ...&#39;</span>
 <span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">via</span> <span class="o">=</span> <span class="s1">&#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
@@ -219,6 +232,10 @@ data: chain3.sha3(&quot;createOrder(string)&quot;) 取前4个字节 0x03b7c764�
 <dd>每次操作成功后，Nonce会自动增加1
 或者直接调用monitor的rpc接口ScsRPCMethod.GetContractInfo获得合约变量的方式进行验证。</dd>
 </dl>
+<p>以部署dapp1和dapp2为例，需要将这两个业务逻辑合约注册到dappbase中去：</p>
+<p>STEP4： 调用dappbase中的registerDapp方法来注册dapp1</p>
+<p>STEP5： 调用dappbase中的registerDapp方法来注册dapp2</p>
+<p>STEPX： 调用dapp1或dapp2中的业务逻辑</p>
 </div>
 </div>
 

@@ -48,7 +48,7 @@ erc20 部署
 部署完毕后, 获得erc20合约地址  0x5fcb383cf80a9d2961f4d8ba0a4b9e4a34157da7
 
 subchainbase 部署
-================	
+====================	
 
 注意这个子链合约在官方基础上进行了修改，增加了setToken和MintToken相关的若干方法。
 部署SubChainBase.sol示例:
@@ -169,8 +169,12 @@ ERC20 初始化
 同时观察scs的concole界面，scs开始出块即成功完成部署子链。
 	
 dapp合约部署
-================		
-部署 dapp合约，dechat是一个官方示例，注意合约有两个参数，分别是版主的账号和开发者的账号
+================	
+按照多合约部署步骤，需要首先部署dappbase合约，方法请参见"子链业务逻辑的部署"。
+验证: 
+ | 合约部署成功后，Nonce值应该是1  
+
+部署 dapp合约，dechat是一个官方示例，注意合约有两个参数，分别是版主的账号和开发者的账号。
 
 部署示例:
 ::
@@ -189,10 +193,15 @@ dapp合约部署
 	> subchainaddr = '0xe9463e215315d6f1e5387a161868d7d0a4db89e8';
 	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c'; 
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
-	> chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag: "0x1", data: '0x' + bin, nonce: 0, via: via, });
+	> chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag: "0x3", data: '0x' + bin, nonce: 0, via: via, });
 			
 验证: 
- | 合约部署成功后，Nonce值应该是1   		
+ | 合约部署成功后，Nonce值应该是2
+
+
+ 部署完dapp合约，需要将合约注册入dappbase。
+
+
 		
 dapp 充值
 ================		
@@ -221,9 +230,11 @@ dapp 充值
 
 
 dapp 提币
-================					
+================	
 
-调用 dapp合约 的 redeemFromMicroChain方法， 用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
+**请注意data前需要加上dapp合约地址**				
+
+调用 dapp合约 的 redeemFromMicroChain方法，用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
  | redeemFromMicroChain方法将用户账号和对应token数量加入推送结构体redeem，等待一轮flush后，自动会调用子链合约的redeemFromMicroChain方法
  
  | 然后子链合约自动调用DirectExchangeToke对象的 redeemFromMicroChain 方法，扣除DirectExchangeToke合约本身的token数量，增加用户账号对应token的数量 
@@ -234,11 +245,12 @@ dapp 提币
 ::
 	根据ABI chain3.sha3("redeemFromMicroChain()") = 0x89739c5bf1ef36273bf0e7aeb59ffe71213a58e1f01965e75662cb21b03abb13
 	取前4个字节 0x89739c5b
+	调用dapp合约方法，需要再data前加入dappaddr
 	> nonce = 1	  // 调用ScsRPCMethod.GetNonce获得
 	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
 	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c';
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
-	> chain3.mc.sendTransaction( { nonce: nonce, from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag:'0x1', data: '0x89739c5b', via: via,});
+	> chain3.mc.sendTransaction( { nonce: nonce, from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag:'0x1', data: dappaddr + '0x89739c5b', via: via,});
 	
 	
 验证：  
@@ -296,7 +308,7 @@ erc20 部署
 	
 
 subchainbase 部署
-================	
+=====================	
 
 注意这个子链合约在官方基础上进行了修改，增加了erc20合约地址和兑换比例的参数
 部署SubChainBase.sol示例:
@@ -385,7 +397,11 @@ subchainbase 部署
 同时观察scs的concole界面，scs开始出块即成功完成部署子链。
 	
 dapp合约部署
-================		
+================	
+按照多合约部署步骤，需要首先部署dappbase合约，方法请参见"子链业务逻辑的部署"。
+验证: 
+ | 合约部署成功后，Nonce值应该是1 
+
 部署 dapp合约，dechat是一个官方示例，注意合约有两个参数，分别是版主的账号和开发者的账号
 
 部署示例:
@@ -405,11 +421,11 @@ dapp合约部署
 	> subchainaddr = '0xb877bf4e4cc94fd9168313e00047b77217760930';
 	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c'; 
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
-	> chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:amount, to: subchainaddr, gas:0, shardingFlag: "0x1", data: '0x' + bin, nonce: 0, via: via, });
+	> chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:amount, to: subchainaddr, gas:0, shardingFlag: "0x3", data: '0x' + bin, nonce: 0, via: via, });
 
 	
 验证: 
- | 在 scs 的_logs目录下搜索日志文件，查找"created contract address"，找到dapp合约地址  6ab296062d8a147297851719682fb5ffe081f1d3
+ | 在 scs 的_logs目录下搜索日志文件，查找"created contract address"，找到dapp合约地址:6ab296062d8a147297851719682fb5ffe081f1d3
  | 调用monitor的方法 ScsRPCMethod.GetBalance 查询对应dapp合约地址的余额，应该等于erc20总量。
 		
 dapp 充值
@@ -435,7 +451,9 @@ dapp 充值
 dapp 提币
 ================					
 
-调用 dapp合约 的 redeemFromMicroChain方法， 用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
+**请注意data前需要加上dapp合约地址**
+
+调用 dapp合约 的 redeemFromMicroChain方法，用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
  | redeemFromMicroChain方法将用户账号和对应token数量加入推送结构体redeem，等待一轮flush后，自动会调用子链合约的redeemFromMicroChain方法
  
  | 调用erc20合约的transfer给用户账号转对应的token数量
@@ -444,11 +462,12 @@ dapp 提币
 ::
 	根据ABI chain3.sha3("redeemFromMicroChain()") = 0x89739c5bf1ef36273bf0e7aeb59ffe71213a58e1f01965e75662cb21b03abb13
 	取前4个字节 0x89739c5b
+	调用dapp方法，需要再data前加入dappaddr
 	> nonce = 1	  // 调用ScsRPCMethod.GetNonce获得
 	> subchainaddr = '0xb877bf4e4cc94fd9168313e00047b77217760930';
 	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c';
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
-	> chain3.mc.sendTransaction( { nonce: nonce, from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag:'0x1', data: '0x89739c5b', via: via,});
+	> chain3.mc.sendTransaction( { nonce: nonce, from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag:'0x1', data: dappaddr + '0x89739c5b', via: via,});
 	
 	
 验证：  
