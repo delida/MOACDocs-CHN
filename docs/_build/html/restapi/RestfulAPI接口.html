@@ -84,7 +84,11 @@
 <li class="toctree-l2"><a class="reference internal" href="RestfulAPI简介.html">Restful API 简介</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Restful API 接口</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">管理模块</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">主网模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">主网模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">账户余额</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">区块高度</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -169,7 +173,7 @@ pwd：授权账号密码
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/auth
-PODY：account=******&amp;pwd=******
+BODY：account=******&amp;pwd=******
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -183,7 +187,8 @@ PODY：account=******&amp;pwd=******
 </div>
 <div class="section" id="id2">
 <h2>主网模块<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>获得账户余额</p>
+<div class="section" id="id3">
+<h3>账户余额<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>方法：getBalance</p>
 <p>参数:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：        vnode节点地址
@@ -193,8 +198,8 @@ token：          auth返回的授权token
 </pre></div>
 </div>
 <p>调用示例：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/getBalance
-PODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x******&amp;token=********************************
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/getBalance
+BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x******&amp;token=********************************
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -204,6 +209,30 @@ PODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x******&amp;token=*****
         <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">账户余额</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>区块高度<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>方法：getBlockNumber</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：        vnode节点地址
+vnodeport：      vnode节点端口
+token：          auth返回的授权token
+</pre></div>
+</div>
+<p>调用示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/getBlockNumber
+BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;token=********************************
+</pre></div>
+</div>
+<p>返回数据示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">区块高度</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

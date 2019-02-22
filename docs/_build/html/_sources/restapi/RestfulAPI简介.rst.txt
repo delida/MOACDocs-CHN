@@ -13,7 +13,7 @@ URL设计
 
 url格式:    http(s)://server.com/api/{method}
 
-POST提交格式采用form表单参数  Content-Type: application/x-www-form-urlencoded (a=name&b=666)
+POST提交格式采用form表单参数    Content-Type: application/x-www-form-urlencoded (a=name&b=666)
 
 
 结构返回
