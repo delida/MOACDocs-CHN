@@ -83,7 +83,10 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Restful API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="RestfulAPI简介.html">Restful API 简介</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Restful API 接口</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">管理模块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">管理模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#api">API认证</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">主网模块</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id3">账户余额</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id4">区块高度</a></li>
@@ -163,7 +166,8 @@
 <h1>Restful API 接口<a class="headerlink" href="#restful-api" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2>管理模块<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>API认证接口</p>
+<div class="section" id="api">
+<h3>API认证<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h3>
 <p>请求访问token，提供权限调用API的其他接口</p>
 <p>方法：auth</p>
 <p>参数:</p>
@@ -183,6 +187,7 @@ BODY：account=******&amp;pwd=******
         <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;token内容&quot;</span>
 <span class="p">}</span>
 </pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="id2">

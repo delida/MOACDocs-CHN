@@ -12,6 +12,7 @@
 
    subchain/index
    restapi/index
+   sdk/index
 
 
 

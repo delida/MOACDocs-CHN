@@ -3,23 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-欢迎来到墨客链中文文档
+SDK
 ========================================
 
 .. toctree::
    :maxdepth: 2
-   :caption: 目录:
+   :caption: SDK目录:
 
-   subchain/index
-   restapi/index
-   sdk/index
+   SDK简介
+   SDK接口
 
-
-
-
-其他
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
