@@ -17,32 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="SDK 简介" href="SDK简介.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -77,9 +80,46 @@
             
             
               <p class="caption"><span class="caption-text">目录:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../subchain/index.html">子链</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../restapi/index.html">Restful API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">SDK</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="SDK简介.html">SDK 简介</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SDK 接口</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">钱包模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">注册</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">登录</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">主链模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">实例化主链对象</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">获取主链区块高度</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">获取主链某一区块信息</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">获取主链交易详情</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">获取主链账户余额</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#erc">获取主链账户ERC代币余额</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">主链加签交易</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#moac">主链MOAC转账</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">充值</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">子链模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id13">实例化子链对象</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">获取子链区块高度</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">获取子链某一区块信息</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">获取子链账户余额</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nonce">获取Nonce</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dapp">获取子链DAPP合约实例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">子链加签交易</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">子链转账</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">调用子链合约</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">提币</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -125,6 +165,8 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="index.html">SDK</a> &raquo;</li>
+        
       <li>SDK 接口</li>
     
     
@@ -149,7 +191,389 @@
 <div class="section" id="id1">
 <h2>钱包模块<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h3>获取余额<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>注册<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pwd：钱包账户密码
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">account</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&quot;moac-api&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">account</span><span class="p">;</span>
+<span class="n">var</span> <span class="n">wallet</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">pwd</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wallet：
+{ address: &#39;钱包地址....&#39;,
+  privateKey: &#39;私钥....&#39;,
+  keyStore: &#39;keyStore内容...&#39;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>登录<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>addr：钱包地址
+pwd：钱包密码
+keyStore：keyStore
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">account</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&quot;moac-api&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">account</span><span class="p">;</span>
+<span class="n">var</span> <span class="n">status</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">pwd</span><span class="p">,</span> <span class="n">keyStore</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>status：0 //登录失败
+status：1 //登录成功
+status：2 //密码错误
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>主链模块<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>实例化主链对象<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeAddress：主链访问地址 //http://47.106.69.61:8989
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">VnodeChain</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&quot;moac-api&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">vnodeChain</span><span class="p">;</span>
+<span class="n">var</span> <span class="n">vc</span> <span class="o">=</span> <span class="n">new</span> <span class="n">VnodeChain</span><span class="p">(</span><span class="n">vnodeAddress</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>获取主链区块高度<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">blockNumber</span> <span class="o">=</span> <span class="n">vc</span><span class="o">.</span><span class="n">getBlockNumber</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>blockNumber：主链区块高度
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>获取主链某一区块信息<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hashOrNumber：区块hash或区块高度
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">blockInfo</span> <span class="o">=</span> <span class="n">vc</span><span class="o">.</span><span class="n">getBlockInfo</span><span class="p">(</span><span class="n">hashOrNumber</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>blockInfo：某一区块信息
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>获取主链交易详情<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hash：交易hash
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">tradeInfo</span> <span class="o">=</span> <span class="n">vc</span><span class="o">.</span><span class="n">getTransactionByHash</span><span class="p">(</span><span class="nb">hash</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tradeInfo：交易详情
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>获取主链账户余额<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>addr：钱包账户地址
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">balance</span> <span class="o">=</span> <span class="n">vc</span><span class="o">.</span><span class="n">getBalance</span><span class="p">(</span><span class="n">addr</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>balance：主链账户余额
+</pre></div>
+</div>
+</div>
+<div class="section" id="erc">
+<h3>获取主链账户ERC代币余额<a class="headerlink" href="#erc" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>addr：钱包账户地址
+contractAddress：合约地址
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">balance</span> <span class="o">=</span> <span class="n">vc</span><span class="o">.</span><span class="n">getErcBalance</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">contractAddress</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>balance：账户ERC代币余额
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3>主链加签交易<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>from：交易发送人
+to：交易接受者（可以为个人地址，或者主链上的合约地址）
+amount：交易金额
+strData：参照充值buyMintToken
+privateKey：交易发起人私钥字符串
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vc</span><span class="o">.</span><span class="n">sendRawTransaction</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">strData</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="nb">hash</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">hash</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hash：交易hash
+</pre></div>
+</div>
+</div>
+<div class="section" id="moac">
+<h3>主链MOAC转账<a class="headerlink" href="#moac" title="Permalink to this headline">¶</a></h3>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>from：转账人地址
+to：收款人地址
+amount：交易金额
+privatekey：转账人私钥
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vc</span><span class="o">.</span><span class="n">transferMoac</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">privatekey</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="nb">hash</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">hash</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hash：交易hash
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h3>充值<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>addr：钱包地址
+amount：金额
+privateKey：钱包私钥
+microChainAddress：子链地址
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vc</span><span class="o">.</span><span class="n">buyMintToken</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">,</span> <span class="n">microChainAddress</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="nb">hash</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">hash</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hash：交易hash
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h2>子链模块<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h3>实例化子链对象<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeAddress：主链访问地址 //http://47.106.69.61:8989
+monitorAddress：子链访问地址 //http://47.106.89.22:8546
+microChainAddress：子链地址
+via：子链via
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">MicroChain</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&quot;moac-api&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">microChain</span><span class="p">;</span>
+<span class="n">var</span> <span class="n">mc</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MicroChain</span><span class="p">(</span><span class="n">vnodeAddress</span><span class="p">,</span> <span class="n">monitorAddress</span><span class="p">,</span> <span class="n">microChainAddress</span><span class="p">,</span> <span class="n">via</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h3>获取子链区块高度<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">getBlockNumber</span><span class="p">()</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="n">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>data：子链区块高度
+</pre></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h3>获取子链某一区块信息<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>blockNumber：区块高度
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">getBlock</span><span class="p">(</span><span class="n">blockNumber</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="n">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>data：某一区块信息
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h3>获取子链账户余额<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>addr：钱包地址
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">getBalance</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="n">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>data：子链账户余额
+</pre></div>
+</div>
+</div>
+<div class="section" id="nonce">
+<h3>获取Nonce<a class="headerlink" href="#nonce" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>addr：账户钱包地址
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">getNonce</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="n">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">});;</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>data：某一区块信息
+</pre></div>
+</div>
+</div>
+<div class="section" id="dapp">
+<h3>获取子链DAPP合约实例<a class="headerlink" href="#dapp" title="Permalink to this headline">¶</a></h3>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dappContractAddress：dapp合约地址
+dappAbi：dapp的abi
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">dapp</span> <span class="o">=</span> <span class="n">getDappInstance</span><span class="p">(</span><span class="n">dappContractAddress</span><span class="p">,</span> <span class="n">dappAbi</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dapp：dapp实例
+</pre></div>
+</div>
+</div>
+<div class="section" id="id17">
+<h3>子链加签交易<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>from：发送方的钱包地址
+microChainAddress：子链地址
+amount：交易金额
+contractAddress：合约地址
+data：通过调用“获取子链DAPP合约实例”实例方法获得
+          getDappInstance(microChainAddress, abi).createTopic.getData(award, expblk, desc);
+nonce：通过“获取Nonce”方法得到nonce
+privateKey：钱包私钥
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">sendRawTransaction</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">microChainAddress</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">contractAddress</span><span class="o">+</span><span class="n">data</span><span class="o">.</span><span class="n">substring</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">nonce</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="n">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>data：1//成功
+data：0//失败
+</pre></div>
+</div>
+</div>
+<div class="section" id="id18">
+<h3>子链转账<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>Node.JS Example</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>from：发送方的钱包地址
+to：接收方的钱包地址
+amount：交易金额
+privateKey：钱包私钥
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">transferCoin</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="n">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>data：1//成功
+data：0//失败
+</pre></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h3>调用子链合约<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>contractAddress：合约地址
+param：参数
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">callContract</span><span class="p">(</span><span class="n">contractAddress</span><span class="p">,</span> <span class="p">[</span><span class="n">param</span><span class="p">])</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="n">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>data：调用合约返回信息
+</pre></div>
+</div>
+</div>
+<div class="section" id="id20">
+<h3>提币<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>addr：钱包地址
+amount：金额
+privateKey：钱包私钥
+</pre></div>
+</div>
+<p>代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">redeemMintToken</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span><span class="n">privateKey</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="nb">hash</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">hash</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>返回:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>hash：交易hash
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -159,6 +583,13 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="SDK简介.html" class="btn btn-neutral float-left" title="SDK 简介" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -182,25 +613,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

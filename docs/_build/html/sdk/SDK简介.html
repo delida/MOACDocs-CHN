@@ -17,32 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SDK 接口" href="SDK接口.html" />
+    <link rel="prev" title="SDK" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -77,9 +81,14 @@
             
             
               <p class="caption"><span class="caption-text">目录:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../subchain/index.html">子链</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../restapi/index.html">Restful API</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">SDK</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SDK 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SDK接口.html">SDK 接口</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -125,6 +134,8 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="index.html">SDK</a> &raquo;</li>
+        
       <li>SDK 简介</li>
     
     
@@ -147,6 +158,24 @@
   <div class="section" id="sdk">
 <h1>SDK 简介<a class="headerlink" href="#sdk" title="Permalink to this headline">¶</a></h1>
 <p>为了方便用户接入，MOAC官方提供nodejs 版本的SDK，官方暂不考虑提供其他版本的SDK。</p>
+<p>Node.JS SDK下载安装</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">npm</span> <span class="n">install</span> <span class="n">moac</span><span class="o">-</span><span class="n">api</span>
+</pre></div>
+</div>
+<p>Node.JS SDK异常处理说明：</p>
+<p>应用方根据自己业务逻辑对sdk方法进行 try catch 异常处理</p>
+<p>示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">VnodeChain</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&quot;moac-api&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">vnodeChain</span><span class="p">;</span>
+
+<span class="k">try</span><span class="p">{</span>
+        <span class="n">var</span> <span class="n">vc</span> <span class="o">=</span> <span class="n">new</span> <span class="n">VnodeChain</span><span class="p">(</span><span class="s2">&quot;http://47.106.69.61:8989&quot;</span><span class="p">);</span>
+        <span class="n">var</span> <span class="n">blockNumber</span> <span class="o">=</span> <span class="n">vc</span><span class="o">.</span><span class="n">getBlockNumber</span><span class="p">();</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">blockNumber</span><span class="p">);</span>
+<span class="p">}</span><span class="n">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">){</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 
 
@@ -154,6 +183,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="SDK接口.html" class="btn btn-neutral float-right" title="SDK 接口" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -177,25 +215,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
