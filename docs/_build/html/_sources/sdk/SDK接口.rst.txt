@@ -115,6 +115,24 @@ Node.JS Example
 ::
 	tradeInfo：交易详情
 	
+获取合约实例
+=====================
+
+Node.JS Example
+
+参数:
+::
+	microChainAddress：子链地址
+	versionKey：版本号（默认0.1版本）
+
+代码:
+::
+	var data = vc.getSubChainBaseInstance(microChainAddress, versionKey);
+
+返回:
+::
+	data：合约实例
+	
 获取主链账户余额
 =====================
 
@@ -193,6 +211,23 @@ Node.JS Example
 ::
 	hash：交易hash
 	
+调用主链合约
+=========================
+
+参数:
+::
+	shaCode：合约中无参方法如getStatus(), shaCode = chain3.sha3("getStatus()").substring(0,10);
+			合约中有参方法如balanceOf(address _owner)  shaCode = chain3.sha3("balanceOf(address)").substring(0,10) + "000000000000000000000000" + _owner.substring(2);;
+	contractAddress：合约地址
+
+代码:
+::
+	var callRes = vc.callContract(shaCode, contractAddress);
+
+返回:
+::
+	callRes：返回信息
+	
 充值
 =========================
 
@@ -240,13 +275,33 @@ Node.JS Example
 
 代码:
 ::
-	mc.getBlockNumber().then((data) => {
-		console.log(data);
+	mc.getBlockNumber().then((blockNumber) => {
+		console.log(blockNumber);
 	});
 
 返回:
 ::
-	data：子链区块高度
+	blockNumber：子链区块高度
+	
+获取某一区间内的多个区块信息
+=========================
+
+Node.JS Example
+
+参数:
+::
+	start：开始高度
+	end：结束高度
+
+代码:
+::
+	mc.getBlocks(start, end).then((blockListInfo) => {
+		console.log(blockListInfo);
+	});
+
+返回:
+::
+	blockListInfo：区块信息List
 	
 获取子链某一区块信息
 =========================
@@ -259,13 +314,32 @@ Node.JS Example
 
 代码:
 ::
-	mc.getBlock(blockNumber).then((data) => {
-		console.log(data);
+	mc.getBlock(blockNumber).then((blockInfo) => {
+		console.log(blockInfo);
 	});
 
 返回:
 ::
-	data：某一区块信息
+	blockInfo：某一区块信息
+	
+获取子链交易详情
+=========================
+
+Node.JS Example
+
+参数:
+::
+	transactionHash：交易hash
+
+代码:
+::
+	mc.getTransactionByHash(transactionHash).then((transactionInfo) => {
+		console.log(transactionInfo);
+	});
+
+返回:
+::
+	transactionInfo：交易详情
 	
 获取子链账户余额
 =========================
@@ -278,13 +352,44 @@ Node.JS Example
 
 代码:
 ::
-	mc.getBalance(addr).then((data) => {
-		console.log(data);
+	mc.getBalance(addr).then((balance) => {
+		console.log(balance);
 	});
 
 返回:
 ::
 	data：子链账户余额
+	
+获取子链详细信息
+=========================
+
+Node.JS Example
+
+代码:
+::
+	mc.getMicroChainInfo().then((microChainInfo) => {
+		console.log(microChainInfo);
+	});;
+
+返回:
+::
+	microChainInfo：子链信息
+	
+获取子链DAPP状态
+=========================
+
+Node.JS Example
+
+代码:
+::
+	mc.getDappState().then((state) => {
+		console.log(state);
+	});;
+
+返回:
+::
+	state：1//正常
+	state：0//异常
 
 获取Nonce
 =========================
@@ -297,13 +402,13 @@ Node.JS Example
 
 代码:
 ::
-	mc.getNonce(addr).then((data) => {
-		console.log(data);
+	mc.getNonce(addr).then((nonce) => {
+		console.log(nonce);
 	});;
 
 返回:
 ::
-	data：某一区块信息
+	nonce：得到的nonce
 	
 获取子链DAPP合约实例
 =========================
@@ -335,19 +440,17 @@ Node.JS Example
 	contractAddress：合约地址
 	data：通过调用“获取子链DAPP合约实例”实例方法获得
 		  getDappInstance(microChainAddress, abi).createTopic.getData(award, expblk, desc);
-	nonce：通过“获取Nonce”方法得到nonce
-	privateKey：钱包私钥
+	privateKey：发送方钱包私钥
 
 代码:
 ::
-	mc.sendRawTransaction(from, microChainAddress, amount, contractAddress+data.substring(2), nonce, privateKey).then((data) => {
-		console.log(data);
+	mc.sendRawTransaction(from, microChainAddress, amount, contractAddress+data.substring(2), privateKey).then((hash) => {
+		console.log(hash);
 	});
 
 返回:
 ::
-	data：1//成功
-	data：0//失败
+	hash：交易hash
 	
 子链转账
 =========================
@@ -364,14 +467,13 @@ Node.JS Example
 
 代码:
 ::
-	mc.transferCoin(from, to, amount, privateKey).then((data) => {
-		console.log(data);
+	mc.transferCoin(from, to, amount, privateKey).then((hash) => {
+		console.log(hash);
 	});
 
 返回:
 ::
-	data：1//成功
-	data：0//失败
+	hash：交易hash
 	
 调用子链合约
 =========================
