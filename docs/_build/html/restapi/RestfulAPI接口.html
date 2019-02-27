@@ -17,36 +17,34 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="SDK" href="../sdk/index.html" />
     <link rel="prev" title="Restful API 简介" href="RestfulAPI简介.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -101,12 +99,19 @@
 <li class="toctree-l4"><a class="reference internal" href="#id8">区块信息</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id9">转账</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id10">调用智能合约</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#erc20">erc20转账</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">erc20余额</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">充值子链  兑换子链原生币</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">子链模块</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id12">获得子链区块高度</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id13">获取子链区块信息</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id14">获取子链账户余额</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">子链模块</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id14">获得子链区块高度</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">获取子链区块信息</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">获取子链账户余额</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">子链原生币转账</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">子链加签交易</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#public">子链合约调用 针对public方法和变量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">子链提币 原生币转erc20</a></li>
 </ul>
 </li>
 </ul>
@@ -244,7 +249,7 @@ token：          auth返回的授权token
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/account/login
-BODY：address=0x******************&amp;pwd=********&amp;keyStore={****************}&amp;token=********************************
+BODY：address=0x********&amp;pwd=*****&amp;keyStore={*******}&amp;token=************
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -271,7 +276,7 @@ token：          auth返回的授权token
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/vnode/getBalance
-BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x******&amp;token=********************************
+BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x******&amp;token=*****************
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -294,7 +299,7 @@ token：          auth返回的授权token
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/vnode/getBlockNumber
-BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;token=********************************
+BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;token=***************
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -318,7 +323,7 @@ token：          auth返回的授权token
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/vnode/getBlockInfo
-BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;block=2002326&amp;token=********************************
+BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;block=2002326&amp;token=******************
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -334,19 +339,19 @@ BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;block=2002326&amp;token=********
 <h3>转账<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>方法：sendRawTransaction</p>
 <p>参数:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：        vnode节点地址
-vnodeport：      vnode节点端口
-from：           源账号地址
-to：             目标账号地址
-amount： 数量（单位 moac）
-data：           备注
-privateKey：源账号私钥
-token：          auth返回的授权token
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                vnode节点地址
+vnodeport：              vnode节点端口
+from：                   源账号地址
+to：                     目标账号地址
+amount：                 数量（单位 moac）
+data：                   备注
+privatekey：             源账号私钥
+token：                  auth返回的授权token
 </pre></div>
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/vnode/sendRawTransaction
-BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;from=0x*******&amp;to=0x*******&amp;amount=10&amp;data=&amp;privateKey=0x*******&amp;token=********************************
+BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;from=0x**&amp;to=0x***&amp;amount=10&amp;data=&amp;privatekey=0x**&amp;token=*******
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -371,7 +376,7 @@ token：          auth返回的授权token
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/vnode/callContract
-BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x*******&amp;data=0x*******&amp;token=********************************
+BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x*****&amp;data=0x****&amp;token=***************
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -383,24 +388,105 @@ BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x*******&amp;data=0x***
 </pre></div>
 </div>
 </div>
+<div class="section" id="erc20">
+<h3>erc20转账<a class="headerlink" href="#erc20" title="Permalink to this headline">¶</a></h3>
+<p>方法：transferErc</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                                vnode节点地址
+vnodeport：                              vnode节点端口
+from：                                   源账号地址
+to：                                     目标账号地址
+contractaddress:                        erc20合约地址
+amount：                                 erc20代币数量
+privatekey：                             源账号私钥
+abistring：                              erc20合约abi
+token：                                  auth返回的授权token
+</pre></div>
+</div>
+<p>调用示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/vnode/transferErc
+BODY：vnodeip=&amp;vnodeport=&amp;from=0x**&amp;to=0x**&amp;contractaddress=0x**&amp;amount=10&amp;privatekey=0x**&amp;abistring=****&amp;token=*******
+</pre></div>
+</div>
+<p>返回数据示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">交易hash</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="id11">
-<h2>子链模块<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<h3>erc20余额<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>方法：getErcBalance</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                                vnode节点地址
+vnodeport：                              vnode节点端口
+address：                                账户地址
+contractaddress:                        erc20合约地址
+token：                                  auth返回的授权token
+</pre></div>
+</div>
+<p>调用示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/vnode/getErcBalance
+BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x*****&amp;contractaddress=0x**&amp;token=*********
+</pre></div>
+</div>
+<p>返回数据示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">余额</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="id12">
-<h3>获得子链区块高度<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<h3>充值子链  兑换子链原生币<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>方法：buyMintToken</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                                vnode节点地址
+vnodeport：                              vnode节点端口
+address：                                账户地址
+amount：                                 兑换数量
+privatekey：                             源账号私钥
+microChainaddress:                      子链地址
+token：                                  auth返回的授权token
+</pre></div>
+</div>
+<p>调用示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/vnode/buyMintToken
+BODY：vnodeip=&amp;vnodeport=&amp;address=0x**&amp;amount=**&amp;privatekey=0x**&amp;microChainaddress=0x**&amp;token=****
+</pre></div>
+</div>
+<p>返回数据示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">交易hash</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id13">
+<h2>子链模块<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id14">
+<h3>获得子链区块高度<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>方法：getBlockNumber</p>
 <p>参数:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                        vnode节点地址
-vnodeport：                      vnode节点端口
-microip：                        monitor节点地址
-microport：                      monitor节点端口
-contractaddress：        子链SubChain地址
-token：                          auth返回的授权token
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                                vnode节点地址
+vnodeport：                              vnode节点端口
+microip：                                monitor节点地址
+microport：                              monitor节点端口
+microchainaddress：                      子链SubChain地址
+token：                                  auth返回的授权token
 </pre></div>
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api//micro/getBlockNumber
-BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;microip=127.0.0.1&amp;microport=8546&amp;contractaddress=0x*******&amp;token=********************************
+BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x***&amp;token=***********
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -412,22 +498,22 @@ BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;microip=127.0.0.1&amp;microport=
 </pre></div>
 </div>
 </div>
-<div class="section" id="id13">
-<h3>获取子链区块信息<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>获取子链区块信息<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>方法：getBlock</p>
 <p>参数:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                        vnode节点地址
-vnodeport：                      vnode节点端口
-microip：                        monitor节点地址
-microport：                      monitor节点端口
-contractaddress：        子链SubChain地址
-blocknum:                       块号
-token：                          auth返回的授权token
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                                vnode节点地址
+vnodeport：                              vnode节点端口
+microip：                                monitor节点地址
+microport：                              monitor节点端口
+microchainaddress：                      子链SubChain地址
+blocknum:                               块号
+token：                                  auth返回的授权token
 </pre></div>
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api//micro/getBlock
-BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;microip=127.0.0.1&amp;microport=8546&amp;contractaddress=0x*******&amp;blocknum=*****&amp;token=********************************
+BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x***&amp;blocknum=*****&amp;token=***********
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -439,22 +525,22 @@ BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;microip=127.0.0.1&amp;microport=
 </pre></div>
 </div>
 </div>
-<div class="section" id="id14">
-<h3>获取子链账户余额<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h3>获取子链账户余额<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <p>方法：getBalance</p>
 <p>参数:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                        vnode节点地址
-vnodeport：                      vnode节点端口
-microip：                        monitor节点地址
-microport：                      monitor节点端口
-contractaddress：        子链SubChain地址
-address                         账户地址
-token：                          auth返回的授权token
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                                vnode节点地址
+vnodeport：                              vnode节点端口
+microip：                                monitor节点地址
+microport：                              monitor节点端口
+microchainaddress：                      子链SubChain地址
+address：                                账户地址
+token：                                  auth返回的授权token
 </pre></div>
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api//micro/getBalance
-BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;microip=127.0.0.1&amp;microport=8546&amp;contractaddress=0x*******&amp;address=0x*******&amp;token=********************************
+BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x*****&amp;address=0x*****&amp;token=**************
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -462,6 +548,125 @@ BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;microip=127.0.0.1&amp;microport=
         <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
         <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
         <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">账户余额</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id17">
+<h3>子链原生币转账<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>方法：transferCoin</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                                vnode节点地址
+vnodeport：                              vnode节点端口
+microip：                                monitor节点地址
+microport：                              monitor节点端口
+microchainaddress：                      子链SubChain地址
+via：                                    子链收益账号
+from：                                   源账户地址
+to：                                     目标账户地址
+amount：                                 原生币数量
+privatekey：                             源账号私钥
+token：                                  auth返回的授权token
+</pre></div>
+</div>
+<p>调用示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api//micro/transferCoin
+BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x**&amp;via=0x**&amp;from=0x**&amp;to=0x**&amp;amount=**&amp;privatekey=0x***&amp;token=*****
+</pre></div>
+</div>
+<p>返回数据示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">交易hash</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id18">
+<h3>子链加签交易<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>方法：sendRawTransaction</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                                vnode节点地址
+vnodeport：                              vnode节点端口
+microip：                                monitor节点地址
+microport：                              monitor节点端口
+from：                                   发送交易账户地址
+microchainaddress：                      子链SubChain地址
+amount:                                 payable对应金额
+dataStr                                 dapp合约地址 + 调用合约参数
+privatekey：                             源账号私钥
+token：                                  auth返回的授权token
+</pre></div>
+</div>
+<p>调用示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api//micro/sendRawTransaction
+BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;from=0x**&amp;microchainaddress=0x***&amp;amount=**&amp;dataStr=****&amp;privatekey=0x***&amp;token=*****
+</pre></div>
+</div>
+<p>返回数据示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">交易hash</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="public">
+<h3>子链合约调用 针对public方法和变量<a class="headerlink" href="#public" title="Permalink to this headline">¶</a></h3>
+<p>方法：callContract</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                                        vnode节点地址
+vnodeport：                                      vnode节点端口
+microip：                                        monitor节点地址
+microport：                                      monitor节点端口
+microchainaddress：                              子链SubChain地址
+dappaddress:                                    dapp合约地址
+data                                            调用合约参数   比如  [&quot;方法名&quot;, 参数1, 参数2]
+token：                                          auth返回的授权token
+</pre></div>
+</div>
+<p>调用示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api//micro/callContract
+BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x*****&amp;dappaddress=0x**&amp;data=****&amp;token=********
+</pre></div>
+</div>
+<p>返回数据示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">交易hash</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h3>子链提币 原生币转erc20<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>方法：redeemMintToken</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip：                                        vnode节点地址
+vnodeport：                                      vnode节点端口
+microip：                                        monitor节点地址
+microport：                                      monitor节点端口
+microchainaddress：                              子链SubChain地址
+dappaddress:                                    dapp合约地址
+address：                                        提币账户地址
+amount                                          提取原生币数量
+privatekey：                                     源账号私钥
+token：                                          auth返回的授权token
+</pre></div>
+</div>
+<p>调用示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api//micro/redeemMintToken
+BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x**&amp;dappaddress=0x**&amp;address=0x**&amp;amount=**&amp;data=****&amp;privatekey=0x**&amp;token=********
+</pre></div>
+</div>
+<p>返回数据示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">交易hash</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -480,7 +685,7 @@ BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;microip=127.0.0.1&amp;microport=
         <a href="../sdk/index.html" class="btn btn-neutral float-right" title="SDK" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="RestfulAPI简介.html" class="btn btn-neutral float-left" title="Restful API 简介" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="RestfulAPI简介.html" class="btn btn-neutral" title="Restful API 简介" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -506,16 +711,25 @@ BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;microip=127.0.0.1&amp;microport=
   
 
 
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
