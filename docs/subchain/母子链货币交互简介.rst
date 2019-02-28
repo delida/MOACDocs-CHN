@@ -23,30 +23,6 @@
 	scs monitor: 0xa5966600efb221097ce6a8ba1dc6eb1d5b43ef83
 	
 
-erc20 部署
-================	
-
-这类似一个管理合约，负责和子链货币之间的转换
-
-参考官方示例的erc20合约DirectExchangeToken.sol
-调用示例： 注意参数 tokensupply为erc20 的token总量，exchangerate为moac与子链token的兑换比率
-::
-	> chain3 = require('chain3')
-	> solc = require('solc')
-	> chain3 = new chain3();
-	> chain3.setProvider(new chain3.providers.HttpProvider('http://localhost:8545'));
-	> input = {'': fs.readFileSync('DirectExchangeToken.sol', 'utf8'), 'StandardToken.sol': fs.readFileSync('StandardToken.sol', 'utf8'), 'ERC20.sol': fs.readFileSync('ERC20.sol', 'utf8'), 'SafeMath.sol': fs.readFileSync('SafeMath.sol', 'utf8')};
-	> output = solc.compile({sources: input}, 1);                 
-	> abi = output.contracts[':DirectExchangeToken'].interface;
-	> bin = output.contracts[':DirectExchangeToken'].bytecode;
-	> tokensupply = 100000000;      // total supply
-	> exchangerate = 100;
-	> directexchangetokenContract = chain3.mc.contract(JSON.parse(abi));  
-	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
-	> dtoken = directexchangetokenContract.new( tokensupply, exchangerate,{ from: chain3.mc.accounts[0],  data: '0x' + bin,  gas:'9000000'} , function (e, contract){console.log('Contract address: ' + contract.address + ' transactionHash: ' + contract.transactionHash); });
-
-部署完毕后, 获得erc20合约地址  0x5fcb383cf80a9d2961f4d8ba0a4b9e4a34157da7
-
 subchainbase 部署
 ====================	
 
@@ -63,8 +39,8 @@ subchainbase 部署
 	> bin = output.contracts[':SubChainBase'].bytecode;
 	> proto = '0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac' ;    // 子链矿池合约 
 	> vnodeProtocolBaseAddr = '0x22f141dcc59850707708bc90e256318a5fe0b928' ;       // Vnode矿池合约 
-	> min = 1 ;			// 子链需要SCS的最小数量
-	> max = 10 ;		// 子链需要SCS的最大数量
+	> min = 1 ;			// 子链需要SCS的最小数量，当前需要从如下值中选择：1，3，5，7
+	> max = 11 ;		// 子链需要SCS的最大数量，当前需要从如下值中选择：11，21，31，51，99
 	> thousandth = 1 ;			// 千分之几
 	> flushRound = 40 ;     	// 子链刷新周期  单位是主链block生成对应数量的时间（10秒一个block）
 	> SubChainBaseContract = chain3.mc.contract(JSON.parse(abi));  
@@ -73,48 +49,6 @@ subchainbase 部署
 	
 部署完毕后, 获得子链合约地址  0xe9463e215315d6f1e5387a161868d7d0a4db89e8
 
-ERC20 初始化
-================
-在子链的register open前先调用 subchainbase 的 setToken 方法 
- | 参数： DirectExchangeToken的合约地址
- | 根据参数DirectExchangeToken的地址，实例化合约内部的DirectExchangeToke对象, 并将 DirectExchangeToken合约的totalsupply复制给合约变量 BALANCE 
-
-调用示例: 
-::
-	根据ABI chain3.sha3("setToken(address)") = 0x144fa6d7f374f07750ac69fe5e8b4f8a614ab02482bcb9f0fa3f2c98943860c6
-		取前4个字节 0x144fa6d7  
-		参数传erc20合约地址  5fcb383cf80a9d2961f4d8ba0a4b9e4a34157da7  （前面补24个0， 凑足32个字节）  
-		0x144fa6d70000000000000000000000005fcb383cf80a9d2961f4d8ba0a4b9e4a34157da7
-	> subchainaddr = '0xe9463e215315d6f1e5387a161868d7d0a4db89e8';
-	> data = '0x144fa6d70000000000000000000000005fcb383cf80a9d2961f4d8ba0a4b9e4a34157da7'
-	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
-	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: data});
-			
-验证：  
-
-访问子链合约的 BALANCE 为 ERC20的 totalsupply 
-::	
-	> chain3.mc.getStorageAt(subchainaddr,0x30)   // 注意BALANCE变量在合约中变量定义的位置（16进制）
-
-	
-然后调用DirectExchangeToken 的 updateOwner 方法 将 合约owner由发布者 改为 subchainbase地址
-这样子链合约就可以操控ERC20合约，并进行方法调用。
-::
-	根据ABI chain3.sha3('updateOwner(address)') = 0x880cdc3156e7a1d7441d29b6ec3cab090473e3e84f7cc83d0bdcd0a696e8064b
-		取前4个字节 0x880cdc31
-		参数传subchainbase合约地址  e9463e215315d6f1e5387a161868d7d0a4db89e8  （前面补24个0， 凑足32个字节）  
-		0x880cdc31000000000000000000000000e9463e215315d6f1e5387a161868d7d0a4db89e8
-	> erc20addr = '0x5fcb383cf80a9d2961f4d8ba0a4b9e4a34157da7';
-	> data = '0x880cdc31000000000000000000000000e9463e215315d6f1e5387a161868d7d0a4db89e8'
-	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
-	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: erc20addr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: data});
-
-验证：  
-
-访问erc20合约的 owner 是否由部署账号 0x87e369172af1e817ebd8d63bcd9f685a513a6736 改为 子链合约地址  0xe9463e215315d6f1e5387a161868d7d0a4db89e8
-::	
-	> chain3.mc.getStorageAt(erc20addr,0x03)   // 注意owner变量在合约中变量定义的位置（16进制）
-			
 			
 子链注册scs
 ================	
@@ -189,7 +123,7 @@ dapp合约部署
 	> bin = output.contracts[':DeChat'].bytecode;	
 	> bin += '000000000000000000000000' + '87e369172af1e817ebd8d63bcd9f685a513a6736';  // 版主的账号
 	> bin += '000000000000000000000000' + '87e369172af1e817ebd8d63bcd9f685a513a6736';  // 开发者的账号
-	> amount = chain3.toSha(100000000,'mc') // 要与部署DirectExchangeToken合约地址的amount参数一致
+	> amount = chain3.toSha(100000000,'mc') // 需要在子链上发行的原生币的数量
 	> subchainaddr = '0xe9463e215315d6f1e5387a161868d7d0a4db89e8';
 	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c'; 
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
@@ -326,8 +260,8 @@ subchainbase 部署
 	> vnodeProtocolBaseAddr = '0x22f141dcc59850707708bc90e256318a5fe0b928' ;       // Vnode矿池合约 
 	> ercAddr = '0x5042086887a86151945d2c2bb60628addf49d48c';     // erc20合约地址
 	> ercRate = 100;    // 兑换比率
-	> min = 1 ;			// 子链需要SCS的最小数量
-	> max = 10 ;		// 子链需要SCS的最大数量
+	> min = 1 ;			// 子链需要SCS的最小数量，当前需要从如下值中选择：1，3，5，7
+	> max = 11 ;		// 子链需要SCS的最大数量，当前需要从如下值中选择：11，21，31，51，99
 	> thousandth = 1 ;			// 千分之几
 	> flushRound = 40 ;     	// 子链刷新周期  单位是主链block生成对应数量的时间（10秒一个block）
 	> SubChainBaseContract = chain3.mc.contract(JSON.parse(abi));  
