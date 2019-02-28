@@ -235,14 +235,13 @@ erc20转账
 	contractaddress:			erc20合约地址
 	amount：					erc20代币数量
 	privatekey：				源账号私钥
-	abistring：				erc20合约abi
 	token：					auth返回的授权token
 	
 	
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api/vnode/transferErc
-	BODY：vnodeip=&vnodeport=&from=0x**&to=0x**&contractaddress=0x**&amount=10&privatekey=0x**&abistring=****&token=*******
+	BODY：vnodeip=&vnodeport=&from=0x**&to=0x**&contractaddress=0x**&amount=10&privatekey=0x**&token=*******
 
 返回数据示例	
 ::	
@@ -278,11 +277,71 @@ erc20余额
 		"message": "",
 		"data": 余额
 	}	
-
-充值子链  兑换子链原生币
+	
+erc20授权给子链
 =====================
 
-方法：buyMintToken
+方法：ercApprove
+
+参数:
+::
+	vnodeip： 				vnode节点地址
+	vnodeport：				vnode节点端口
+	address：				账户地址
+	amount：				授权erc20数量
+	privatekey：				账号私钥
+	microchainaddress			子链地址
+	contractaddress:			erc20合约地址
+	token：					auth返回的授权token
+	
+	
+调用示例：
+::
+	POST: http://139.198.126.104:8080/api/vnode/ercApprove
+	BODY：vnodeip=127.0.0.1&vnodeport=8545&address=0x*****&amount=***&privatekey=0x***&microchainaddress=0x***&contractaddress=0x**&token=*********
+
+返回数据示例	
+::	
+	{
+		"success": true,
+		"message": "",
+		"data": 交易hash
+	}	
+
+
+充值子链  erc20兑换子链原生币 注：前提是erc20对应数量已经授权给子链
+=====================
+
+方法：buyErcMintToken
+
+参数:
+::
+	vnodeip： 				vnode节点地址
+	vnodeport：				vnode节点端口
+	address：				账户地址
+	amount：					兑换数量
+	privatekey：				源账号私钥
+	microchainaddress:			子链地址
+	token：					auth返回的授权token
+	
+	
+调用示例：
+::
+	POST: http://139.198.126.104:8080/api/vnode/buyErcMintToken
+	BODY：vnodeip=&vnodeport=&address=0x**&amount=**&privatekey=0x**&microchainaddress=0x**&token=****
+
+返回数据示例	
+::	
+	{
+		"success": true,
+		"message": "",
+		"data": 交易hash
+	}	
+
+充值子链  moac兑换子链原生币
+=====================
+
+方法：buyMoacMintToken
 
 参数:
 ::
@@ -297,7 +356,7 @@ erc20余额
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/buyMintToken
+	POST: http://139.198.126.104:8080/api/vnode/buyMoacMintToken
 	BODY：vnodeip=&vnodeport=&address=0x**&amount=**&privatekey=0x**&microChainaddress=0x**&token=****
 
 返回数据示例	
@@ -318,8 +377,6 @@ erc20余额
 
 参数:
 ::
-	vnodeip： 				vnode节点地址
-	vnodeport：				vnode节点端口
 	microip： 				monitor节点地址
 	microport：				monitor节点端口
 	microchainaddress： 			子链SubChain地址
@@ -329,7 +386,7 @@ erc20余额
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api//micro/getBlockNumber
-	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x***&token=***********
+	BODY：microip=127.0.0.1&microport=8546&microchainaddress=0x***&token=***********
 返回数据示例	
 ::	
 	{
@@ -345,8 +402,6 @@ erc20余额
 
 参数:
 ::
-	vnodeip： 				vnode节点地址
-	vnodeport：				vnode节点端口
 	microip： 				monitor节点地址
 	microport：				monitor节点端口
 	microchainaddress： 			子链SubChain地址
@@ -357,7 +412,7 @@ erc20余额
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api//micro/getBlock
-	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x***&blocknum=*****&token=***********
+	BODY：microip=127.0.0.1&microport=8546&microchainaddress=0x***&blocknum=*****&token=***********
 
 返回数据示例	
 ::	
@@ -374,8 +429,6 @@ erc20余额
 
 参数:
 ::
-	vnodeip： 				vnode节点地址
-	vnodeport：				vnode节点端口
 	microip： 				monitor节点地址
 	microport：				monitor节点端口
 	microchainaddress： 			子链SubChain地址
@@ -443,6 +496,7 @@ erc20余额
 	microport：				monitor节点端口
 	from：					发送交易账户地址
 	microchainaddress： 			子链SubChain地址
+	via：					子链收益账号
 	amount:					payable对应金额	
 	dappaddress:				dapp合约地址
 	data 						调用合约参数
@@ -453,7 +507,7 @@ erc20余额
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api//micro/sendRawTransaction
-	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&from=0x**&microchainaddress=0x***&amount=**&dappaddress=0x***dataStr=**&privatekey=0x***&token=*****
+	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&from=0x**&microchainaddress=0x***&via=0x**&amount=**&dappaddress=0x***dataStr=**&privatekey=0x***&token=*****
 
 返回数据示例	
 ::	
@@ -470,12 +524,10 @@ erc20余额
 
 参数:
 ::
-	vnodeip： 					vnode节点地址
-	vnodeport：					vnode节点端口
 	microip： 					monitor节点地址
 	microport：					monitor节点端口
 	microchainaddress： 				子链SubChain地址
-	dappbaseaddress:					dappbase合约地址
+	dappaddress:				dapp合约地址
 	data 						调用合约参数   比如  ["方法名", 参数1, 参数2]
 	token：						auth返回的授权token
 	
@@ -483,14 +535,14 @@ erc20余额
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api//micro/callContract
-	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x*****&dappbaseaddress=0x**&data=****&token=********
+	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x*****&dappaddress=0x**&data=****&token=********
 
 返回数据示例	
 ::	
 	{
 		"success": true,
 		"message": "",
-		"data": 交易hash
+		"data": 合约返回结果
 	}	
 	
 子链提币 原生币转erc20
