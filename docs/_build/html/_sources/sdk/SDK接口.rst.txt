@@ -148,7 +148,7 @@ Node.JS Example
 	
 返回:
 ::
-	balance：主链账户余额
+	balance：主链账户余额（单位为moac）
 
 获取主链账户ERC代币余额
 =====================
@@ -166,7 +166,42 @@ Node.JS Example
 	
 返回:
 ::
-	balance：账户ERC代币余额
+	balance：账户ERC代币余额（erc20最小单位）
+	
+获取主链合约实例
+=========================
+
+Node.JS Example
+
+参数:
+::
+	abiObj：abi对象
+	contractAddress：合约地址
+	
+代码:
+::
+	var object = vc.getContractInstance(abiObj, contractAddress);
+	
+返回:
+::
+	object：主链合约实例对象
+	
+获取交易Data
+=========================
+
+参数:
+::
+	method：方法 例 "issue(address,uint256)"
+	paramTypes：paramTypes 参数类型数组 例['address','uint256']
+	paramValues：paramValues 参数值数组 例['0x.....',10000]（如需要传金额的入参为erc20最小单位）
+
+代码:
+::
+	var data = mc.getData(method,paramTypes,paramValues);
+
+返回:
+::
+	data：data字符串
 	
 主链加签交易
 =========================
@@ -198,7 +233,7 @@ Node.JS Example
 ::
 	from：转账人地址
 	to：收款人地址
-	amount：交易金额
+	amount：交易金额（单位为moac）
 	privatekey：转账人私钥
 
 代码:
@@ -211,24 +246,68 @@ Node.JS Example
 ::
 	hash：交易hash
 	
+主链ERC代币转账
+=========================
+
+参数:
+::
+	from：转账人地址
+	to：收款人地址
+	contractAddress：erc代币合约地址
+	amount：交易金额（单位为moac）
+	privateKey：转账人私钥
+
+代码:
+::
+	vc.transferErc(from, to, contractAddress, amount, privateKey).then((hash) => {
+		console.log(hash);
+	});
+
+返回:
+::
+	hash：交易hash
+	
 调用主链合约
 =========================
 
 参数:
 ::
-	shaCode：合约中无参方法如getStatus(), shaCode = chain3.sha3("getStatus()").substring(0,10);
-			合约中有参方法如balanceOf(address _owner)  shaCode = chain3.sha3("balanceOf(address)").substring(0,10) + "000000000000000000000000" + _owner.substring(2);;
+	method：方法 例 "issue(address,uint256)"
+	paramTypes：paramTypes 参数类型数组 例['address','uint256']
+	paramValues：paramValues 参数值数组 例['0x.....',10000]（如需要传金额的入参为erc20最小单位）
 	contractAddress：合约地址
 
 代码:
 ::
-	var callRes = vc.callContract(shaCode, contractAddress);
+	var callRes = vc.callContract(method, paramTypes, paramValues, contractAddress);
 
 返回:
 ::
-	callRes：返回信息
+	callRes：调用合约返回信息
 	
-充值
+ERC20充值
+=========================
+
+参数:
+::
+	addr：钱包地址
+	privateKey：钱包私钥
+	microChainAddress：子链地址
+	method：方法 "issue(address,uint256)"
+	paramTypes：paramTypes 参数类型数组 ['address','uint256']
+	paramValues：paramValues 参数值数组 ['0x.....',10000]（需要传金额的入参为erc20最小单位）
+
+代码:
+::
+	vc.buyErcMintToken(addr, privateKey, microChainAddress, method, paramTypes, paramValues).then((hash) => {
+		console.log(hash);
+	});
+
+返回:
+::
+	hash：交易hash
+
+MOAC充值
 =========================
 
 参数:
@@ -240,7 +319,7 @@ Node.JS Example
 
 代码:
 ::
-	vc.buyMintToken(addr, amount, privateKey, microChainAddress).then((hash) => {
+	vc.buyMoacMintToken(addr, amount, privateKey, microChainAddress).then((hash) => {
 		console.log(hash);
 	});
 
@@ -358,7 +437,7 @@ Node.JS Example
 
 返回:
 ::
-	data：子链账户余额
+	data：子链账户余额（erc20最小单位）
 	
 获取子链详细信息
 =========================
@@ -416,7 +495,7 @@ Node.JS Example
 参数:
 ::
 	dappContractAddress：dapp合约地址
-	dappAbi：dapp的abi
+	dappAbi：dapp合约的Abi对象
 
 代码:
 ::
@@ -425,6 +504,23 @@ Node.JS Example
 返回:
 ::
 	dapp：dapp实例
+
+获取交易Data
+=========================
+
+参数:
+::
+	method：方法 例 "issue(address,uint256)"
+	paramTypes：paramTypes 参数类型数组 例['address','uint256']
+	paramValues：paramValues 参数值数组 例['0x.....',10000]（如需要传金额的入参为erc20最小单位）
+
+代码:
+::
+	var data = mc.getData(method,paramTypes,paramValues);
+
+返回:
+::
+	data：data字符串
 
 
 子链加签交易
@@ -437,14 +533,14 @@ Node.JS Example
 	from：发送方的钱包地址
 	microChainAddress：子链地址
 	amount：交易金额
-	contractAddress：合约地址
-	data：通过调用“获取子链DAPP合约实例”实例方法获得
+	dappAddress：dapp地址
+	dataStr：通过调用“获取子链DAPP合约实例”实例方法获得
 		  getDappInstance(microChainAddress, abi).createTopic.getData(award, expblk, desc);
 	privateKey：发送方钱包私钥
 
 代码:
 ::
-	mc.sendRawTransaction(from, microChainAddress, amount, contractAddress+data.substring(2), privateKey).then((hash) => {
+	mc.sendRawTransaction(from, microChainAddress, amount, dappAddress, dataStr, privateKey).then((hash) => {
 		console.log(hash);
 	});
 
@@ -461,7 +557,7 @@ Node.JS Example
 ::
 	from：发送方的钱包地址
 	to：接收方的钱包地址
-	amount：交易金额
+	amount：交易金额（erc20最小单位）
 	privateKey：钱包私钥
 	
 
@@ -480,12 +576,13 @@ Node.JS Example
 
 参数:
 ::
-	contractAddress：合约地址
-	param：参数
+	contractAddress：dapp合约地址
+	param：例如合约中存在一个无参的方法getDechatInfo，则传入["getDechatInfo"];
+     	     存在一个有参的方法getTopicList(uint pageNum, uint pageSize), 则传入["getTopicList", 0, 20]
 
 代码:
 ::
-	mc.callContract(contractAddress, [param]).then((data) => {
+	mc.callContract(contractAddress, param).then((data) => {
 		console.log(data);
 	});
 
@@ -493,18 +590,18 @@ Node.JS Example
 ::
 	data：调用合约返回信息
 	
-提币
+提币（MOAC）
 =========================
 
 参数:
 ::
 	addr：钱包地址
-	amount：金额
+	amount：金额（单位为moac）
 	privateKey：钱包私钥
 
 代码:
 ::
-	mc.redeemMintToken(addr, amount,privateKey).then((hash) => {
+	mc.redeemMoacMintToken(addr, amount, privateKey).then((hash) => {
 		console.log(hash);
 	});
 
@@ -512,5 +609,23 @@ Node.JS Example
 ::
 	hash：交易hash
 
+提币（ERC20）
+=========================
+
+参数:
+::
+	addr：钱包地址
+	amount：金额（erc20最小单位）
+	privateKey：钱包私钥
+
+代码:
+::
+	mc.redeemErcMintToken(addr, amount,privateKey).then((hash) => {
+		console.log(hash);
+	});
+
+返回:
+::
+	hash：交易hash
 
 
