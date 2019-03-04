@@ -395,12 +395,14 @@ paramValues：paramValues 参数值数组 例[&#39;0x.....&#39;,10000]（如需�
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>from：交易发送人
 to：交易接受者（可以为个人地址，或者主链上的合约地址）
 amount：交易金额
-strData：参照充值buyMintToken
+method：方法 例 &quot;issue(address,uint256)&quot;
+paramTypes：paramTypes 参数类型数组 例[&#39;address&#39;,&#39;uint256&#39;]
+paramValues：paramValues 参数值数组 例[&#39;0x.....&#39;,10000]（如需要传金额的入参为erc20最小单位）
 privateKey：交易发起人私钥字符串
 </pre></div>
 </div>
 <p>代码:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vc</span><span class="o">.</span><span class="n">sendRawTransaction</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">strData</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="nb">hash</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vc</span><span class="o">.</span><span class="n">sendRawTransaction</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">paramTypes</span><span class="p">,</span> <span class="n">paramValues</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="nb">hash</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
         <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">hash</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -495,13 +497,15 @@ paramValues：paramValues 参数值数组 [&#39;0x.....&#39;,10000]（需要传�
 <h3>MOAC充值<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>参数:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>addr：钱包地址
-amount：金额
 privateKey：钱包私钥
 microChainAddress：子链地址
+method：方法 &quot;issue(address,uint256)&quot;
+paramTypes：paramTypes 参数类型数组 [&#39;address&#39;,&#39;uint256&#39;]
+paramValues：paramValues 参数值数组 [&#39;0x.....&#39;,10000]（金额单位为moac）
 </pre></div>
 </div>
 <p>代码:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vc</span><span class="o">.</span><span class="n">buyMoacMintToken</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">,</span> <span class="n">microChainAddress</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="nb">hash</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vc</span><span class="o">.</span><span class="n">buyMoacMintToken</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">,</span> <span class="n">microChainAddress</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">paramTypes</span><span class="p">,</span> <span class="n">paramValues</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="nb">hash</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
         <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">hash</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
@@ -705,13 +709,14 @@ paramValues：paramValues 参数值数组 例[&#39;0x.....&#39;,10000]（如需�
 microChainAddress：子链地址
 amount：交易金额
 dappAddress：dapp地址
-dataStr：通过调用“获取子链DAPP合约实例”实例方法获得
-          getDappInstance(microChainAddress, abi).createTopic.getData(award, expblk, desc);
+method：方法 例 &quot;issue(address,uint256)&quot;
+paramTypes：paramTypes 参数类型数组 例[&#39;address&#39;,&#39;uint256&#39;]
+paramValues：paramValues 参数值数组 例[&#39;0x.....&#39;,10000]（如需要传金额的入参为erc20最小单位）
 privateKey：发送方钱包私钥
 </pre></div>
 </div>
 <p>代码:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">sendRawTransaction</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">microChainAddress</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">dappAddress</span><span class="p">,</span> <span class="n">dataStr</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="nb">hash</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span><span class="o">.</span><span class="n">sendRawTransaction</span><span class="p">(</span><span class="n">from</span><span class="p">,</span> <span class="n">microChainAddress</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">dappAddress</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">paramTypes</span><span class="p">,</span> <span class="n">paramValues</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">((</span><span class="nb">hash</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
         <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">hash</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
