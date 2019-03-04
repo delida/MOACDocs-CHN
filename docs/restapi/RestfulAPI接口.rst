@@ -13,8 +13,8 @@ API认证
 
 参数:
 ::
-	account： 	授权账号
-	pwd：		授权账号密码
+	account:  授权账号
+	pwd:  授权账号密码
 	
 调用示例：
 ::
@@ -40,8 +40,8 @@ API认证
 
 参数:
 ::
-	pwd： 		账户密码
-	token：		auth返回的授权token
+	pwd:  账户密码
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -64,10 +64,10 @@ API认证
 
 参数:
 ::
-	address：	账户地址
-	pwd： 		账户密码
-	keyStore：	账户的keyStore信息
-	token：		auth返回的授权token
+	address:  账户地址
+	pwd:  账户密码
+	keyStore:  账户的keyStore信息
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -94,10 +94,10 @@ API认证
 
 参数:
 ::
-	vnodeip： 	vnode节点地址
-	vnodeport：	vnode节点端口
-	address：	账号地址
-	token：		auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	address:  账号地址
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -110,7 +110,7 @@ API认证
 	{
 		"success": true,
 		"message": "",
-		"data": 账户余额
+		"data": 账户余额（单位 moac	）
 	}
 	
 区块高度
@@ -120,9 +120,9 @@ API认证
 
 参数:
 ::
-	vnodeip： 	vnode节点地址
-	vnodeport：	vnode节点端口
-	token：		auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -145,10 +145,10 @@ API认证
 
 参数:
 ::
-	vnodeip： 	vnode节点地址
-	vnodeport：	vnode节点端口
-	block：		区块号或者区块hash
-	token：		auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	block:  区块号或者区块hash
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -171,20 +171,22 @@ API认证
 
 参数:
 ::
-	vnodeip： 		vnode节点地址
-	vnodeport：		vnode节点端口
-	from：			源账号地址
-	to：			目标账号地址
-	amount：			数量（单位 moac）
-	data：			备注
-	privatekey：		源账号私钥
-	token：			auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	from:  源账号地址
+	to:  目标账号地址
+	amount:  数量（单位 moac）
+	method:  dapp合约方法 比如：buyMintToken(uint256)
+	paramTypes:  dapp合约方法对应的参数类型 比如：["uint256"]
+	paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+	privatekey:  源账号私钥
+	token:  auth返回的授权token
 	
 	
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api/vnode/sendRawTransaction
-	BODY：vnodeip=127.0.0.1&vnodeport=8545&from=0x**&to=0x***&amount=10&data=&privatekey=0x**&token=*******
+	BODY：vnodeip=127.0.0.1&vnodeport=8545&from=0x**&to=0x***&amount=10&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]&privatekey=0x**&token=*******
 
 返回数据示例	
 ::	
@@ -201,11 +203,11 @@ API认证
 
 参数:
 ::
-	vnodeip： 	vnode节点地址
-	vnodeport：	vnode节点端口
-	address：	合约地址
-	data：		调用合约参数
-	token：		auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	address:  合约地址
+	data:  调用合约参数
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -228,14 +230,14 @@ erc20转账
 
 参数:
 ::
-	vnodeip： 				vnode节点地址
-	vnodeport：				vnode节点端口
-	from：					源账号地址
-	to：					目标账号地址
-	contractaddress:			erc20合约地址
-	amount：					erc20代币数量
-	privatekey：				源账号私钥
-	token：					auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	from:  源账号地址
+	to:  目标账号地址
+	contractaddress:  erc20合约地址
+	amount:  erc20代币数量
+	privatekey:  源账号私钥
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -258,11 +260,11 @@ erc20余额
 
 参数:
 ::
-	vnodeip： 				vnode节点地址
-	vnodeport：				vnode节点端口
-	address：				账户地址
-	contractaddress:			erc20合约地址
-	token：					auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	address:  账户地址
+	contractaddress:  erc20合约地址
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -275,7 +277,7 @@ erc20余额
 	{
 		"success": true,
 		"message": "",
-		"data": 余额
+		"data": 余额（最小精度，10进制）
 	}	
 	
 erc20授权给子链
@@ -285,14 +287,14 @@ erc20授权给子链
 
 参数:
 ::
-	vnodeip： 				vnode节点地址
-	vnodeport：				vnode节点端口
-	address：				账户地址
-	amount：				授权erc20数量
-	privatekey：				账号私钥
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	address:  账户地址
+	amount:  授权erc20数量
+	privatekey:  账号私钥
 	microchainaddress			子链地址
-	contractaddress:			erc20合约地址
-	token：					auth返回的授权token
+	contractaddress:  erc20合约地址
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -316,19 +318,21 @@ erc20授权给子链
 
 参数:
 ::
-	vnodeip： 				vnode节点地址
-	vnodeport：				vnode节点端口
-	address：				账户地址
-	amount：					兑换数量
-	privatekey：				源账号私钥
-	microchainaddress:			子链地址
-	token：					auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	address:  账户地址
+	privatekey:  源账号私钥
+	microchainaddress:  子链地址
+	method:  dapp合约方法 默认为：buyMintToken(uint256)
+	paramTypes:  dapp合约方法对应的参数类型 默认为：["uint256"]
+	paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+	token:  auth返回的授权token
 	
 	
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api/vnode/buyErcMintToken
-	BODY：vnodeip=&vnodeport=&address=0x**&amount=**&privatekey=0x**&microchainaddress=0x**&token=****
+	BODY：vnodeip=&vnodeport=&address=0x**&privatekey=0x**&microchainaddress=0x**&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]&token=****
 
 返回数据示例	
 ::	
@@ -345,19 +349,21 @@ erc20授权给子链
 
 参数:
 ::
-	vnodeip： 				vnode节点地址
-	vnodeport：				vnode节点端口
-	address：				账户地址
-	amount：					兑换数量
-	privatekey：				源账号私钥
-	microChainaddress:			子链地址
-	token：					auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	address:  账户地址
+	privatekey:  源账号私钥
+	microChainaddress:  子链地址
+	method:  dapp合约方法 默认为：buyMintToken(uint256)
+	paramTypes:  dapp合约方法对应的参数类型 默认为：["uint256"]
+	paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+	token:  auth返回的授权token
 	
 	
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api/vnode/buyMoacMintToken
-	BODY：vnodeip=&vnodeport=&address=0x**&amount=**&privatekey=0x**&microChainaddress=0x**&token=****
+	BODY：vnodeip=&vnodeport=&address=0x**&privatekey=0x**&microChainaddress=0x**&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]&token=****
 
 返回数据示例	
 ::	
@@ -377,10 +383,10 @@ erc20授权给子链
 
 参数:
 ::
-	microip： 				monitor节点地址
-	microport：				monitor节点端口
-	microchainaddress： 			子链SubChain地址
-	token：					auth返回的授权token
+	microip:  monitor节点地址
+	microport:  monitor节点端口
+	microchainaddress:  子链SubChain地址
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -402,11 +408,11 @@ erc20授权给子链
 
 参数:
 ::
-	microip： 				monitor节点地址
-	microport：				monitor节点端口
-	microchainaddress： 			子链SubChain地址
-	blocknum:				块号
-	token：					auth返回的授权token
+	microip:  monitor节点地址
+	microport:  monitor节点端口
+	microchainaddress:  子链SubChain地址
+	blocknum:  块号
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -429,11 +435,11 @@ erc20授权给子链
 
 参数:
 ::
-	microip： 				monitor节点地址
-	microport：				monitor节点端口
-	microchainaddress： 			子链SubChain地址
-	address：				账户地址
-	token：					auth返回的授权token
+	microip:  monitor节点地址
+	microport:  monitor节点端口
+	microchainaddress:  子链SubChain地址
+	address:  账户地址
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -457,17 +463,17 @@ erc20授权给子链
 
 参数:
 ::
-	vnodeip： 				vnode节点地址
-	vnodeport：				vnode节点端口
-	microip： 				monitor节点地址
-	microport：				monitor节点端口
-	microchainaddress： 			子链SubChain地址
-	via：					子链收益账号
-	from：					源账户地址
-	to：					目标账户地址
-	amount：					原生币数量
-	privatekey：				源账号私钥
-	token：					auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	microip:  monitor节点地址
+	microport:  monitor节点端口
+	microchainaddress:  子链SubChain地址
+	via:  子链收益账号
+	from:  源账户地址
+	to:  目标账户地址
+	amount:  原生币数量
+	privatekey:  源账号私钥
+	token:  auth返回的授权token
 	
 	
 调用示例：
@@ -483,31 +489,33 @@ erc20授权给子链
 		"data": 交易hash
 	}	
 
-子链加签交易
+子链加签交易  
 =====================
 
-方法：sendRawTransaction
+方法：sendRawTransaction   调用dapp合约涉及修改数据的方法
 
 参数:
 ::
-	vnodeip： 				vnode节点地址
-	vnodeport：				vnode节点端口
-	microip： 				monitor节点地址
-	microport：				monitor节点端口
-	from：					发送交易账户地址
-	microchainaddress： 			子链SubChain地址
-	via：					子链收益账号
-	amount:					payable对应金额	
-	dappaddress:				dapp合约地址
-	data 						调用合约参数
-	privatekey：				源账号私钥
-	token：					auth返回的授权token
+	vnodeip: vnode节点地址
+	vnodeport:  vnode节点端口
+	microip:  monitor节点地址
+	microport:  monitor节点端口
+	from: 发送交易账户地址
+	microchainaddress:  子链SubChain地址
+	via:  子链收益账号
+	amount:	 payable对应金额	
+	dappaddress:  dapp合约地址
+	method:  dapp合约方法 比如：buyMintToken(uint256)
+	paramTypes:  dapp合约方法对应的参数类型 比如：["uint256"]
+	paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+	privatekey: 源账号私钥
+	token: auth返回的授权token
 	
 	
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api//micro/sendRawTransaction
-	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&from=0x**&microchainaddress=0x***&via=0x**&amount=**&dappaddress=0x***dataStr=**&privatekey=0x***&token=*****
+	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&from=0x**&microchainaddress=0x***&via=0x**&amount=**&dappaddress=0x***&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]&privatekey=0x***&token=*****
 
 返回数据示例	
 ::	
@@ -517,25 +525,27 @@ erc20授权给子链
 		"data": 交易hash
 	}
 	
-子链合约调用 针对public方法和变量
+子链合约调用 
 =====================
 
-方法：callContract
+方法：callContract 针对public方法和变量，不涉及数据修改
 
 参数:
 ::
-	microip： 					monitor节点地址
-	microport：					monitor节点端口
-	microchainaddress： 				子链SubChain地址
-	dappaddress:				dapp合约地址
-	data 						调用合约参数   比如  ["方法名", 参数1, 参数2]
-	token：						auth返回的授权token
+	microip:  monitor节点地址
+	microport:  monitor节点端口
+	microchainaddress:  子链SubChain地址
+	dappaddress:  dapp合约地址
+	method:  dapp合约方法 比如：buyMintToken(uint256)
+	paramTypes:  dapp合约方法对应的参数类型 比如：["uint256"]
+	paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+	token:  auth返回的授权token
 	
 	
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api//micro/callContract
-	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x*****&dappaddress=0x**&data=****&token=********
+	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x*****&dappaddress=0x**&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]&token=********
 
 返回数据示例	
 ::	
@@ -545,28 +555,60 @@ erc20授权给子链
 		"data": 合约返回结果
 	}	
 	
-子链提币 原生币转erc20
+子链ERC提币 
 =====================
 
-方法：redeemMintToken
+方法：redeemErcMintToken     原生币转erc20
 
 参数:
 ::
-	vnodeip： 					vnode节点地址
-	vnodeport：					vnode节点端口
-	microip： 					monitor节点地址
-	microport：					monitor节点端口
-	microchainaddress： 				子链SubChain地址
-	dappbaseaddress:					dappbase合约地址
-	address：					提币账户地址
-	amount 						提取原生币数量
-	privatekey：					源账号私钥
-	token：						auth返回的授权token
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	microipHmonitor节点地址
+	microport:  monitor节点端口
+	microchainaddress:  子链SubChain地址
+	dappbaseaddress:  dappbase合约地址
+	address:  提币账户地址
+	amount:  提取原生币数量
+	privatekey:  源账号私钥
+	token:  auth返回的授权token
 	
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api//micro/redeemMintToken
+	POST: http://139.198.126.104:8080/api//micro/redeemErcMintToken
+	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&dappbaseaddress=0x**&address=0x**&amount=**&data=****&privatekey=0x**&token=********
+
+返回数据示例	
+::	
+	{
+		"success": true,
+		"message": "",
+		"data": 交易hash
+	}	
+	
+子链MOAC提币 
+=====================
+
+方法：redeemMoacMintToken     原生币转moac
+
+参数:
+::
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	microipHmonitor节点地址
+	microport:  monitor节点端口
+	microchainaddress:  子链SubChain地址
+	dappbaseaddress:  dappbase合约地址
+	address:  提币账户地址
+	amount:  提取原生币数量
+	privatekey:  源账号私钥
+	token:  auth返回的授权token
+	
+	
+调用示例：
+::
+	POST: http://139.198.126.104:8080/api//micro/redeemMoacMintToken
 	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&dappbaseaddress=0x**&address=0x**&amount=**&data=****&privatekey=0x**&token=********
 
 返回数据示例	
