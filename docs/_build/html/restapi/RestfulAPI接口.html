@@ -348,8 +348,8 @@ from:  源账号地址
 to:  目标账号地址
 amount:  数量（单位 moac）
 method:  dapp合约方法 比如：buyMintToken(uint256)
-paramTypes:  dapp合约方法对应的参数类型 比如：[&quot;uint256&quot;]
-paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+paramtypes:  dapp合约方法对应的参数类型 比如：[&quot;uint256&quot;]
+paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
 privatekey:  源账号私钥
 token:  auth返回的授权token
 </pre></div>
@@ -372,16 +372,18 @@ BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;from=0x**&amp;to=0x***&amp;amoun
 <h3>调用智能合约<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>方法：callContract</p>
 <p>参数:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vnodeip</span><span class="p">:</span>  <span class="n">vnode节点地址</span>
-<span class="n">vnodeport</span><span class="p">:</span>  <span class="n">vnode节点端口</span>
-<span class="n">address</span><span class="p">:</span>  <span class="n">合约地址</span>
-<span class="n">data</span><span class="p">:</span>  <span class="n">调用合约参数</span>
-<span class="n">token</span><span class="p">:</span>  <span class="n">auth返回的授权token</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vnodeip:  vnode节点地址
+vnodeport:  vnode节点端口
+address:  合约地址
+method:  dapp合约方法 比如：buyMintToken(uint256)
+paramtypes:  dapp合约方法对应的参数类型 比如：[&quot;uint256&quot;]
+paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
+token:  auth返回的授权token
 </pre></div>
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/vnode/callContract
-BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x*****&amp;data=0x****&amp;token=***************
+BODY：vnodeip=127.0.0.1&amp;vnodeport=8545&amp;address=0x*****&amp;method=buyMintToken(uint256)&amp;paramtypes=[&quot;uint256&quot;]&amp;paramvalues=[100000000]0x****&amp;token=***************
 </pre></div>
 </div>
 <p>返回数据示例</p>
@@ -484,8 +486,8 @@ address:  账户地址
 privatekey:  源账号私钥
 microchainaddress:  子链地址
 method:  dapp合约方法 默认为：buyMintToken(uint256)
-paramTypes:  dapp合约方法对应的参数类型 默认为：[&quot;uint256&quot;]
-paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+paramtypes:  dapp合约方法对应的参数类型 默认为：[&quot;uint256&quot;]
+paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
 token:  auth返回的授权token
 </pre></div>
 </div>
@@ -513,8 +515,8 @@ address:  账户地址
 privatekey:  源账号私钥
 microChainaddress:  子链地址
 method:  dapp合约方法 默认为：buyMintToken(uint256)
-paramTypes:  dapp合约方法对应的参数类型 默认为：[&quot;uint256&quot;]
-paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+paramtypes:  dapp合约方法对应的参数类型 默认为：[&quot;uint256&quot;]
+paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
 token:  auth返回的授权token
 </pre></div>
 </div>
@@ -654,8 +656,8 @@ via:  子链收益账号
 amount:  payable对应金额
 dappaddress:  dapp合约地址
 method:  dapp合约方法 比如：buyMintToken(uint256)
-paramTypes:  dapp合约方法对应的参数类型 比如：[&quot;uint256&quot;]
-paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+paramtypes:  dapp合约方法对应的参数类型 比如：[&quot;uint256&quot;]
+paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
 privatekey: 源账号私钥
 token: auth返回的授权token
 </pre></div>
@@ -682,15 +684,13 @@ BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;from
 microport:  monitor节点端口
 microchainaddress:  子链SubChain地址
 dappaddress:  dapp合约地址
-method:  dapp合约方法 比如：buyMintToken(uint256)
-paramTypes:  dapp合约方法对应的参数类型 比如：[&quot;uint256&quot;]
-paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+data:  字符串数组，如合约方法getTopicList(uint pageNum, uint pageSize)，则传入[&quot;getTopicList&quot;, &quot;0&quot;, &quot;20&quot;]
 token:  auth返回的授权token
 </pre></div>
 </div>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api//micro/callContract
-BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x*****&amp;dappaddress=0x**&amp;method=buyMintToken(uint256)&amp;paramtypes=[&quot;uint256&quot;]&amp;paramvalues=[100000000]&amp;token=********
+BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x*****&amp;dappaddress=0x**&amp;data=&amp;token=********
 </pre></div>
 </div>
 <p>返回数据示例</p>

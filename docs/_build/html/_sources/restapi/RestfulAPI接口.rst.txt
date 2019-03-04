@@ -177,8 +177,8 @@ API认证
 	to:  目标账号地址
 	amount:  数量（单位 moac）
 	method:  dapp合约方法 比如：buyMintToken(uint256)
-	paramTypes:  dapp合约方法对应的参数类型 比如：["uint256"]
-	paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+	paramtypes:  dapp合约方法对应的参数类型 比如：["uint256"]
+	paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
 	privatekey:  源账号私钥
 	token:  auth返回的授权token
 	
@@ -206,14 +206,16 @@ API认证
 	vnodeip:  vnode节点地址
 	vnodeport:  vnode节点端口
 	address:  合约地址
-	data:  调用合约参数
+	method:  dapp合约方法 比如：buyMintToken(uint256)
+	paramtypes:  dapp合约方法对应的参数类型 比如：["uint256"]
+	paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
 	token:  auth返回的授权token
 	
 	
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api/vnode/callContract
-	BODY：vnodeip=127.0.0.1&vnodeport=8545&address=0x*****&data=0x****&token=***************
+	BODY：vnodeip=127.0.0.1&vnodeport=8545&address=0x*****&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]0x****&token=***************
 
 返回数据示例	
 ::	
@@ -324,8 +326,8 @@ erc20授权给子链
 	privatekey:  源账号私钥
 	microchainaddress:  子链地址
 	method:  dapp合约方法 默认为：buyMintToken(uint256)
-	paramTypes:  dapp合约方法对应的参数类型 默认为：["uint256"]
-	paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+	paramtypes:  dapp合约方法对应的参数类型 默认为：["uint256"]
+	paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
 	token:  auth返回的授权token
 	
 	
@@ -355,8 +357,8 @@ erc20授权给子链
 	privatekey:  源账号私钥
 	microChainaddress:  子链地址
 	method:  dapp合约方法 默认为：buyMintToken(uint256)
-	paramTypes:  dapp合约方法对应的参数类型 默认为：["uint256"]
-	paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+	paramtypes:  dapp合约方法对应的参数类型 默认为：["uint256"]
+	paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
 	token:  auth返回的授权token
 	
 	
@@ -506,8 +508,8 @@ erc20授权给子链
 	amount:	 payable对应金额	
 	dappaddress:  dapp合约地址
 	method:  dapp合约方法 比如：buyMintToken(uint256)
-	paramTypes:  dapp合约方法对应的参数类型 比如：["uint256"]
-	paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+	paramtypes:  dapp合约方法对应的参数类型 比如：["uint256"]
+	paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
 	privatekey: 源账号私钥
 	token: auth返回的授权token
 	
@@ -536,16 +538,14 @@ erc20授权给子链
 	microport:  monitor节点端口
 	microchainaddress:  子链SubChain地址
 	dappaddress:  dapp合约地址
-	method:  dapp合约方法 比如：buyMintToken(uint256)
-	paramTypes:  dapp合约方法对应的参数类型 比如：["uint256"]
-	paramValues:  dapp合约方法对应的参数值   比如：[100000000]
+	data:  字符串数组，如合约方法getTopicList(uint pageNum, uint pageSize)，则传入["getTopicList", "0", "20"]
 	token:  auth返回的授权token
 	
 	
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api//micro/callContract
-	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x*****&dappaddress=0x**&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]&token=********
+	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x*****&dappaddress=0x**&data=&token=********
 
 返回数据示例	
 ::	
