@@ -68,7 +68,7 @@ Node.JS Example
 	var vc = new VnodeChain(vnodeAddress);
 
 获取主链区块高度
-=====================
+===========================================
 
 Node.JS Example
 
@@ -82,7 +82,7 @@ Node.JS Example
 	blockNumber：主链区块高度
 	
 获取主链某一区块信息
-=====================
+====================================
 
 Node.JS Example
 
@@ -99,7 +99,7 @@ Node.JS Example
 	blockInfo：某一区块信息
 
 获取主链交易详情
-=====================
+=====================================
 
 Node.JS Example
 
@@ -116,7 +116,7 @@ Node.JS Example
 	tradeInfo：交易详情
 	
 获取合约实例
-=====================
+===========================
 
 Node.JS Example
 
@@ -134,7 +134,7 @@ Node.JS Example
 	data：合约实例
 	
 获取主链账户余额
-=====================
+=====================================
 
 Node.JS Example
 
@@ -151,7 +151,7 @@ Node.JS Example
 	balance：主链账户余额（单位为moac）
 
 获取主链账户ERC代币余额
-=====================
+=============================================
 
 Node.JS Example
 
@@ -169,7 +169,7 @@ Node.JS Example
 	balance：账户ERC代币余额（erc20最小单位）
 	
 获取主链合约实例
-=========================
+================================
 
 Node.JS Example
 
@@ -213,12 +213,14 @@ Node.JS Example
 	from：交易发送人
 	to：交易接受者（可以为个人地址，或者主链上的合约地址）
 	amount：交易金额
-	strData：参照充值buyMintToken
+	method：方法 例 "issue(address,uint256)"
+	paramTypes：paramTypes 参数类型数组 例['address','uint256']
+	paramValues：paramValues 参数值数组 例['0x.....',10000]（如需要传金额的入参为erc20最小单位）
 	privateKey：交易发起人私钥字符串
 	
 代码:
 ::
-	vc.sendRawTransaction(from, to, amount, strData, privateKey).then((hash) => {
+	vc.sendRawTransaction(from, to, amount, method, paramTypes, paramValues, privateKey).then((hash) => {
 		console.log(hash);
 	});
 	
@@ -247,7 +249,7 @@ Node.JS Example
 	hash：交易hash
 	
 主链ERC代币转账
-=========================
+==============================
 
 参数:
 ::
@@ -313,13 +315,15 @@ MOAC充值
 参数:
 ::
 	addr：钱包地址
-	amount：金额
 	privateKey：钱包私钥
 	microChainAddress：子链地址
+	method：方法 "issue(address,uint256)"
+	paramTypes：paramTypes 参数类型数组 ['address','uint256']
+	paramValues：paramValues 参数值数组 ['0x.....',10000]（金额单位为moac）
 
 代码:
 ::
-	vc.buyMoacMintToken(addr, amount, privateKey, microChainAddress).then((hash) => {
+	vc.buyMoacMintToken(addr, privateKey, microChainAddress, method, paramTypes, paramValues).then((hash) => {
 		console.log(hash);
 	});
 
@@ -331,7 +335,7 @@ MOAC充值
 ---------------------------
 
 实例化子链对象
-=========================
+=================================
 
 Node.JS Example
 
@@ -363,7 +367,7 @@ Node.JS Example
 	blockNumber：子链区块高度
 	
 获取某一区间内的多个区块信息
-=========================
+=================================================
 
 Node.JS Example
 
@@ -383,7 +387,7 @@ Node.JS Example
 	blockListInfo：区块信息List
 	
 获取子链某一区块信息
-=========================
+==========================================
 
 Node.JS Example
 
@@ -490,7 +494,7 @@ Node.JS Example
 	nonce：得到的nonce
 	
 获取子链DAPP合约实例
-=========================
+============================================
 
 参数:
 ::
@@ -534,13 +538,14 @@ Node.JS Example
 	microChainAddress：子链地址
 	amount：交易金额
 	dappAddress：dapp地址
-	dataStr：通过调用“获取子链DAPP合约实例”实例方法获得
-		  getDappInstance(microChainAddress, abi).createTopic.getData(award, expblk, desc);
+	method：方法 例 "issue(address,uint256)"
+	paramTypes：paramTypes 参数类型数组 例['address','uint256']
+	paramValues：paramValues 参数值数组 例['0x.....',10000]（如需要传金额的入参为erc20最小单位）
 	privateKey：发送方钱包私钥
 
 代码:
 ::
-	mc.sendRawTransaction(from, microChainAddress, amount, dappAddress, dataStr, privateKey).then((hash) => {
+	mc.sendRawTransaction(from, microChainAddress, amount, dappAddress, method, paramTypes, paramValues, privateKey).then((hash) => {
 		console.log(hash);
 	});
 
