@@ -11,7 +11,9 @@ URL设计
 
 使用http作为API的通信协议，目前采用较多的POST方法。
 
-url格式:    http(s)://server.com/api/{method}
+url格式:    http(s)://server.com/api/{module}/{version}/{method}
+
+关于version，各模块支持多版本，默认version为v1.0
 
 POST提交格式采用form表单参数    Content-Type: application/x-www-form-urlencoded (a=name&b=666)
 
@@ -47,10 +49,13 @@ token有过期机制，目前是2小时有效。
 ---------------------------
 
 测试环境地址：http://139.198.126.104:8080
+
 正式环境地址：
 
 目前设计需要vnode节点的相关API，可通过参数传入地址和端口的方式指定连接的节点。
 参数传入为空的情况下，会使用平台默认的节点信息（测试环境对应testnet的默认节点，正式环境默认主网节点）。
+
+
 
 
 

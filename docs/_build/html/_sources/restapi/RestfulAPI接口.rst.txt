@@ -46,7 +46,7 @@ API认证
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/account/register
+	POST: http://139.198.126.104:8080/api/account/v1.0/register
 	BODY：pwd=********&token=********************************
 
 返回数据示例	
@@ -66,13 +66,13 @@ API认证
 ::
 	address:  账户地址
 	pwd:  账户密码
-	keyStore:  账户的keyStore信息
+	keystore:  账户的keyStore信息
 	token:  auth返回的授权token
 	
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/account/login
+	POST: http://139.198.126.104:8080/api/account/v1.0/login
 	BODY：address=0x********&pwd=*****&keyStore={*******}&token=************
 
 返回数据示例	
@@ -102,7 +102,7 @@ API认证
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/getBalance
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/getBalance
 	BODY：vnodeip=127.0.0.1&vnodeport=8545&address=0x******&token=*****************
 
 返回数据示例	
@@ -127,7 +127,7 @@ API认证
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/getBlockNumber
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/getBlockNumber
 	BODY：vnodeip=127.0.0.1&vnodeport=8545&token=***************
 
 返回数据示例	
@@ -153,7 +153,7 @@ API认证
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/getBlockInfo
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/getBlockInfo
 	BODY：vnodeip=127.0.0.1&vnodeport=8545&block=2002326&token=******************
 
 返回数据示例	
@@ -162,7 +162,59 @@ API认证
 		"success": true,
 		"message": "",
 		"data": 区块信息
-	}		
+	}	
+
+交易明细
+=====================
+
+方法：getTransactionByHash
+
+参数:
+::
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	hash:  交易hash
+	token:  auth返回的授权token
+	
+	
+调用示例：
+::
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/getTransactionByHash
+	BODY：vnodeip=127.0.0.1&vnodeport=8545&hash=0x**&token=******************
+
+返回数据示例	
+::	
+	{
+		"success": true,
+		"message": "",
+		"data": 交易明细
+	}
+
+交易详情
+=====================
+
+方法：getTransactionReceiptByHash
+
+参数:
+::
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	hash:  交易hash
+	token:  auth返回的授权token
+	
+	
+调用示例：
+::
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/getTransactionReceiptByHash
+	BODY：vnodeip=127.0.0.1&vnodeport=8545&hash=0x**&token=******************
+
+返回数据示例	
+::	
+	{
+		"success": true,
+		"message": "",
+		"data": 交易详情
+	}	
 	
 转账
 =====================
@@ -185,7 +237,7 @@ API认证
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/sendRawTransaction
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/sendRawTransaction
 	BODY：vnodeip=127.0.0.1&vnodeport=8545&from=0x**&to=0x***&amount=10&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]&privatekey=0x**&token=*******
 
 返回数据示例	
@@ -214,7 +266,7 @@ API认证
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/callContract
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/callContract
 	BODY：vnodeip=127.0.0.1&vnodeport=8545&address=0x*****&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]0x****&token=***************
 
 返回数据示例	
@@ -244,7 +296,7 @@ erc20转账
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/transferErc
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/transferErc
 	BODY：vnodeip=&vnodeport=&from=0x**&to=0x**&contractaddress=0x**&amount=10&privatekey=0x**&token=*******
 
 返回数据示例	
@@ -271,7 +323,7 @@ erc20余额
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/getErcBalance
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/getErcBalance
 	BODY：vnodeip=127.0.0.1&vnodeport=8545&address=0x*****&contractaddress=0x**&token=*********
 
 返回数据示例	
@@ -301,7 +353,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/ercApprove
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/ercApprove
 	BODY：vnodeip=127.0.0.1&vnodeport=8545&address=0x*****&amount=***&privatekey=0x***&microchainaddress=0x***&contractaddress=0x**&token=*********
 
 返回数据示例	
@@ -313,10 +365,10 @@ erc20授权给子链
 	}	
 
 
-充值子链  erc20兑换子链原生币 注：前提是erc20对应数量已经授权给子链
+充值子链  erc20兑换子链原生币
 =====================
 
-方法：buyErcMintToken
+方法：buyErcMintToken   注：前提是erc20对应数量已经授权给子链
 
 参数:
 ::
@@ -333,7 +385,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/buyErcMintToken
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/buyErcMintToken
 	BODY：vnodeip=&vnodeport=&address=0x**&privatekey=0x**&microchainaddress=0x**&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]&token=****
 
 返回数据示例	
@@ -364,7 +416,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api/vnode/buyMoacMintToken
+	POST: http://139.198.126.104:8080/api/vnode/v1.0/buyMoacMintToken
 	BODY：vnodeip=&vnodeport=&address=0x**&privatekey=0x**&microChainaddress=0x**&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]&token=****
 
 返回数据示例	
@@ -393,7 +445,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api//micro/getBlockNumber
+	POST: http://139.198.126.104:8080/api//micro/v1.0/getBlockNumber
 	BODY：microip=127.0.0.1&microport=8546&microchainaddress=0x***&token=***********
 返回数据示例	
 ::	
@@ -419,7 +471,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api//micro/getBlock
+	POST: http://139.198.126.104:8080/api//micro/v1.0/getBlock
 	BODY：microip=127.0.0.1&microport=8546&microchainaddress=0x***&blocknum=*****&token=***********
 
 返回数据示例	
@@ -446,7 +498,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api//micro/getBalance
+	POST: http://139.198.126.104:8080/api//micro/v1.0/getBalance
 	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x*****&address=0x*****&token=**************
 
 返回数据示例	
@@ -480,7 +532,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api//micro/transferCoin
+	POST: http://139.198.126.104:8080/api//micro/v1.0/transferCoin
 	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&via=0x**&from=0x**&to=0x**&amount=**&privatekey=0x***&token=*****
 
 返回数据示例	
@@ -516,7 +568,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api//micro/sendRawTransaction
+	POST: http://139.198.126.104:8080/api//micro/v1.0/sendRawTransaction
 	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&from=0x**&microchainaddress=0x***&via=0x**&amount=**&dappaddress=0x***&method=buyMintToken(uint256)&paramtypes=["uint256"]&paramvalues=[100000000]&privatekey=0x***&token=*****
 
 返回数据示例	
@@ -544,7 +596,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api//micro/callContract
+	POST: http://139.198.126.104:8080/api//micro/v1.0/callContract
 	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x*****&dappaddress=0x**&data=&token=********
 
 返回数据示例	
@@ -576,7 +628,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api//micro/redeemErcMintToken
+	POST: http://139.198.126.104:8080/api//micro/v1.0/redeemErcMintToken
 	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&dappbaseaddress=0x**&address=0x**&amount=**&data=****&privatekey=0x**&token=********
 
 返回数据示例	
@@ -608,7 +660,7 @@ erc20授权给子链
 	
 调用示例：
 ::
-	POST: http://139.198.126.104:8080/api//micro/redeemMoacMintToken
+	POST: http://139.198.126.104:8080/api//micro/v1.0/redeemMoacMintToken
 	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&dappbaseaddress=0x**&address=0x**&amount=**&data=****&privatekey=0x**&token=********
 
 返回数据示例	
