@@ -86,7 +86,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#url">URL设计</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id1">结构返回</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">接口访问控制</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">节点控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">私钥安全</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">节点控制</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="RestfulAPI接口.html">Restful API 接口</a></li>
@@ -194,7 +195,15 @@ data：     接口返回数据
 <p>token有过期机制，目前是2小时有效。</p>
 </div>
 <div class="section" id="id3">
-<h2>节点控制<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>私钥安全<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>对于账号私钥的安全提供了两种方案。</p>
+<ol class="arabic simple">
+<li>dapp注册账户后，收到返回的私钥（privatekey），后续发送交易直接传递私钥</li>
+<li>dapp注册账户后，也会返回一个加密串（encode），后续发送交易传递加密串和账户密码，系统会解码获得私钥进行签名。</li>
+</ol>
+</div>
+<div class="section" id="id4">
+<h2>节点控制<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>测试环境地址：<a class="reference external" href="http://139.198.126.104:8080">http://139.198.126.104:8080</a></p>
 <p>正式环境地址：</p>
 <p>目前设计需要vnode节点的相关API，可通过参数传入地址和端口的方式指定连接的节点。
