@@ -141,7 +141,7 @@ API认证
 	{
 		"success": true,
 		"message": "",
-		"data": 账户余额（单位 moac	）
+		"data": 账户余额 (单位 moac)	
 	}
 	
 区块高度

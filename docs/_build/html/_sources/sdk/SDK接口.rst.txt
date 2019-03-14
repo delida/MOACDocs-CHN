@@ -217,10 +217,11 @@ Node.JS Example
 	paramTypes：paramTypes 参数类型数组 例['address','uint256']
 	paramValues：paramValues 参数值数组 例['0x.....',10000]（如需要传金额的入参为erc20最小单位）
 	privateKey：交易发起人私钥字符串
+	gasPrice：gas费用（默认为0，如返回错误为gas过低，请在返回的gas基础上加上整数gas重新提交）
 	
 代码:
 ::
-	vc.sendRawTransaction(from, to, amount, method, paramTypes, paramValues, privateKey).then((hash) => {
+	vc.sendRawTransaction(from, to, amount, method, paramTypes, paramValues, privateKey, gasPrice).then((hash) => {
 		console.log(hash);
 	});
 	
