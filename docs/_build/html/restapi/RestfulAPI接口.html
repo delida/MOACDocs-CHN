@@ -17,36 +17,34 @@
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
+  
+  
     
 
   
+
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="SDK" href="../sdk/index.html" />
     <link rel="prev" title="Restful API 简介" href="RestfulAPI简介.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
+
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -113,6 +111,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#id17">子链模块</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id18">获得子链区块高度</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dapp">获得子链dapp地址列表</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id19">获取子链区块信息</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#hash">获得子链对应Hash的交易信息</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id20">获得子链对应Hash的交易明细</a></li>
@@ -606,6 +605,8 @@ BODY：vnodeip=&amp;vnodeport=&amp;address=0x**&amp;privatekey=0x**&amp;microcha
 vnodeport:  vnode节点端口
 address:  账户地址
 privatekey:  源账号私钥
+pwd： 账户密码
+encode：账户加密串
 microChainaddress:  子链地址
 method:  dapp合约方法 默认为：buyMintToken(uint256)
 paramtypes:  dapp合约方法对应的参数类型 默认为：[&quot;uint256&quot;]
@@ -651,6 +652,30 @@ BODY：microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x***&amp;toke
         <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
         <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">子链区块高度</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dapp">
+<h3>获得子链dapp地址列表<a class="headerlink" href="#dapp" title="Permalink to this headline">¶</a></h3>
+<p>方法：getDappAddrList</p>
+<p>参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">microip</span><span class="p">:</span>  <span class="n">monitor节点地址</span>
+<span class="n">microport</span><span class="p">:</span>  <span class="n">monitor节点端口</span>
+<span class="n">microchainaddress</span><span class="p">:</span>  <span class="n">子链SubChain地址</span>
+<span class="n">token</span><span class="p">:</span>  <span class="n">auth返回的授权token</span>
+</pre></div>
+</div>
+<p>调用示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>POST: http://139.198.126.104:8080/api/micro/v1.0/getDappAddrList
+BODY：microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x***&amp;token=***********
+</pre></div>
+</div>
+<p>返回数据示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{
+        &quot;success&quot;: true,
+        &quot;message&quot;: &quot;&quot;,
+        &quot;data&quot;: 子链dapp地址列表（按合约注册次序）
+}
 </pre></div>
 </div>
 </div>
@@ -929,7 +954,7 @@ BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;micr
         <a href="../sdk/index.html" class="btn btn-neutral float-right" title="SDK" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="RestfulAPI简介.html" class="btn btn-neutral float-left" title="Restful API 简介" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="RestfulAPI简介.html" class="btn btn-neutral" title="Restful API 简介" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -955,16 +980,25 @@ BODY：vnodeip=&amp;vnodeport=&amp;microip=127.0.0.1&amp;microport=8546&amp;micr
   
 
 
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

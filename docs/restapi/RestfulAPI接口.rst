@@ -447,6 +447,8 @@ erc20授权给子链
 	vnodeport:  vnode节点端口
 	address:  账户地址
 	privatekey:  源账号私钥
+	pwd： 账户密码
+	encode：账户加密串
 	microChainaddress:  子链地址
 	method:  dapp合约方法 默认为：buyMintToken(uint256)
 	paramtypes:  dapp合约方法对应的参数类型 默认为：["uint256"]
@@ -494,6 +496,31 @@ erc20授权给子链
 		"message": "",
 		"data": 子链区块高度
 	}	
+	
+获得子链dapp地址列表
+=====================
+
+方法：getDappAddrList
+
+参数:
+::
+	microip:  monitor节点地址
+	microport:  monitor节点端口
+	microchainaddress:  子链SubChain地址
+	token:  auth返回的授权token
+	
+	
+调用示例：
+::
+	POST: http://139.198.126.104:8080/api/micro/v1.0/getDappAddrList
+	BODY：microip=127.0.0.1&microport=8546&microchainaddress=0x***&token=***********
+返回数据示例	
+::	
+	{
+		"success": true,
+		"message": "",
+		"data": 子链dapp地址列表（按合约注册次序）
+	}		
 	
 获取子链区块信息
 =====================
