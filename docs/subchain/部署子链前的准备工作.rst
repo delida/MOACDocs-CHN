@@ -21,7 +21,7 @@ Vnode节点
 
 按序号查询余额：mc.getBalance(mc.accounts[0])   
 
-测试环境的公共提币地址：http://119.28.13.213:3000/ 
+测试环境的公共提币地址：https://faucet.moacchina.com
 
 注意：后续消耗gas的操作都需要执行personal.unlockAccount(mc.accounts[0]) 对应账号进行解锁				
 

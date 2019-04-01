@@ -80,6 +80,8 @@
             
               <p class="caption"><span class="caption-text">目录:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">墨客系统介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">墨客区块链系统和工具</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">子链</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="名词解释.html">名词解释</a></li>
 <li class="toctree-l2"><a class="reference internal" href="子链要点.html">子链要点</a></li>
@@ -100,6 +102,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../restapi/index.html">Restful API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dapps/index.html">DAPPs</a></li>
 </ul>
 
             
@@ -186,7 +189,7 @@
 <h2>各类账号<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>可以运行concole命令 personal.newAccount() 创建账号； mc.accounts查看账号；</p>
 <p>按序号查询余额：mc.getBalance(mc.accounts[0])</p>
-<p>测试环境的公共提币地址：<a class="reference external" href="http://119.28.13.213:3000/">http://119.28.13.213:3000/</a></p>
+<p>测试环境的公共提币地址：<a class="reference external" href="https://faucet.moacchina.com">https://faucet.moacchina.com</a></p>
 <p>注意：后续消耗gas的操作都需要执行personal.unlockAccount(mc.accounts[0]) 对应账号进行解锁</p>
 <p>准备账号列表：（示例地址参考后续的命令操作）</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>子链操作账号：进行创建合约，发起交易等基本操作： 0x87e369172af1e817ebd8d63bcd9f685a513a6736
@@ -228,7 +231,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, MOAC
+        &copy; Copyright 2018, MOAC.
 
     </p>
   </div>
@@ -247,13 +250,20 @@
 
   
 
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-    
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'chn',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 

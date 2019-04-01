@@ -80,6 +80,8 @@
             
               <p class="caption"><span class="caption-text">目录:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">墨客系统介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">墨客区块链系统和工具</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">子链</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="名词解释.html">名词解释</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">子链要点</a><ul>
@@ -100,6 +102,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../restapi/index.html">Restful API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dapps/index.html">DAPPs</a></li>
 </ul>
 
             
@@ -187,12 +190,12 @@
 <div class="section" id="moac">
 <h2>子链中的MOAC押金和消耗<a class="headerlink" href="#moac" title="Permalink to this headline">¶</a></h2>
 <p>为了使子链安全稳定的运行，MOAC引入的押金机制，主要体现在以下几个方面：</p>
-<p>1、每个子链节点在第一次启动后，将会有一个唯一的墨客钱包地址，在部署子链前，需要在向这个地址打入1个MOAC作为运行费用；</p>
+<p>1、每个子链节点在第一次启动后，将会有一个唯一的墨客钱包地址，在部署子链前，需要在向这个地址打入至少1个MOAC作为运行费用；</p>
 <p>2、每个子链节点注册进入子链矿工池时，需要向矿工池缴纳一定的押金，最小值由子链控制合约设置，最大值不限。子链节点每被选中一次，将会扣除一定数额的押金，当押金被扣完后，该节点将不会再参与新的子链，退出子链时，可以调用方法取回押金；</p>
 <p>3、当一个子链节点注册成一个监听节点时，需要缴纳一定的押金；当退出子链时可以取回押金；</p>
 <p>4、押金一般不会扣除，但在flush时，如果有企图作弊的节点，将会按照规则踢出子链，并扣除押金，不再返还；</p>
-<p>子链中的MOAC消耗：</p>
-<p>首先，调用子链方法不会消耗任何gas，但是，dapp运营方需要向子链控制合约地址打入一定量的MOAC维持子链运行，这部分MOAC将会消耗在给子链矿工费用和主链充提gas返还上。</p>
+<p>维护子链的MOAC消耗：</p>
+<p>首先，调用子链方法不会消耗任何gas，但是，dapp运营方需要向子链控制合约地址打入一定量的MOAC维持子链运行，这部分MOAC将会消耗在给子链矿工费用、子链向母链flush状态，以及母链充提gas返还上。这个维护消耗可以通过调整子链的flush周期来部分改变。</p>
 </div>
 <div class="section" id="id3">
 <h2>子链部署的注意点<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
@@ -221,7 +224,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, MOAC
+        &copy; Copyright 2018, MOAC.
 
     </p>
   </div>
@@ -240,13 +243,20 @@
 
   
 
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-    
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'chn',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 
