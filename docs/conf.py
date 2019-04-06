@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u'MOACdocs-chn'
-copyright = u'2018, MOAC'
+copyright = u'2018-2019, MOAC'
 author = u'MOAC Shanghai'
 
 # The short X.Y version

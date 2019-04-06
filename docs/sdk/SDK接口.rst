@@ -15,11 +15,13 @@ Node.JS Example
 
 代码:
 ::
+
 	var account = require("moac-api").account;
 	var wallet = account.register(pwd);
 
 返回:
 ::
+
 	wallet：
 	{ address: '钱包地址....',
 	  privateKey: '私钥....',
@@ -33,17 +35,20 @@ Node.JS Example
 
 参数:
 ::
+
 	addr：钱包地址
 	pwd：钱包密码
 	keyStore：keyStore
 
 代码:
 ::
+
 	var account = require("moac-api").account;
 	var status = account.login(addr, pwd, keyStore);
 
 返回:
 ::
+
 	status：0 //登录失败
 	status：1 //登录成功
 	status：2 //密码错误
