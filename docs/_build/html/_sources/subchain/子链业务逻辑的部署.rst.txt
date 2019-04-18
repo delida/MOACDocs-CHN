@@ -46,14 +46,16 @@ STEP1：在子链上部署多合约基础合约 dappbase.sol， 部署示例
 验证: 
 	合约部署成功后，Nonce值应该是1  
 	可调用monitor的rpc接口ScsRPCMethod.GetNonce进行检查，具体详见子链接口调用部分。
-	在 scs 的_logs目录下搜索日志文件，查找"created master contract address"，找到dapp合约地址:6ab296062d8a147297851719682fb5ffe081f1d3
+	
+	dapp合约地址:6ab296062d8a147297851719682fb5ffe081f1d3
+	dapp合约地址可调用monitor的rpc接口ScsRPCMethod.GetReceipt，传入对应Nonce，获得contractAddress字段内容
 
 
 STEP2：在子链上部署业务逻辑合约 dapp1.sol，部署方法和上面雷同
-	在 scs 的_logs目录下搜索日志文件，查找"created business contract address"
+	合约地址可调用monitor的rpc接口ScsRPCMethod.GetReceipt，传入对应Nonce，获得contractAddress字段内容
 
 STEP3：在子链上部署业务逻辑合约 dapp2.sol，部署方法和上面雷同
-	在 scs 的_logs目录下搜索日志文件，查找"created business contract address"
+	合约地址可调用monitor的rpc接口ScsRPCMethod.GetReceipt，传入对应Nonce，获得contractAddress字段内容
 		
 
 DAPP智能合约的调用

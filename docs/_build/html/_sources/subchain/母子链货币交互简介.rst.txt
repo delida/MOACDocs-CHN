@@ -96,7 +96,7 @@ dappbase合约部署
  | 调用monitor的方法 ScsRPCMethod.GetNonce  Nonce值应该是1  
  | 调用monitor的方法 ScsRPCMethod.GetBalance 查询对应dappbase合约地址的余额，应该等于10的21次方 
  | 调用monitor的方法 ScsRPCMethod.GetBalance 查询对应部署账号地址的余额，应该等于0
- | 在 scs 的_logs目录下搜索日志文件，查找"created master contract address"，找到dapp合约地址:6ab296062d8a147297851719682fb5ffe081f1d3
+ | 调用monitor的方法 ScsRPCMethod.GetReceipt 传入对应Nonce，从contractAddress字段内容获得合约地址
 
 
 		
@@ -273,6 +273,7 @@ dappbase合约部署
 验证: 
  | 调用monitor的方法 ScsRPCMethod.GetBalance 查询对应dappbase合约地址的余额，应该等于10的23次方 
  | 调用monitor的方法 ScsRPCMethod.GetBalance 查询对应部署账号地址的余额，应该等于0
+ | 调用monitor的方法 ScsRPCMethod.GetReceipt 传入对应Nonce，从contractAddress字段内容获得合约地址
 		
 dapp 充值
 ================		
