@@ -194,11 +194,11 @@ via: 对应 proxy vnode 的收益地址
 <span class="o">&gt;</span> <span class="n">solc</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;solc&#39;</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">chain3</span><span class="p">();</span>
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">setProvider</span><span class="p">(</span><span class="n">new</span> <span class="n">chain3</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">HttpProvider</span><span class="p">(</span><span class="s1">&#39;http://localhost:8545&#39;</span><span class="p">));</span>
-<span class="o">&gt;</span> <span class="n">solfile</span> <span class="o">=</span> <span class="s1">&#39;deorder.sol&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">solfile</span> <span class="o">=</span> <span class="s1">&#39;DappBase.sol&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">contract</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="n">solfile</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">);</span>
 <span class="o">&gt;</span> <span class="n">output</span> <span class="o">=</span> <span class="n">solc</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">contract</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<span class="o">&gt;</span> <span class="n">abi</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:DeOrder&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">interface</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="nb">bin</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:DeOrder&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bytecode</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">abi</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:DappBase&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">interface</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="nb">bin</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:DappBase&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bytecode</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">via</span> <span class="o">=</span> <span class="s1">&#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
@@ -208,10 +208,13 @@ via: 对应 proxy vnode 的收益地址
 <dl class="docutils">
 <dt>验证:</dt>
 <dd>合约部署成功后，Nonce值应该是1
-可调用monitor的rpc接口ScsRPCMethod.GetNonce进行检查，具体详见子链接口调用部分。</dd>
+可调用monitor的rpc接口ScsRPCMethod.GetNonce进行检查，具体详见子链接口调用部分。
+在 scs 的_logs目录下搜索日志文件，查找&quot;created master contract address&quot;，找到dapp合约地址:6ab296062d8a147297851719682fb5ffe081f1d3</dd>
+<dt>STEP2：在子链上部署业务逻辑合约 dapp1.sol，部署方法和上面雷同</dt>
+<dd>在 scs 的_logs目录下搜索日志文件，查找&quot;created business contract address&quot;</dd>
+<dt>STEP3：在子链上部署业务逻辑合约 dapp2.sol，部署方法和上面雷同</dt>
+<dd>在 scs 的_logs目录下搜索日志文件，查找&quot;created business contract address&quot;</dd>
 </dl>
-<p>STEP2：在子链上部署业务逻辑合约 dapp1.sol，部署方法和上面雷同</p>
-<p>STEP3：在子链上部署业务逻辑合约 dapp2.sol，部署方法和上面雷同</p>
 </div>
 <div class="section" id="id3">
 <h2>DAPP智能合约的调用<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
@@ -225,13 +228,15 @@ nonce：调用monitor的rpc接口ScsRPCMethod.GetNonce获得
 gas: 0 不需要消耗gas费用
 shardingflag： 0x1  表示子链调用操作
 via: 对应 proxy vnode 的收益地址
-data: 调用合约地址 + chain3.sha3(&quot;registerDapp(address,address,string)&quot;) 取前4个字节 0xb5560a14，加上传值凑足32个字节
+data: 调用合约地址 + registerDapp(address,address,string)对应参数
 </pre></div>
 </div>
 <p>registerDapp中，第一个参数是想要注册的dapp的地址（dapp1和dapp2的地址），可以通过RPC getReciipt方法获得部署时contract address；第二个参数是创建dappbase时的from，也就是只有创建dappbase的人才能调用此方法；第三个参数是这个dapp的ABI。</p>
 <p>调用示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">nonce</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;0x0xcc0D18E77748AeBe3cC6462be0EF724e391a4aDb5560a140000000000000000000000001105d71a3d23c5bc80fc4b76605d694a0f83bfab00000000000000000000000044c10f4c... ...&#39;</span>
+<span class="o">&gt;</span> <span class="n">addr_dapp</span> <span class="o">=</span> <span class="n">需要注册dapp的合约地址</span>
+<span class="o">&gt;</span> <span class="n">abi</span> <span class="o">=</span> <span class="n">需要注册dapp的abi</span>
+<span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">dappbase</span><span class="o">.</span><span class="n">address</span> <span class="o">+</span> <span class="n">dappbase</span><span class="o">.</span><span class="n">registerDapp</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="n">addr_dapp</span><span class="p">,</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">abi</span><span class="p">)</span><span class="o">.</span><span class="n">substring</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">via</span> <span class="o">=</span> <span class="s1">&#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
@@ -241,7 +246,7 @@ data: 调用合约地址 + chain3.sha3(&quot;registerDapp(address,address,string
 <dl class="docutils">
 <dt>验证：</dt>
 <dd>每次操作成功后，Nonce会自动增加1
-或者直接调用monitor的rpc接口ScsRPCMethod.GetContractInfo获得合约变量的方式进行验证。</dd>
+或者直接调用monitor的rpc接口ScsRPCMethod.GetDappAddrList获得合约注册列表的方式进行验证。</dd>
 </dl>
 <p>以部署dapp1和dapp2为例，需要将这两个业务逻辑合约注册到dappbase中去：</p>
 <p>STEP4： 调用dappbase中的registerDapp方法来注册dapp1</p>
@@ -270,7 +275,7 @@ data: 调用合约地址 + chain3.sha3(&quot;registerDapp(address,address,string
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, MOAC.
+        &copy; Copyright 2018-2019, MOAC
 
     </p>
   </div>
@@ -289,20 +294,13 @@ data: 调用合约地址 + chain3.sha3(&quot;registerDapp(address,address,string
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'chn',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
 
   
 

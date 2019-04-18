@@ -17,27 +17,21 @@ Monitor不参与子链的交易共识，只是同步区块数据，提供数据�
 
 调用registerAsMonitor参数说明:	
 ::	
-	根据ABI chain3.sha3("registerAsMonitor(address)") = 0x4e592e2f6fc52405522577d357d824c923989a62e4916d9b689311d8b2a6192c 
-		取前4个字节 0x4e592e2f  
-	参数address传scs keystore文件中的地址 （前面补24个0， 凑足32个字节）  
-	data = '0x4e592e2f000000000000000000000000d135afa5c8d96ba11c40cf0b52952d54bce57363'		
-	
-	注意registerAsMonitor不同版本参数
-	> data = contractInstance.registerAsMonitor.getData('0xd135afa5c8d96ba11c40cf0b52952d54bce57363','127.0.0.1')   
+	> data = subchainbase.registerAsMonitor.getData('0xd135afa5c8d96ba11c40cf0b52952d54bce57363','127.0.0.1:2345')   
 	
 
 调用示例:
 ::
+	> subchainbase = SubChainBaseContract.at('0xb877bf4e4cc94fd9168313e00047b77217760930')
 	> amount = chain3.toSha(1,'mc')
 	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
-	> data = '0x4e592e2f000000000000000000000000d135afa5c8d96ba11c40cf0b52952d54bce57363';
+	> data = subchainbase.registerAsMonitor.getData('0xd135afa5c8d96ba11c40cf0b52952d54bce57363','127.0.0.1:2345')
 	> chain3.mc.sendTransaction({ from: chain3.mc.accounts[0], value:amount, to: subchainaddr, gas: "5000000", gasPrice: chain3.mc.gasPrice, data: data });
 
 验证： 观察SCS monitor concole界面开始同步子链区块，或者调用子链合约的getMonitorInfo方法
 ::
-	> contractInstance = SubChainBaseContract.at('0xb877bf4e4cc94fd9168313e00047b77217760930')
-	
-	> contractInstance.getMonitorInfo.call()
+	> subchainbase = SubChainBaseContract.at('0xb877bf4e4cc94fd9168313e00047b77217760930')	
+	> subchainbase.getMonitorInfo.call()
 
 子链RPC接口
 ----------------------
@@ -188,11 +182,11 @@ GetTransactionByHash: 通过交易hash获取子链的tx信息
 				}
 		  }
 
-GetReceipts: 通过账号和Nonce获取子链的tx执行结果
+GetReceipt: 通过账号和Nonce获取子链的tx执行结果
 ::
 	SubChainAddr: 子链合约地址
 	Sender：查询账号
-	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetReceipts",
+	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetReceipt",
 			"params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
 				"Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"， "Nonce":9
 				}

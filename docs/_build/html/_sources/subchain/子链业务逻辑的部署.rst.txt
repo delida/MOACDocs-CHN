@@ -33,24 +33,27 @@ STEP1：在子链上部署多合约基础合约 dappbase.sol， 部署示例
 	> solc = require('solc')
 	> chain3 = new chain3();
 	> chain3.setProvider(new chain3.providers.HttpProvider('http://localhost:8545'));
-	> solfile = 'deorder.sol';
+	> solfile = 'DappBase.sol';
 	> contract = fs.readFileSync(solfile, 'utf8');
 	> output = solc.compile(contract, 1);                    
-	> abi = output.contracts[':DeOrder'].interface;
-	> bin = output.contracts[':DeOrder'].bytecode;
+	> abi = output.contracts[':DappBase'].interface;
+	> bin = output.contracts[':DappBase'].bytecode;
 	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
 	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c';  
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
 	> chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas:0, shardingFlag: "0x3", data: '0x' + bin, nonce: 0, via: via, });
 			
 验证: 
-	合约部署成功后，Nonce值应该是1   
+	合约部署成功后，Nonce值应该是1  
 	可调用monitor的rpc接口ScsRPCMethod.GetNonce进行检查，具体详见子链接口调用部分。
+	在 scs 的_logs目录下搜索日志文件，查找"created master contract address"，找到dapp合约地址:6ab296062d8a147297851719682fb5ffe081f1d3
 
 
 STEP2：在子链上部署业务逻辑合约 dapp1.sol，部署方法和上面雷同
+	在 scs 的_logs目录下搜索日志文件，查找"created business contract address"
 
 STEP3：在子链上部署业务逻辑合约 dapp2.sol，部署方法和上面雷同
+	在 scs 的_logs目录下搜索日志文件，查找"created business contract address"
 		
 
 DAPP智能合约的调用
@@ -71,14 +74,16 @@ dappbase.sol有个方法 registerDapp(address,address,string)
 	gas: 0 不需要消耗gas费用
 	shardingflag： 0x1  表示子链调用操作
 	via: 对应 proxy vnode 的收益地址
-	data: 调用合约地址 + chain3.sha3("registerDapp(address,address,string)") 取前4个字节 0xb5560a14，加上传值凑足32个字节
+	data: 调用合约地址 + registerDapp(address,address,string)对应参数
 
 registerDapp中，第一个参数是想要注册的dapp的地址（dapp1和dapp2的地址），可以通过RPC getReciipt方法获得部署时contract address；第二个参数是创建dappbase时的from，也就是只有创建dappbase的人才能调用此方法；第三个参数是这个dapp的ABI。
 	
 调用示例：
 ::
 	> nonce = 3	
-	> data = '0x0xcc0D18E77748AeBe3cC6462be0EF724e391a4aDb5560a140000000000000000000000001105d71a3d23c5bc80fc4b76605d694a0f83bfab00000000000000000000000044c10f4c... ...'			
+	> addr_dapp = 需要注册dapp的合约地址
+	> abi = 需要注册dapp的abi
+	> data = dappbase.address + dappbase.registerDapp.getData(addr_dapp, chain3.mc.accounts[0], abi).substring(2)		
 	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
 	> via = '0xf103bc1c054babcecd13e7ac1cf34f029647b08c';
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
@@ -86,7 +91,7 @@ registerDapp中，第一个参数是想要注册的dapp的地址（dapp1和dapp2
 	
 验证：
 	每次操作成功后，Nonce会自动增加1
-	或者直接调用monitor的rpc接口ScsRPCMethod.GetContractInfo获得合约变量的方式进行验证。
+	或者直接调用monitor的rpc接口ScsRPCMethod.GetDappAddrList获得合约注册列表的方式进行验证。
 
 以部署dapp1和dapp2为例，需要将这两个业务逻辑合约注册到dappbase中去：
 

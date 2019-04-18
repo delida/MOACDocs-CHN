@@ -5,7 +5,7 @@ Vnode节点
 ----------------------
 墨客主网节点  版本来源: https://github.com/MOACChain/moac-core/releases/
 
-此文档采用的版本： 1.0.8    环境：windows   testnet浏览器： http://testnet.moac.io/home
+此文档采用的版本： 1.0.9    环境：windows   testnet浏览器： http://testnet.moac.io/home
 
 在测试环境testnet启动节点： 
 	moac-windows-4.0-amd64.exe --testnet --rpc --rpcapi "chain3,mc,net,db,personal,admin,miner"

@@ -25,8 +25,6 @@
 	> chain3.mc.getTransactionReceipt(VnodeProtocolBase.transactionHash).contractAddress
 
 部署完毕后，获得 vnode矿池合约地址  0x22f141dcc59850707708bc90e256318a5fe0b928	
-	
-注意：gas 不要设置太大， 不然会触发错误 exceeds block gas limit undefined
 		
 vnode 设置代理并加入矿池
 ------------------------
@@ -59,6 +57,8 @@ vnode 设置代理并加入矿池
 		string数据长度:	3139322e3136382e31302e3230393a3530303632 	20字节
 			0000000000000000000000000000000000000000000000000000000000000014
 		data = '0x32434a2e000000000000000000000000f103bc1c054babcecd13e7ac1cf34f029647b08c000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000143139322e3136382e31302e3230393a3530303632000000000000000000000000'		
+	也可以调用合约对象的getData方法获得data参数
+		data = VnodeProtocolBase.register.getData(via, '192.168.10.209:50062')
 
 调用示例:
 ::
@@ -69,6 +69,7 @@ vnode 设置代理并加入矿池
 
 验证： 访问Vnode矿池合约的vnodeCount
 ::
+	> VnodeProtocolBase.vnodeCount()
 	> chain3.mc.getStorageAt("0x22f141dcc59850707708bc90e256318a5fe0b928",0x02)   // 注意vnodeCount变量在合约中变量定义的位置（16进制）
 	
 部署子链矿池  
@@ -78,7 +79,7 @@ vnode 设置代理并加入矿池
 
 如果加入现成的子链矿池，则可以忽略此步骤
 		
-部署SubChainProtocolBase.sol示例:    共识:POR  最低保证金: 2moac 
+部署SubChainProtocolBase.sol示例:    共识:POR  最低保证金: 2 moac 
 ::		     
 	> chain3 = require('chain3')
 	> solc = require('solc')
@@ -100,7 +101,7 @@ vnode 设置代理并加入矿池
 设置启动scs 
 ----------------------
 
-这里我们设置两个scs节点
+这里我们设置三个scs节点
 
 确认 userconfig.json配置
 ::
@@ -108,13 +109,15 @@ vnode 设置代理并加入矿池
 	Beneficiary为收益账号: 
 		0xa934198916cd993c73c1aa6e0c0e7b21ce7c735b 
 		0x2e7c076dbf6e61207a0ddb1b942ef7da8fd139f0
+		0xea1a118e94344be69f02753d1e6f7fe19dda89ac
 		
 分别通过命令启动  scsserver-windows-4.0-amd64 --password "123456"   （生成scs keystore的密码）
 		
-然后在生成的keystore文件中分别获得 scs 地址  
+然后在scskeystore目录内生成的keystore文件中分别获得 scs 地址  
 ::
-	d4057328a35f34507dbcd295d43ed0cccf9c368a 
+	0xd4057328a35f34507dbcd295d43ed0cccf9c368a 
 	0x3e21ba36b396936c6cc9adc3674655b912e5fa54
+	0x03c74ecc8ad9493a6a3d14f4e48d5eb551fe1be5
 
 最后给scs转入moac以支付必要的交易费用
 ::		
@@ -124,11 +127,14 @@ vnode 设置代理并加入矿池
 	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:chain3.toSha(amount,'mc'), to: scsaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: ''});
 	> scsaddr = '0x3e21ba36b396936c6cc9adc3674655b912e5fa54';
 	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:chain3.toSha(amount,'mc'), to: scsaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: ''});
+	> scsaddr = '0x03c74ecc8ad9493a6a3d14f4e48d5eb551fe1be5';
+	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:chain3.toSha(amount,'mc'), to: scsaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: ''});
 	
 可以通过查询余额进行验证  
 ::		
 	> chain3.mc.getBalance('0xd4057328a35f34507dbcd295d43ed0cccf9c368a')
 	> chain3.mc.getBalance('0x3e21ba36b396936c6cc9adc3674655b912e5fa54')
+	> chain3.mc.getBalance('0x03c74ecc8ad9493a6a3d14f4e48d5eb551fe1be5')
 	
 将scs加入子链矿池
 ----------------------
@@ -158,15 +164,15 @@ vnode 设置代理并加入矿池
 	
 验证： 访问子链矿池合约的scsCount
 ::		
-	> chain3.mc.getStorageAt("0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac",0x02)	// 注意scsCount变量在合约中变量定义的位置（16进制）
+	> subchainprotocolbase.scsCount()
 
-同上将另一个scs（0x3e21ba36b396936c6cc9adc3674655b912e5fa54）也加入子链矿池
+同上将另两个scs也加入子链矿池
 
 
 部署子链合约  
 ----------------------
 
-现在我们可以部署一个子链合约，并准备将两个scs
+现在我们可以部署一个子链合约
 
 部署SubChainBase.sol示例:
 ::
@@ -182,7 +188,7 @@ vnode 设置代理并加入矿池
 	> vnodeProtocolBaseAddr = '0x22f141dcc59850707708bc90e256318a5fe0b928' ;       // Vnode矿池合约 
 	> min = 1 ;			// 子链需要SCS的最小数量，当前需要从如下值中选择：1，3，5，7
 	> max = 11;		// 子链需要SCS的最大数量，当前需要从如下值中选择：11，21，31，51，99
-	> thousandth = 1 ;			// 千分之几
+	> thousandth = 1 ;			// 千分之几，控制选择scs的概率，对于大型子链矿池才有效
 	> flushRound = 40 ;     	// 子链刷新周期  单位是主链block生成对应数量的时间，当前的取值范围是40-99
 	> SubChainBaseContract = chain3.mc.contract(JSON.parse(abi));  
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
@@ -218,8 +224,9 @@ vnode 设置代理并加入矿池
 	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: '0x5defc56c'});				
 
 	
-验证：  访问子链合约的 registerFlag 为 1 ， 等待scs注册 (vnode 一个 flush周期后 ) ， 访问子链合约的 nodeCount
-	> chain3.mc.getStorageAt(subchainaddr,0x14)  // 注意registerFlag变量在合约中变量定义的位置（16进制）
+验证：  等待scs注册 (vnode 一个 flush周期后 ) ， 可不断访问子链合约的 nodeCount，等待3个scs注册完成
+::
+	> SubChainBase.nodeCount()
 	> chain3.mc.getStorageAt(subchainaddr,0x0e)  // 注意nodeCount变量在合约中变量定义的位置（16进制）
 
 子链关闭注册
@@ -233,8 +240,5 @@ vnode 设置代理并加入矿池
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
 	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: '0x69f3576f'});
 			
-验证：  访问子链合约的 registerFlag 为 0
-	> chain3.mc.getStorageAt(subchainaddr,0x14)	 // 注意registerFlag变量在合约中变量定义的位置（16进制）
-
-SCS自身完成初始化并开始子链运行，可观察scs的concole界面，scs开始出块即成功完成部署子链。
+验证：  SCS自身完成初始化并开始子链运行，可观察scs的concole界面，scs开始出块即成功完成部署子链。
 

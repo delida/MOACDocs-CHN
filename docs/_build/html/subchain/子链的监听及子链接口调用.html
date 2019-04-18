@@ -180,26 +180,20 @@
 </div>
 <p>子链运行后，Monitor可以调用子链控制合约subchainbase中的registerAsMonitor方法进行注册</p>
 <p>调用registerAsMonitor参数说明:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>根据ABI chain3.sha3(&quot;registerAsMonitor(address)&quot;) = 0x4e592e2f6fc52405522577d357d824c923989a62e4916d9b689311d8b2a6192c
-        取前4个字节 0x4e592e2f
-参数address传scs keystore文件中的地址 （前面补24个0， 凑足32个字节）
-data = &#39;0x4e592e2f000000000000000000000000d135afa5c8d96ba11c40cf0b52952d54bce57363&#39;
-
-注意registerAsMonitor不同版本参数
-&gt; data = contractInstance.registerAsMonitor.getData(&#39;0xd135afa5c8d96ba11c40cf0b52952d54bce57363&#39;,&#39;127.0.0.1&#39;)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">subchainbase</span><span class="o">.</span><span class="n">registerAsMonitor</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="s1">&#39;0xd135afa5c8d96ba11c40cf0b52952d54bce57363&#39;</span><span class="p">,</span><span class="s1">&#39;127.0.0.1:2345&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>调用示例:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">amount</span> <span class="o">=</span> <span class="n">chain3</span><span class="o">.</span><span class="n">toSha</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;mc&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">subchainbase</span> <span class="o">=</span> <span class="n">SubChainBaseContract</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s1">&#39;0xb877bf4e4cc94fd9168313e00047b77217760930&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">amount</span> <span class="o">=</span> <span class="n">chain3</span><span class="o">.</span><span class="n">toSha</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;mc&#39;</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;0x4e592e2f000000000000000000000000d135afa5c8d96ba11c40cf0b52952d54bce57363&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">subchainbase</span><span class="o">.</span><span class="n">registerAsMonitor</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="s1">&#39;0xd135afa5c8d96ba11c40cf0b52952d54bce57363&#39;</span><span class="p">,</span><span class="s1">&#39;127.0.0.1:2345&#39;</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">({</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="n">amount</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;5000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">data</span> <span class="p">});</span>
 </pre></div>
 </div>
 <p>验证： 观察SCS monitor concole界面开始同步子链区块，或者调用子链合约的getMonitorInfo方法</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">contractInstance</span> <span class="o">=</span> <span class="n">SubChainBaseContract</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s1">&#39;0xb877bf4e4cc94fd9168313e00047b77217760930&#39;</span><span class="p">)</span>
-
-<span class="o">&gt;</span> <span class="n">contractInstance</span><span class="o">.</span><span class="n">getMonitorInfo</span><span class="o">.</span><span class="n">call</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">subchainbase</span> <span class="o">=</span> <span class="n">SubChainBaseContract</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="s1">&#39;0xb877bf4e4cc94fd9168313e00047b77217760930&#39;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">subchainbase</span><span class="o">.</span><span class="n">getMonitorInfo</span><span class="o">.</span><span class="n">call</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -345,10 +339,10 @@ Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&
           <span class="p">}</span>
 </pre></div>
 </div>
-<p>GetReceipts: 通过账号和Nonce获取子链的tx执行结果</p>
+<p>GetReceipt: 通过账号和Nonce获取子链的tx执行结果</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
 Sender：查询账号
-Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetReceipts&quot;,
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetReceipt&quot;,
                 &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
                         &quot;Sender&quot;:&quot;0x87e369172af1e817ebd8d63bcd9f685a513a6736&quot;， &quot;Nonce&quot;:9
                         }
@@ -427,7 +421,7 @@ Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, MOAC.
+        &copy; Copyright 2018-2019, MOAC
 
     </p>
   </div>
@@ -446,20 +440,13 @@ Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'chn',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
 
   
 
