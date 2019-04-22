@@ -749,11 +749,16 @@ BODY：microip=127.0.0.1&amp;microport=8546&amp;microchainaddress=0x***&amp;hash
 </pre></div>
 </div>
 <p>返回数据示例</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">子链交易明细</span>
-<span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{
+        &quot;success&quot;: true,
+        &quot;message&quot;: &quot;&quot;,
+        &quot;data&quot;: 子链交易明细，其中主要字段描述如下：
+                failed：交易是否成功  false表示成功
+                        result：如执行合约方法，retrun的数据
+                        transactionHash：子链hash
+                        contractAddress：当部署合约时，返回合约地址
+
+}
 </pre></div>
 </div>
 </div>
