@@ -1,6 +1,6 @@
 
-chain3j: Chain3 Java 软件库
-==================================
+Chain3 Java 软件库
+==================
 
 `chain3j <https://github.com/MOACChain/chain3j>` is a lightweight, highly modular, reactive, type safe Java and Android library for working with
 Smart Contracts and integrating with clients (nodes) on the MOAC network:
@@ -8,7 +8,7 @@ Smart Contracts and integrating with clients (nodes) on the MOAC network:
 This allows you to work with the `MOAC <https://www.moac.io/>`_ blockchain, without the
 additional overhead of having to write your own integration code for the platform.
 
-Features
+特点
 --------
 
 - Complete implementation of MOAC's `JSON-RPC <https://github.com/MOACChain/moac-core/wiki/JSON-RPC>`_
