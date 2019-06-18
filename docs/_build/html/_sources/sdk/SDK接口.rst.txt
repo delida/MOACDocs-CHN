@@ -69,6 +69,7 @@ Node.JS Example
 	
 代码:
 ::
+
 	var VnodeChain = require("moac-api").vnodeChain;
 	var vc = new VnodeChain(vnodeAddress);
 

@@ -1,2 +1,20 @@
 关闭子链
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+子链关闭请求
+----------------------
+
+子链合约提供了close的方法来支持关闭子链，必须由子链部署账号来发送交易请求。
+
+调用示例:
+::	
+	根据ABI chain3.sha3("close()") = 0x43d726d69bfad97630bc12e80b1a43c44fecfddf089a314709482b2b0132f662
+		取前4个字节 0x43d726d6 
+	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
+	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
+	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: '0x43d726d6'});
+
+关闭请求发送后，需等待一轮flush后生效，相关子链维护费用也将退回到子链部署账号中。
+可以通过查询余额进行验证  
+::		
+	> chain3.mc.getBalance('0x1195cd9769692a69220312e95192e0dcb6a4ec09')

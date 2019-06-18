@@ -89,7 +89,11 @@
 <li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
 <li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">子链业务逻辑的部署</a></li>
 <li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">子链节点的更替</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">子链节点的更替</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">子链节点添加</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">子链节点退出</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭子链</a></li>
 <li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
 <li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html">多合约的进阶操作</a></li>
@@ -166,6 +170,69 @@
             
   <div class="section" id="id1">
 <h1>子链节点的更替<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>子链节点添加<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>子链合约提供了registerAdd方法来支持子链添加，必须由子链部署账号来发送交易请求。</p>
+<p>需要对应SubChainProtocolBase矿池合约有等待加入的scs节点。</p>
+<p>子链收到请求后，在矿池合约选取scs，开始同步子链区块，等一轮flush后生效，正式加入子链。</p>
+<p>registerAdd参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>nodeToAdd： 当前scs数+需要加入scs数
+</pre></div>
+</div>
+<p>调用示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">subchainbase</span><span class="o">.</span><span class="n">registerAdd</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;2000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">data</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>验证：scs对应日志开始同步区块，合约公共变量codeCount更新为scs最新数量</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">SubChainBase</span><span class="o">.</span><span class="n">nodeCount</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>子链节点退出<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>子链节点退出有两种方式：</p>
+<ol class="arabic simple">
+<li>当子链工作正常时，调用子类合约requestRelease方法请求退出子链，等待一轮flush后生效。</li>
+</ol>
+<p>requestRelease参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>senderType：     1：scs发起请求       2：收益账号发出请求
+index：          scs序号（参考ScsRPCMethod.GetSubChainInfo中scs的列表）
+</pre></div>
+</div>
+<p>调用示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">subchainbase</span><span class="o">.</span><span class="n">requestRelease</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="n">senderType</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;2000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">data</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>验证：等待一轮flush后，关注合约公共变量codeCount是否变化</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">SubChainBase</span><span class="o">.</span><span class="n">nodeCount</span><span class="p">()</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>当子链工作不正常时，可以调用子类合约requestReleaseImmediate方法请求立即退出子链。</li>
+</ol>
+<p>requestReleaseImmediate参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>senderType：     1：scs发起请求       2：收益账号发出请求
+index：          scs序号（参考ScsRPCMethod.GetSubChainInfo中scs的列表）
+</pre></div>
+</div>
+<p>调用示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">subchainbase</span><span class="o">.</span><span class="n">requestReleaseImmediate</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="n">senderType</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
+<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;2000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">data</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>验证：合约公共变量codeCount是否变化</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">SubChainBase</span><span class="o">.</span><span class="n">nodeCount</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
