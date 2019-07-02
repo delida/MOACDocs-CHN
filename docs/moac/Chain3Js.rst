@@ -2,7 +2,7 @@ Chain3 JavaScript 软件库
 =======================
 
 
-Chain3 JavaScript 软件库是墨客基于以太坊开发的一套javascript库，目的是让应用程序能够与墨客节点进行通信。
+Chain3 JavaScript 软件库是墨客开发的一套javascript库，目的是让应用程序能够使用简便的方式与墨客节点进行通信。
 注意，这里有两层，moac启动了一个墨客母链节点，console参数开启了一个javascript的控制台，这个控制台注入了chain3.js这个库，以使我们可以通过chain3对象与墨客节点的JSON-RPC接口做交互。
 
 
@@ -15,7 +15,7 @@ calls <https://github.com/MOACChain/moac-core/wiki/RPC>`__ 来和母链服务器
 ./moac --rpc --rpcport 8545
 
 
-``chain3`` 除了包含 ``mc`` 对象 - ``chain3.mc`` 与母链节点互动之外，在 account.js 中提供了交易签名功能，
+``chain3`` 除了包含 ``mc`` 对象 - ``chain3.mc`` 与母链节点互动之外，在 accounts 下面的文件中提供了交易签名功能，
 以及对消息签名和验证的功能，以方便用户使用。
 ``chain3`` 还提供了和子链客户端 SCS 交互的对象 ``scs``
 Over time we'll introduce other objects such as SCS for the other chain3

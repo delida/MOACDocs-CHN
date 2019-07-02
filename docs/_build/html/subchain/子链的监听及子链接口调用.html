@@ -224,7 +224,9 @@ post返回结果：
 &gt; request({ url: url, method: &quot;POST&quot;, json: true, body: data, headers: {&quot;Content-Type&quot;: &#39;application/json&#39;, &quot;Accept&quot;: &#39;application/json&#39;}}, function(error, response, result) {if (!error &amp;&amp; response.statusCode == 200) {console.log(result)}});
 </pre></div>
 </div>
-<p>以下是几个常用的RPC接口及调用body示例</p>
+<p>以下是几个常用的RPC接口及调用body示例（v1.0.9）</p>
+<p><strong>*通用类*</strong></p>
+<p>此部分接口和子链区块本身相关，业务逻辑无关。</p>
 <p>GetNonce：获得子链的nonce，这是调用子链DAPP合约的必要参数之一，每当子链交易发送后会自动加1</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
 Sender：查询账号， 每个账号在子链有不同的nonce
@@ -250,10 +252,36 @@ Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&
           }
 </pre></div>
 </div>
+<p>GetBlocks: 获取某一区间内的区块信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
+Start: 开始block
+End： 结束block
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetBlocks&quot;,
+                &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;
+                        &quot;Start&quot;:10, &quot;End&quot;:20}
+          }
+</pre></div>
+</div>
 <p>GetSubChainInfo：获得当前子链的信息</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SubChainAddr</span><span class="p">:</span> <span class="n">子链合约地址</span>
 <span class="n">Body</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">,</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;ScsRPCMethod.GetSubChainInfo&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;params&quot;</span><span class="p">:{</span><span class="s2">&quot;SubChainAddr&quot;</span><span class="p">:</span><span class="s2">&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;</span><span class="p">}</span>
+          <span class="p">}</span>
+</pre></div>
+</div>
+<p>GetTxpool：获得子链交易池信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SubChainAddr</span><span class="p">:</span> <span class="n">子链合约地址</span>
+<span class="n">Body</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">,</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;ScsRPCMethod.GetTxpool&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;params&quot;</span><span class="p">:{</span><span class="s2">&quot;SubChainAddr&quot;</span><span class="p">:</span><span class="s2">&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;</span>
+                 <span class="p">}</span>
+          <span class="p">}</span>
+</pre></div>
+</div>
+<p>GetTxpoolCount：获得子链交易池中不同类型交易的数量</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SubChainAddr</span><span class="p">:</span> <span class="n">子链合约地址</span>
+<span class="n">Body</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">,</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;ScsRPCMethod.GetTxpoolCount&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;params&quot;</span><span class="p">:{</span><span class="s2">&quot;SubChainAddr&quot;</span><span class="p">:</span><span class="s2">&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;</span>
+                 <span class="p">}</span>
           <span class="p">}</span>
 </pre></div>
 </div>
@@ -277,48 +305,55 @@ Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&
           }
 </pre></div>
 </div>
-<p>getContractInfo：获得子链基础合约信息（不推荐）</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
-Reqtype:  查询类型 0: 查看合约全部变量 , 1: 查看合约某一个数组变量 , 2: 查看合约某一个mapping变量 , 3: 查看合约某一个结构体变量, 4: 查看合约某一简单类型变量（单倍长度存储的变量）, 5: 查看合约某一变长变量（如string、bytes）
-Storagekey: 十六进制字符串，查询的变量在合约里面的index ，查询全部变量时可以不填
-Position: 十六进制字符串，当Reqtype==1时，Position为数组维度（从0开始）；当Reqtype==2时，Position为mapping下标
-Structformat：针对结构体变量，1：single（简单类型变量单倍长度存储的变量）, 2：list（简单类型数组变量）3：string变长变量（如string、bytes），若结构变量为ContractInfoReq，Structformat = []byte{‘1’,’3’,’3’,’3’}
-
-获取合约 index 1 的 address 对应 Body:
-{&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetContractInfo&quot;,
-&quot;params&quot;:{&quot;subChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
-        &quot;Request&quot;:[{&quot;Reqtype&quot;:4,
-                  &quot;Storagekey&quot;:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                  &quot;Position&quot;:[],
-                  &quot;Structformat&quot;:[]}
-                  ]
-        }
-}
+<p>GetDappAddrList：通过subchainaddr获取子链内所有多合约的地址列表，需要子链业务逻辑合约调用基础合约registerDapp方法后才能生效，具体请参见“母子链货币交互简介”中的示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SubChainAddr</span><span class="p">:</span> <span class="n">子链合约地址</span>
+<span class="n">Body</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">,</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;ScsRPCMethod.GetDappAddrList&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;params&quot;</span><span class="p">:{</span><span class="s2">&quot;SubChainAddr&quot;</span><span class="p">:</span><span class="s2">&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;</span>
+                 <span class="p">}</span>
+          <span class="p">}</span>
 </pre></div>
 </div>
-<p>AnyCall: 获取dapp合约函数的返回值，<strong>调用此接口前必须将dapp注册入dappbase</strong></p>
-<p>Params： 第一个参数是调用的方法，之后是方法传入参数</p>
+<p>返回result中，第零位是dappbase的地址，从第一位开始时业务逻辑合约地址</p>
+<p><strong>*充提类*</strong></p>
+<p>GetExchangeInfo：获得子链指定数量正在充提的信息</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
-Sender：查询账号
-DappAddr:子链业务逻辑地址
-Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.AnyCall&quot;,
+EnteringRecordIndex： 正在充值记录的起始位置(0)
+EnteringRecordSize: 正在充值记录的长度
+RedeemingRecordIndex： 正在提币记录的起始位置(0)
+RedeemingRecordSize： 正在提币记录的长度
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetExchangeInfo&quot;,
                 &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
-                        &quot;DappAddr&quot;:&quot;0xcc0D18E77748AeBe3cC6462be0EF724e391a4aD9&quot;,
-                        &quot;Sender&quot;:&quot;0x87e369172af1e817ebd8d63bcd9f685a513a6736&quot;， &quot;Params&quot; :[&quot;funcA&quot;, &quot;param1&quot;, param2]
-                        }
+                &quot;EnteringRecordIndex&quot;:0, &quot;EnteringRecordSize&quot;: 10,
+                &quot;RedeemingRecordIndex&quot;:0, &quot;RedeemingRecordSize&quot;, 10
+                 }
           }
 </pre></div>
 </div>
-<p>GetBlocks: 获取某一区间内的区块信息</p>
+<p>返回中，XXXRecordCount是指总数量</p>
+<p>GetExchangeByAddress：获得子链指定账号指定数量的充提信息</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
-Start: 开始block
-End： 结束block
-Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetBlocks&quot;,
-                &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;
-                        &quot;Start&quot;:10, &quot;End&quot;:20}
+Sender：需要查询的账号地址
+EnterRecordIndex： 已经充值记录的起始位置(0)
+EnterRecordSize: 已经充值记录的长度
+RedeemRecordIndex： 已经提币记录的起始位置(0)
+RedeemRecordSize： 已经提币记录的长度
+EnteringRecordIndex： 正在充值记录的起始位置(0)
+EnteringRecordSize: 正在充值记录的长度
+RedeemingRecordIndex： 正在提币记录的起始位置(0)
+RedeemingRecordSize： 正在提币记录的长度
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetExchangeByAddress&quot;,
+                &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
+                &quot;EnterRecordIndex&quot;:0, &quot;EnterRecordSize&quot;: 10,
+                &quot;RedeemRecordIndex&quot;:0, &quot;RedeemRecordSize&quot;, 10
+                &quot;EnteringRecordIndex&quot;:0, &quot;EnteringRecordSize&quot;: 10,
+                &quot;RedeemingRecordIndex&quot;:0, &quot;RedeemingRecordSize&quot;, 10
+                 }
           }
 </pre></div>
 </div>
+<p>返回中，XXXRecordCount是指总数量</p>
+<p><strong>*交易类*</strong></p>
+<p>此部分接口和交易相关，当有子链交易发生（sf&gt;0），即可以在这里查看交易和交易结果</p>
 <p>GetTransactionByNonce: 通过账号和Nonce获取子链的tx信息</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
 Sender：查询账号
@@ -339,63 +374,41 @@ Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&
           <span class="p">}</span>
 </pre></div>
 </div>
-<p>GetReceipt: 通过账号和Nonce获取子链的tx执行结果</p>
+<p>GetReceiptByNonce: 通过账号和Nonce获取子链的tx执行结果</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
 Sender：查询账号
-Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetReceipt&quot;,
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetReceiptByNonce&quot;,
                 &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
                         &quot;Sender&quot;:&quot;0x87e369172af1e817ebd8d63bcd9f685a513a6736&quot;， &quot;Nonce&quot;:9
                         }
           }
 </pre></div>
 </div>
-<p>GetDappAddrList: 通过subchainaddr获取子链内所有多合约的地址列表，需要子链业务逻辑合约调用基础合约registerDapp方法后才能生效，具体请参见“母子链货币交互简介”中的示例</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SubChainAddr</span><span class="p">:</span> <span class="n">子链合约地址</span>
-<span class="n">Body</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">,</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;ScsRPCMethod.GetDappAddrList&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;params&quot;</span><span class="p">:{</span><span class="s2">&quot;SubChainAddr&quot;</span><span class="p">:</span><span class="s2">&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;</span><span class="p">,</span>
-                        <span class="p">}</span>
-          <span class="p">}</span>
-</pre></div>
-</div>
-<p>GetExchangeInfo: 获取指定数量的母子链正在充提信息</p>
+<p>注意：如果这是个合约部署的交易，则在contractAddress将会显示合约地址；如果是一个有返回值的方法调用，则在result中显示调用结果</p>
+<p>GetReceiptByHash: 通过交易hash获取子链的tx执行结果</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
-EnteringRecordIndex：充值记录起始位置
-EnteringRecordSize：充值记录获取数量
-RedeemingRecordIndex：提币记录起始位置
-RedeemingRecordSize：提币记录获取数量
-Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetExchangeInfo&quot;,
+Sender：查询账号
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetReceiptByHash&quot;,
                 &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
-                &quot;EnteringRecordIndex&quot;: 0, &quot;EnteringRecordSize&quot;: 5,
-                &quot;RedeemingRecordIndex&quot;: 0, &quot;RedeemingRecordSize&quot;, 5}
+                        &quot;Hash&quot;:&quot;0x87e369172af1e817ebd8d63bcd9f685a513a6736fsne3lkgkvu65kkwlcd&quot;
+                        }
           }
 </pre></div>
 </div>
-<p>返回中，XXXRecordCount是指总数量</p>
-<p>GetExchangeByAddress: 获取指定账号指定数量的充提信息</p>
+<p>注意：如果这是个合约部署的交易，则在contractAddress将会显示合约地址；如果是一个有返回值的方法调用，则在result中显示调用结果</p>
+<p><strong>*业务类*</strong></p>
+<p>此部分合约需要指明是哪个业务逻辑合约</p>
+<p>AnyCall: 获取dapp合约函数的返回值，<strong>调用此接口前必须将dapp注册入dappbase</strong></p>
+<p>Params： 第一个参数是调用的方法，之后是方法传入参数</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SubChainAddr: 子链合约地址
-EnteringRecordIndex：充值中记录起始位置
-EnteringRecordSize：充值中记录获取数量
-RedeemingRecordIndex：提币中记录起始位置
-RedeemingRecordSize：提币中记录获取数量
-EnterRecordIndex：充值完成记录起始位置
-EnterRecordSize：充值完成记录获取数量
-RedeemRecordIndex：提币完成记录起始位置
-RedeemRecordSize：提币完成记录获取数量
-Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.GetExchangeInfo&quot;,
+Sender：查询账号
+DappAddr:子链业务逻辑地址
+Body: {&quot;jsonrpc&quot;:&quot;2.0&quot;,&quot;id&quot;:0,&quot;method&quot;:&quot;ScsRPCMethod.AnyCall&quot;,
                 &quot;params&quot;:{&quot;SubChainAddr&quot;:&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;,
-                &quot;EnteringRecordIndex&quot;: 0, &quot;EnteringRecordSize&quot;: 5,
-                &quot;RedeemingRecordIndex&quot;: 0, &quot;RedeemingRecordSize&quot;: 5,
-                &quot;EnterRecordIndex&quot;: 0, &quot;EnterRecordSize&quot;: 5,
-                &quot;RedeemRecordIndex&quot;: 0, &quot;RedeemRecordSize&quot;: 5}
+                        &quot;DappAddr&quot;:&quot;0xcc0D18E77748AeBe3cC6462be0EF724e391a4aD9&quot;,
+                        &quot;Sender&quot;:&quot;0x87e369172af1e817ebd8d63bcd9f685a513a6736&quot;， &quot;Params&quot; :[&quot;funcA&quot;, &quot;param1&quot;, param2]
+                        }
           }
-</pre></div>
-</div>
-<p>返回中，XXXRecordCount是指总数量</p>
-<p>GetTxpool：获取子链池子信息</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SubChainAddr</span><span class="p">:</span> <span class="n">子链合约地址</span>
-<span class="n">Body</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">,</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;ScsRPCMethod.GetExchangeInfo&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;params&quot;</span><span class="p">:{</span><span class="s2">&quot;SubChainAddr&quot;</span><span class="p">:</span><span class="s2">&quot;0x1195cd9769692a69220312e95192e0dcb6a4ec09&quot;</span><span class="p">}</span>
-          <span class="p">}</span>
 </pre></div>
 </div>
 </div>
