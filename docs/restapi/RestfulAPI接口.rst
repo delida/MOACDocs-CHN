@@ -600,7 +600,12 @@ erc20授权给子链
 	{
 		"success": true,
 		"message": "",
-		"data": 子链交易明细
+		"data": 子链交易明细，其中主要字段描述如下：
+		        failed：交易是否成功  false表示成功
+				result：如执行合约方法，retrun的数据
+				transactionHash：子链hash
+				contractAddress：当部署合约时，返回合约地址
+				
 	}	
 		
 

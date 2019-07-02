@@ -1,2 +1,70 @@
 子链节点的更替
 ^^^^^^^^^^^^^^^^^^^^^^
+
+子链节点添加
+----------------------
+
+子链合约提供了registerAdd方法来支持子链添加，必须由子链部署账号来发送交易请求。
+
+需要对应SubChainProtocolBase矿池合约有等待加入的scs节点。
+
+子链收到请求后，在矿池合约选取scs，开始同步子链区块，等一轮flush后生效，正式加入子链。
+
+registerAdd参数:
+::
+	nodeToAdd： 当前scs数+需要加入scs数
+
+调用示例:
+::	
+	> data = subchainbase.registerAdd.getData(20)
+	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
+	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
+	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: data});
+
+验证：scs对应日志开始同步区块，合约公共变量codeCount更新为scs最新数量
+::		
+	> SubChainBase.nodeCount()
+	
+子链节点退出
+----------------------
+
+子链节点退出有两种方式：
+
+1. 当子链工作正常时，调用子类合约requestRelease方法请求退出子链，等待一轮flush后生效。
+
+requestRelease参数:
+::
+	senderType：	1：scs发起请求       2：收益账号发出请求
+	index： 		scs序号（参考ScsRPCMethod.GetSubChainInfo中scs的列表）
+
+调用示例:	
+::	
+	> data = subchainbase.requestRelease.getData(senderType, index)
+	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
+	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
+	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: data});
+	
+验证：等待一轮flush后，关注合约公共变量codeCount是否变化
+::		
+	> SubChainBase.nodeCount()
+
+	
+2. 当子链工作不正常时，可以调用子类合约requestReleaseImmediate方法请求立即退出子链。
+
+requestReleaseImmediate参数:
+::
+	senderType：	1：scs发起请求       2：收益账号发出请求
+	index： 		scs序号（参考ScsRPCMethod.GetSubChainInfo中scs的列表）
+
+调用示例:	
+::	
+	> data = subchainbase.requestReleaseImmediate.getData(senderType, index)
+	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
+	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
+	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: data});
+	
+验证：合约公共变量codeCount是否变化
+::		
+	> SubChainBase.nodeCount()
+
+

@@ -87,6 +87,7 @@
 <li class="toctree-l2"><a class="reference internal" href="子链要点.html">子链要点</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">部署子链前的准备工作</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#vnode">Vnode节点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scs">SCS节点</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">各类账号</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#chain3-nodejs">chain3 的 nodejs 环境</a></li>
 </ul>
@@ -182,6 +183,25 @@
 <p>验证：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">windows</span> <span class="n">command</span> <span class="n">执行</span> <span class="n">moac</span><span class="o">-</span><span class="n">windows</span><span class="o">-</span><span class="mf">4.0</span><span class="o">-</span><span class="n">amd64</span><span class="o">.</span><span class="n">exe</span> <span class="n">attach</span> \\<span class="o">.</span>\<span class="n">pipe</span>\<span class="n">moac</span><span class="o">.</span><span class="n">ipc</span>
 <span class="n">运行concole命令</span> <span class="n">mc</span><span class="o">.</span><span class="n">blockNumber</span> <span class="n">检查是否同步到最新区块</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scs">
+<h2>SCS节点<a class="headerlink" href="#scs" title="Permalink to this headline">¶</a></h2>
+<p>墨客子链节点  版本来源: <a class="reference external" href="https://github.com/MOACChain/moac-core/releases/">https://github.com/MOACChain/moac-core/releases/</a></p>
+<p>此文档采用的版本： 1.0.9    环境：windows</p>
+<p>userconfig.json配置：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>VnodeServiceCfg为代理vnode地址: 192.168.10.209:50062  （对应上面部署的vnode的IP）
+Beneficiary为收益账号
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>启动节点：</dt>
+<dd>scsserver-windows-4.0-amd64 --password &quot;123456&quot;   （生成scs keystore的密码）</dd>
+</dl>
+<p>验证：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>scs启动后，并开始从vnode同步块号信息。
+在scskeystore目录内生成的keystore文件中生成scs账号的scskeystore文件。
 </pre></div>
 </div>
 </div>
