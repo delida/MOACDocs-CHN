@@ -2,14 +2,8 @@
 ===========
 
 
-墨客母链客户端使用了和以太坊类似的交互式命令行。用户可以在命令行中执行内置的JAVA script命令和脚本，输出结果显示在命令行中。MOAC VNODE developed based on the
-`Ethereum <https://github.com/ethereum/go-ethereum>`__ project. It also
-implements a ***javascript runtime environment*** (JSRE) that can be
-used in either interactive (console) or non-interactive (script) mode.
-
-MOAC VNODE Javascript console exposes the general JavaScript Dapp API and the
-admin API.
-这里使用的web3对象，是以太坊开发的一套javascript库，目的是让应用程序能够与以太坊节点进行通信。注意，这里有两层，geth启动了一个以太坊节点，console参数开启了一个javascript的控制台，这个控制台注入了web3.js这个库，以使我们可以通过web3对象与以太坊节点做交互。
+墨客母链客户端使用了和以太坊类似的交互式命令行。用户可以在命令行（console）中执行内置的JAVA script命令或者利用脚本（script），输出结果显示在命令行中。
+这里使用的chain3对象，是MOAC参考以太坊，而开发的一套javascript库，目的是让应用程序能够与MOAC的VNODE和SCS节点进行通信。注意，这里有两层，moac启动了一个MOAC VNODE节点，console参数开启了一个javascript的控制台，这个控制台注入了chain3.js这个库，以使我们可以通过chain3对象与MOAC VNODE节点做交互。
 
 
 Interactive use: the JSRE REPL Console
@@ -36,10 +30,7 @@ $ moac attach ws://127.0.0.1:8546
 --rpccorsdomain 允许连接到rpc的url匹配模式 *代表任意
 console 启动一个交互式的JavaScript环境
 
-作者：luohuayong
-链接：https://www.jianshu.com/p/fa2e69a772a2
-来源：简书
-简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+
 
 Note that by default the moac node doesn't start the http and weboscket service and not all functionality is provided over these interfaces due to security reasons. These defaults can be overridden when the --rpcapi and --wsapi arguments when the moac node is started, or with admin.startRPC and admin.startWS.
 
