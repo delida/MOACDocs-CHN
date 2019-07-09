@@ -189,7 +189,9 @@ shardingflag：表示操作子链， 传值：0x3，请注意，多合约版本�
 via: 对应 proxy vnode 的收益地址
 </pre></div>
 </div>
-<p>STEP1：在子链上部署多合约基础合约 dappbase.sol， 部署示例</p>
+<p>STEP1：在子链上部署多合约基础合约 DappBase.sol， 在 nuwa1.0.10 中可能是 DappBasePrivate.sol 或者 DappBasePublic.sol，两者的不同是
+DappBasePublic 允许除子链拥有者(owner)之外的用户在子链上部署DAPPs。之前默认的都是仅有子链owner才能部署DAPP。
+部署示例（以下在nodeJs console中进行）：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;chain3&#39;</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">solc</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;solc&#39;</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">chain3</span><span class="p">();</span>

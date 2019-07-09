@@ -27,7 +27,9 @@ DAPP智能合约也通过主链的sendTransaction发送交易到 proxy vnode 的
 	shardingflag：表示操作子链， 传值：0x3，请注意，多合约版本部署任何合约shardingflag都为0x3  
 	via: 对应 proxy vnode 的收益地址
 	
-STEP1：在子链上部署多合约基础合约 dappbase.sol， 部署示例
+STEP1：在子链上部署多合约基础合约 DappBase.sol， 在 nuwa1.0.10 中可能是 DappBasePrivate.sol 或者 DappBasePublic.sol，两者的不同是
+DappBasePublic 允许除子链拥有者(owner)之外的用户在子链上部署DAPPs。之前默认的都是仅有子链owner才能部署DAPP。
+部署示例（以下在nodeJs console中进行）：
 ::
 	> chain3 = require('chain3')
 	> solc = require('solc')
