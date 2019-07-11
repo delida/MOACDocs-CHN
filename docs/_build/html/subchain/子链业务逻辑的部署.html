@@ -172,7 +172,7 @@
   <div class="section" id="id1">
 <h1>子链业务逻辑的部署<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>同主链相同，业务逻辑的实现也通过智能合约的方式。</p>
-<p>在1.0.8版本中，加入的子链多合约的功能。子链多合约指的是在一条子链上部署多个子链业务逻辑合约。</p>
+<p>在1.0.8及之后的版本中，加入的子链多合约的功能。子链多合约功能指的是在一条子链上部署多个子链业务逻辑合约，又称DAPP的功能。</p>
 <div class="section" id="id2">
 <h2>多合约部署准备工作<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>需要有一条已经在运行的子链，具体部署方法可参见“子链部署方法”。</p>
@@ -190,21 +190,23 @@ via: 对应 proxy vnode 的收益地址
 </pre></div>
 </div>
 <p>STEP1：在子链上部署多合约基础合约 DappBase.sol， 在 nuwa1.0.10 中可能是 DappBasePrivate.sol 或者 DappBasePublic.sol，两者的不同是
-DappBasePublic 允许除子链拥有者(owner)之外的用户在子链上部署DAPPs。之前默认的都是仅有子链owner才能部署DAPP。
-部署示例（以下在nodeJs console中进行）：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;chain3&#39;</span><span class="p">)</span>
-<span class="o">&gt;</span> <span class="n">solc</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;solc&#39;</span><span class="p">)</span>
-<span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">chain3</span><span class="p">();</span>
-<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">setProvider</span><span class="p">(</span><span class="n">new</span> <span class="n">chain3</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">HttpProvider</span><span class="p">(</span><span class="s1">&#39;http://localhost:8545&#39;</span><span class="p">));</span>
-<span class="o">&gt;</span> <span class="n">solfile</span> <span class="o">=</span> <span class="s1">&#39;DappBase.sol&#39;</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="n">contract</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="n">solfile</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">);</span>
-<span class="o">&gt;</span> <span class="n">output</span> <span class="o">=</span> <span class="n">solc</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">contract</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-<span class="o">&gt;</span> <span class="n">abi</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:DappBase&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">interface</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="nb">bin</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">contracts</span><span class="p">[</span><span class="s1">&#39;:DappBase&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bytecode</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="n">via</span> <span class="o">=</span> <span class="s1">&#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;</span><span class="p">;</span>
-<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
-<span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">({</span><span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">shardingFlag</span><span class="p">:</span> <span class="s2">&quot;0x3&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x&#39;</span> <span class="o">+</span> <span class="nb">bin</span><span class="p">,</span> <span class="n">nonce</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="n">via</span><span class="p">:</span> <span class="n">via</span><span class="p">,</span> <span class="p">});</span>
+DappBasePublic 允许除子链拥有者(owner)之外的用户在子链上部署DAPPs。之前默认的都是仅有子链owner才能部署DAPP。</p>
+<p>注意：目前子链原生币支持moac和erc20两种兑换方式，交易values分别对应subchainbase的tokensupply和erc20的totalsupply，细节详见母子链货币交互章节</p>
+<p>部署示例（以下在nodeJs console中进行）：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt; chain3 = require(&#39;chain3&#39;)
+&gt; solc = require(&#39;solc&#39;)
+&gt; chain3 = new chain3();
+&gt; chain3.setProvider(new chain3.providers.HttpProvider(&#39;http://localhost:8545&#39;));
+&gt; solfile = &#39;DappBase.sol&#39;;
+&gt; contract = fs.readFileSync(solfile, &#39;utf8&#39;);
+&gt; output = solc.compile(contract, 1);
+&gt; abi = output.contracts[&#39;:DappBase&#39;].interface;
+&gt; bin = output.contracts[&#39;:DappBase&#39;].bytecode;
+&gt; subchainaddr = &#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;;
+&gt; via = &#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;;
+&gt; chain3.personal.unlockAccount(chain3.mc.accounts[0], &#39;123456&#39;);
+&gt; amount = tokensupply // 注意：amount分别对应subchainbase的tokensupply和erc20的totalsupply，细节详见母子链货币交互章节
+&gt; chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:chain3.toSha(amount,&#39;mc&#39;), to: subchainaddr, gas:0, shardingFlag: &quot;0x3&quot;, data: &#39;0x&#39; + bin, nonce: 0, via: via, });
 </pre></div>
 </div>
 <dl class="docutils">
@@ -279,7 +281,7 @@ data: 调用合约地址 + registerDapp(address,address,string)对应参数
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, MOAC.
+        &copy; Copyright 2018-2019, MOAC
 
     </p>
   </div>
@@ -298,20 +300,13 @@ data: 调用合约地址 + registerDapp(address,address,string)对应参数
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'',
-            LANGUAGE:'chn',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
 
   
 
