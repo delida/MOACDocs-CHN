@@ -4,7 +4,7 @@
 官方发布版本
 ------------
 
-最新的墨客软件可以从官方的发布地址下载 `release
+最新的MOAC软件可以从官方的发布地址下载 `release
 link <https://github.com/MOACChain/moac-core/releases>`__
 
 Debian/Ubuntu/CentOS
@@ -93,7 +93,7 @@ should be seen as:
 2.1 查看moac帮助
 ''''''''''''''''
 
-打开命令（cmd）终端，转到墨客解压目录，在命令行中执行：
+打开命令（cmd）终端，转到MOAC解压目录，在命令行中执行：
 
 ::
 
@@ -103,7 +103,7 @@ should be seen as:
 
 查看moac帮助
 
-打开命令（cmd）终端，转到墨客解压目录，在命令行中执行：
+打开命令（cmd）终端，转到MOAC解压目录，在命令行中执行：
 
 ::
 
@@ -132,7 +132,7 @@ should be seen as:
 2.2 运行节点
 ''''''''''''
 
-打开命令（cmd）终端，转到墨客当前目录，在命令行中执行：
+打开命令（cmd）终端，转到MOAC当前目录，在命令行中执行：
 
 ::
 
@@ -174,7 +174,7 @@ should be seen as:
 
 之后一直滚屏以同步区块数据。
 
-打开另一个命令（cmd）终端，转到墨客当前目录，在命令行中执行：
+打开另一个命令（cmd）终端，转到MOAC当前目录，在命令行中执行：
 
 ::
 
@@ -280,7 +280,7 @@ should be seen as:
 
    moac\_install\_win\_5
 
-登录墨客区块链浏览器页面： http://explorer.moac.io。
+登录MOAC区块链浏览器页面： http://explorer.moac.io。
 
 .. figure:: ../image/moac_explorer_main.png
    :alt: moac\_explorer\_0

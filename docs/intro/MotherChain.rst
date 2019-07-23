@@ -2,22 +2,23 @@
 ^^^^^^^^^^^
 
 
-母链是一个使用工作量证明为共识算法的区块链，可为智能合约和DApp解决数据存储和计算处理工作，是墨客的主要部分。
+母链（MotherChain）是一个使用工作量证明为共识算法的区块链，可为智能合约和DApp解决数据存储和计算处理工作，是MOAC的主要部分。
+母链也称为基础链（BaseChain），可以支持多种应用链（AppChain），又称子链（MicroChain）。
 
 工作量证明 Proof-of-Work（PoW）算法是一种行之有效的措施，可以阻止并最终禁止第三方干扰，包括拒绝服务攻击，其他服务以及网络滥用（如垃圾邮件）。 PoW要求服务请求者提供一些工作量证明，通常是在规定的处理时间内由计算机完成特定处理任务，从而消除错误的系统威胁。
-在墨客平台上，母链是处理交易和其他区块链操作、共识和数据访问的公共区块链层。墨客还支持使用子链来实现其他共识算法 。
+在MOAC平台上，母链是处理交易和其他区块链操作、共识和数据访问的公共区块链层。MOAC还支持使用应用链来实现其他共识算法 。
 
-Besides the POW consensus on transaction and data store set, each POW node is associated with one or more Smart Contract Server(SCS). SCS node could be local to the POW node, or it could be a remote node. The SCS identity is fully verifiable by the corresponding POW node, or Validating Node (VNODE). 
+除了POW对事务和数据存储集的共识之外，每个POW节点都与一个或多个智能合约服务器（SCS）相关联。 SCS节点可以是POW节点的本地节点，也可以是远程节点。 SCS标识可由相应的POW节点或验证节点（VNODE）完全验证。
 
-Block is mined every 10s, with reward of 2 MOAC coins per block.
+MOAC 系统的区块大概每10秒钟达成一次共识，挖出区块的奖励在最初为2个MOAC币。
 
-The reward schedule halves every 12,500,000 blocks, equivalent to
-approx. four years.
+这一奖励每12,500,000个区块减半，大致相当于约四年时间。
 
-After block 15,000,000, the reward will be constant of 0.1 MOAC per
-block. See below.
+在挖出15,000,000个区块之后，奖励变为常数，即每个区块0.1 MOAC。 
 
-We define 1 MOAC = 1,000,000 Sand. 1 Sand = 1,000 Xiao.
+MOAC母链每年将通过挖矿大概产生600万个通证，进一步增加流通中的供应量。到2058年，总供应量预计将达到2.1亿枚。
+
+在MOAC系统中， 1 MOAC = 1,000,000 Sand. 1 Sand = 1,000 Xiao.
 
 
 +---------------------------+------------------------------------+
@@ -46,7 +47,7 @@ and also benefit the SCS providers.
 母链交易数据结构
 --------------
 
-墨客母链的交易数据结构与以太坊的相比，加入了三个新变量：
+MOAC母链的交易数据结构与以太坊的相比，加入了三个新变量：
 
 +-------------------------+-----------+-------------------------------------------+
 | Txdata field            | Json | Usage                                       |
@@ -63,9 +64,9 @@ and also benefit the SCS providers.
 +-------------------------+-----------+-------------------------------------------+
 | **Payload**           | data  |  Information aobut Global Contract call, MicroChain Dapp transactions, etc.|
 +-------------------------+-----------+-------------------------------------------+
-| **ShardingFlag**             | shardingFlag  | 用于鉴别交易种类: 0 - 母链交易 TX; 1 - 子链合约调用；2 - 子链原生币交易; 3 - 子链合约部署；     |
+| **ShardingFlag**             | shardingFlag  | 用于鉴别交易种类: 0 - 母链交易 TX; 1 - 应用链合约调用；2 - 应用链原生币交易; 3 - 应用链合约部署；     |
 +-------------------------+-----------+-------------------------------------------+
-| **Via**           | via  | 仅在ShardingFlag不为0的时候起作用，是子链交易发送到的母链节点的标识地址；|
+| **Via**           | via  | 仅在ShardingFlag不为0的时候起作用，是应用链交易发送到的母链节点的标识地址；|
 +-------------------------+-----------+-------------------------------------------+
 | **SystemContract**           | systemFlag  | 系统合约标识，默认为0，不需要改动；   |
 +-------------------------+-----------+-------------------------------------------+
@@ -95,7 +96,7 @@ and also benefit the SCS providers.
 母链节点客户端（VNODE）
 --------------
 
-VNODE client is used to form the MotherChain network. It used a Proof of Work consensus method similar to Ethereum. VNODE not only handles data storage and compute processing for smart contracts but also pass data for the MicroChain Dapps. 
+VNODE 客户端是接入MOAC母链的软件。VNODE 客户端可以进行母链的POW共识，并和应用链的SCS客户端相连，以支持应用链的共识。 
 
 
 外部链接

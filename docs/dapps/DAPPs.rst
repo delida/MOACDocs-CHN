@@ -1,7 +1,7 @@
 去中心化应用（DAPPs）
 ====================
 
-墨客平台上的去中心化应用(DAPP)即可以部署在母链，也可以单独部署一条子链。
+MOAC平台上的去中心化应用(DAPP)即可以部署在母链，也可以单独部署一条应用链。
 
 
 母链 DAPP 应用
@@ -13,11 +13,11 @@
 
 :doc:`ERC721`
 
-如果开发者想把基于以太坊的应用移植到墨客平台，只需做很小的改动，具体可以参考：
+如果开发者想把基于以太坊的应用移植到MOAC平台，只需做很小的改动，具体可以参考：
 
 :doc:`MoveToMoac`
 
-子链 DApps 应用
+DApps 应用链
 ~~~~~~~~~~~~~~~~
 
 DApp runs on MicroChain means it has its own blockchain that supports transactions, 

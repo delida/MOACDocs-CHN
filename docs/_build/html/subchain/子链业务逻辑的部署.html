@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>子链业务逻辑的部署 &mdash; MOACdocs-chn  documentation</title>
+  <title>应用链业务逻辑的部署 &mdash; MOACdocs-chn  documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="子链的监听及子链接口调用" href="子链的监听及子链接口调用.html" />
-    <link rel="prev" title="子链的部署方法" href="子链的部署方法.html" /> 
+    <link rel="next" title="应用链的监听及应用链接口调用" href="子链的监听及子链接口调用.html" />
+    <link rel="prev" title="应用链的部署方法" href="子链的部署方法.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,23 +80,23 @@
             
               <p class="caption"><span class="caption-text">目录:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">墨客系统介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">墨客区块链系统和工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">MOAC系统介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">MOAC区块链系统和工具</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">子链</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="名词解释.html">名词解释</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链要点.html">子链要点</a></li>
-<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">子链业务逻辑的部署</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="子链要点.html">应用链要点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署应用链前的准备工作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">应用链的部署方法</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">应用链业务逻辑的部署</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">多合约部署准备工作</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dapp">DAPP智能合约的部署（多合约版）</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">DAPP智能合约的调用</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链节点的更替.html">子链节点的更替</a></li>
-<li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭子链</a></li>
-<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">应用链的监听及应用链接口调用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链节点的更替.html">应用链节点的更替</a></li>
+<li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭应用链</a></li>
+<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">母应用链货币交互简介</a></li>
 <li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html">多合约的进阶操作</a></li>
 </ul>
 </li>
@@ -150,7 +150,7 @@
         
           <li><a href="index.html">子链</a> &raquo;</li>
         
-      <li>子链业务逻辑的部署</li>
+      <li>应用链业务逻辑的部署</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -170,12 +170,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>子链业务逻辑的部署<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>应用链业务逻辑的部署<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>同主链相同，业务逻辑的实现也通过智能合约的方式。</p>
-<p>在1.0.8及之后的版本中，加入的子链多合约的功能。子链多合约功能指的是在一条子链上部署多个子链业务逻辑合约，又称DAPP的功能。</p>
+<p>在1.0.8及之后的版本中，加入的应用链多合约的功能。应用链多合约功能指的是在一条应用链上部署多个应用链业务逻辑合约，又称DAPP的功能。</p>
 <div class="section" id="id2">
 <h2>多合约部署准备工作<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>需要有一条已经在运行的子链，具体部署方法可参见“子链部署方法”。</p>
+<p>需要有一条已经在运行的应用链，具体部署方法可参见“应用链部署方法”。</p>
 <p>假设有两个业务逻辑合约dapp1.sol和dapp2.sol。</p>
 <p>从发布链接下载多合约基础合约dappbase.sol</p>
 </div>
@@ -183,15 +183,15 @@
 <h2>DAPP智能合约的部署（多合约版）<a class="headerlink" href="#dapp" title="Permalink to this headline">¶</a></h2>
 <p>DAPP智能合约也通过主链的sendTransaction发送交易到 proxy vnode 的方式进行部署。</p>
 <p>参数：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>to: 子链控制合约subchainbase的地址
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>to: 应用链控制合约subchainbase的地址
 gas: 不需要消耗gas费用，传值：0
-shardingflag：表示操作子链， 传值：0x3，请注意，多合约版本部署任何合约shardingflag都为0x3
+shardingflag：表示操作应用链， 传值：0x3，请注意，多合约版本部署任何合约shardingflag都为0x3
 via: 对应 proxy vnode 的收益地址
 </pre></div>
 </div>
-<p>STEP1：在子链上部署多合约基础合约 DappBase.sol， 在 nuwa1.0.10 中可能是 DappBasePrivate.sol 或者 DappBasePublic.sol，两者的不同是
-DappBasePublic 允许除子链拥有者(owner)之外的用户在子链上部署DAPPs。之前默认的都是仅有子链owner才能部署DAPP。</p>
-<p>注意：目前子链原生币支持moac和erc20两种兑换方式，交易values分别对应subchainbase的tokensupply和erc20的totalsupply，细节详见母子链货币交互章节</p>
+<p>STEP1：在应用链上部署多合约基础合约 DappBase.sol， 在 nuwa1.0.10 中可能是 DappBasePrivate.sol 或者 DappBasePublic.sol，两者的不同是
+DappBasePublic 允许除应用链拥有者(owner)之外的用户在应用链上部署DAPPs。之前默认的都是仅有应用链owner才能部署DAPP。</p>
+<p>!!!特别注意!!!：目前应用链原生币支持moac和erc20两种兑换方式，交易values分别对应subchainbase的tokensupply和erc20的totalsupply，这个值必须对应，否则将会导致dappbase部署失败。细节详见母应用链货币交互章节</p>
 <p>部署示例（以下在nodeJs console中进行）：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt; chain3 = require(&#39;chain3&#39;)
 &gt; solc = require(&#39;solc&#39;)
@@ -205,20 +205,20 @@ DappBasePublic 允许除子链拥有者(owner)之外的用户在子链上部署D
 &gt; subchainaddr = &#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;;
 &gt; via = &#39;0xf103bc1c054babcecd13e7ac1cf34f029647b08c&#39;;
 &gt; chain3.personal.unlockAccount(chain3.mc.accounts[0], &#39;123456&#39;);
-&gt; amount = tokensupply // 注意：amount分别对应subchainbase的tokensupply和erc20的totalsupply，细节详见母子链货币交互章节
+&gt; amount = tokensupply // 注意：amount分别对应subchainbase的tokensupply和erc20的totalsupply，细节详见母应用链货币交互章节
 &gt; chain3.mc.sendTransaction({from: chain3.mc.accounts[0], value:chain3.toSha(amount,&#39;mc&#39;), to: subchainaddr, gas:0, shardingFlag: &quot;0x3&quot;, data: &#39;0x&#39; + bin, nonce: 0, via: via, });
 </pre></div>
 </div>
 <dl class="docutils">
 <dt>验证:</dt>
 <dd><p class="first">合约部署成功后，Nonce值应该是1
-可调用monitor的rpc接口ScsRPCMethod.GetNonce进行检查，具体详见子链接口调用部分。</p>
+可调用monitor的rpc接口ScsRPCMethod.GetNonce进行检查，具体详见应用链接口调用部分。</p>
 <p class="last">dapp合约地址:6ab296062d8a147297851719682fb5ffe081f1d3
 dapp合约地址可调用monitor的rpc接口ScsRPCMethod.GetReceipt，传入对应Nonce，获得contractAddress字段内容</p>
 </dd>
-<dt>STEP2：在子链上部署业务逻辑合约 dapp1.sol，部署方法和上面雷同</dt>
+<dt>STEP2：在应用链上部署业务逻辑合约 dapp1.sol，部署方法和上面雷同</dt>
 <dd>合约地址可调用monitor的rpc接口ScsRPCMethod.GetReceipt，传入对应Nonce，获得contractAddress字段内容</dd>
-<dt>STEP3：在子链上部署业务逻辑合约 dapp2.sol，部署方法和上面雷同</dt>
+<dt>STEP3：在应用链上部署业务逻辑合约 dapp2.sol，部署方法和上面雷同</dt>
 <dd>合约地址可调用monitor的rpc接口ScsRPCMethod.GetReceipt，传入对应Nonce，获得contractAddress字段内容</dd>
 </dl>
 </div>
@@ -226,13 +226,13 @@ dapp合约地址可调用monitor的rpc接口ScsRPCMethod.GetReceipt，传入对�
 <h2>DAPP智能合约的调用<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>DAPP智能合约的调用也通过主链的sendTransaction发送交易到 proxy vnode 的方式进行。</p>
 <p>在多合约版本中，调用dapp方法前，需要先调用dappbase中的registerDapp方法来注册每一个dapp，具体方式如下：</p>
-<p><strong>请注意，与母链调用不同，子链的任何调用需要在data前加上dapp的合约地址！！</strong></p>
+<p><strong>请注意，与母链调用不同，应用链的任何调用需要在data前加上dapp的合约地址！！</strong></p>
 <p>dappbase.sol有个方法 registerDapp(address,address,string)</p>
 <p>参数：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>to: 子链控制合约subchainbase的地址
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>to: 应用链控制合约subchainbase的地址
 nonce：调用monitor的rpc接口ScsRPCMethod.GetNonce获得
 gas: 0 不需要消耗gas费用
-shardingflag： 0x1  表示子链调用操作
+shardingflag： 0x1  表示应用链调用操作
 via: 对应 proxy vnode 的收益地址
 data: 调用合约地址 + registerDapp(address,address,string)对应参数
 </pre></div>
@@ -269,10 +269,10 @@ data: 调用合约地址 + registerDapp(address,address,string)对应参数
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="子链的监听及子链接口调用.html" class="btn btn-neutral float-right" title="子链的监听及子链接口调用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="子链的监听及子链接口调用.html" class="btn btn-neutral float-right" title="应用链的监听及应用链接口调用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="子链的部署方法.html" class="btn btn-neutral" title="子链的部署方法" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="子链的部署方法.html" class="btn btn-neutral" title="应用链的部署方法" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -281,7 +281,7 @@ data: 调用合约地址 + registerDapp(address,address,string)对应参数
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, MOAC
+        &copy; Copyright 2018-2019, MOAC.
 
     </p>
   </div>
@@ -300,13 +300,20 @@ data: 调用合约地址 + registerDapp(address,address,string)对应参数
 
   
 
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-    
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'chn',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 

@@ -1,9 +1,9 @@
-部署子链前的准备工作
+部署应用链前的准备工作
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Vnode节点
-----------------------
-墨客主网节点  版本来源: https://github.com/MOACChain/moac-core/releases/
+Vnode节点软件
+-------------
+MOAC主网节点  版本来源: https://github.com/MOACChain/moac-core/releases/
 
 此文档采用的版本： 1.0.9    环境：windows   testnet浏览器： http://testnet.moac.io/home
 
@@ -16,9 +16,9 @@ Vnode节点
 	运行concole命令 mc.blockNumber 检查是否同步到最新区块
 
 	
-SCS节点
+SCS节点软件
 ----------------------
-墨客子链节点  版本来源: https://github.com/MOACChain/moac-core/releases/
+MOAC应用链节点  版本来源: https://github.com/MOACChain/moac-core/releases/
 
 此文档采用的版本： 1.0.9    环境：windows
 
@@ -48,9 +48,9 @@ userconfig.json配置：
 
 准备账号列表：（示例地址参考后续的命令操作）	
 ::	
-	子链操作账号：进行创建合约，发起交易等基本操作： 0x87e369172af1e817ebd8d63bcd9f685a513a6736 
+	应用链操作账号：进行创建合约，发起交易等基本操作： 0x87e369172af1e817ebd8d63bcd9f685a513a6736 
 	主链vnode收益账号：	0xf103bc1c054babcecd13e7ac1cf34f029647b08c 
-	子链scs收益账号：0xa934198916cd993c73c1aa6e0c0e7b21ce7c735b  0x2e7c076dbf6e61207a0ddb1b942ef7da8fd139f0
+	应用链scs收益账号：0xa934198916cd993c73c1aa6e0c0e7b21ce7c735b  0x2e7c076dbf6e61207a0ddb1b942ef7da8fd139f0
 	
 chain3 的 nodejs 环境	
 ----------------------	

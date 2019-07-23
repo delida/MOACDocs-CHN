@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="子链要点" href="子链要点.html" />
-    <link rel="prev" title="子链" href="index.html" /> 
+    <link rel="next" title="应用链要点" href="子链要点.html" />
+    <link rel="prev" title="应用链" href="index.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,29 +80,31 @@
             
               <p class="caption"><span class="caption-text">目录:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">墨客系统介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">墨客区块链系统和工具</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">子链</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">MOAC系统介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">MOAC区块链系统和工具</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">应用链</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">名词解释</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basechain-motherchain">基础链 （baseChain, motherchain）</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vnode">Vnode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scs">Scs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">子链矿工池</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">vnode代理池</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">子链控制合约</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#appchain-subchain-microchain">应用链 （appChain，subchain, microchain）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scs">SCS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scs-pool">应用链矿工池 （SCS pool）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">vnode代理池</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">应用链控制合约</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#monitor">监听节点（Monitor）</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#flush">flush</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">子链多合约基础合约</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">应用链多合约基础合约</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="子链要点.html">子链要点</a></li>
-<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">子链业务逻辑的部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链节点的更替.html">子链节点的更替</a></li>
-<li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭子链</a></li>
-<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
-<li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html">多合约的进阶操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链要点.html">应用链要点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署应用链前的准备工作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">应用链的部署方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">应用链业务逻辑的部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">应用链的监听及应用链接口调用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链节点的更替.html">应用链节点的更替</a></li>
+<li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭应用链</a></li>
+<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">应用链与基础链之间的跨链交互简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html">应用链上多合约的进阶操作</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../restapi/index.html">Restful API</a></li>
@@ -153,7 +155,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">子链</a> &raquo;</li>
+          <li><a href="index.html">应用链</a> &raquo;</li>
         
       <li>名词解释</li>
     
@@ -176,37 +178,45 @@
             
   <div class="section" id="id1">
 <h1>名词解释<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basechain-motherchain">
+<h2>基础链 （baseChain, motherchain）<a class="headerlink" href="#basechain-motherchain" title="Permalink to this headline">¶</a></h2>
+<p>也称为母链，是使用工作量证明（POW）共识的一条公链，可以支持多条应用链。</p>
+</div>
 <div class="section" id="vnode">
 <h2>Vnode<a class="headerlink" href="#vnode" title="Permalink to this headline">¶</a></h2>
-<p>墨客主网（母链）节点，用于主网挖矿，主网账本同步，主网交易以及子链数据传输的节点。</p>
+<p>MOAC母链节点软件，用于构建母链（又称基础链），可以进行POW挖矿，账本同步，交易以及应用链数据传输的节点。</p>
+</div>
+<div class="section" id="appchain-subchain-microchain">
+<h2>应用链 （appChain，subchain, microchain）<a class="headerlink" href="#appchain-subchain-microchain" title="Permalink to this headline">¶</a></h2>
+<p>也称为子链，是构建在MOAC基础链之上，用于独立运行一个或者多个智能合约的区块链</p>
 </div>
 <div class="section" id="scs">
-<h2>Scs<a class="headerlink" href="#scs" title="Permalink to this headline">¶</a></h2>
-<p>墨客子链节点，用于子链挖矿，子链账本同步以及子链业务逻辑执行的节点，也称为子链矿工</p>
+<h2>SCS<a class="headerlink" href="#scs" title="Permalink to this headline">¶</a></h2>
+<p>MOAC应用链节点软件，用于应用链挖矿，应用链账本同步以及应用链业务逻辑执行的节点，也称为应用链矿工</p>
+</div>
+<div class="section" id="scs-pool">
+<h2>应用链矿工池 （SCS pool）<a class="headerlink" href="#scs-pool" title="Permalink to this headline">¶</a></h2>
+<p>存储应用链矿工的池子，本质上池子是一个智能合约，需要应用链节点注册</p>
 </div>
 <div class="section" id="id2">
-<h2>子链矿工池<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>存储子链矿工的池子，本质上池子是一个智能合约，需要子链节点注册</p>
-</div>
-<div class="section" id="id3">
-<h2>vnode代理池<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>vnode代理池<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>存储vnode代理节点，本质上池子是一个智能合约，需要vnode节点</p>
 </div>
-<div class="section" id="id4">
-<h2>子链控制合约<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>用于控制整个子链的流程</p>
+<div class="section" id="id3">
+<h2>应用链控制合约<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>用于控制整个应用链的流程</p>
 </div>
 <div class="section" id="monitor">
 <h2>监听节点（Monitor）<a class="headerlink" href="#monitor" title="Permalink to this headline">¶</a></h2>
-<p>监听节点是一个特殊的Scs节点，可以用来监听某条子链的运行情况，当一个节点成为监听节点后，其只负责同步该子链的区块信息，不参与子链出块。Dapp用户可以通过该节点监控子链运行情况</p>
+<p>监听节点是一个特殊的SCS节点，可以用来监听某条应用链的运行情况，当一个节点成为监听节点后，其只负责同步该应用链的区块信息，不参与应用链出块。Dapp用户可以通过该节点监控应用链运行情况</p>
 </div>
 <div class="section" id="flush">
 <h2>flush<a class="headerlink" href="#flush" title="Permalink to this headline">¶</a></h2>
-<p>子链的一个特殊操作，每条正常运行的子链每隔一段时间需要向母链进行状态刷新，并且同时完成：Scs矿工的收益发放；有币子链和母链之间的货币充提等操作。flush周期可在部署子链控制合约时设置，当子链交易数不活跃时，flush周期将变大，直到有交易时收敛到设置值</p>
+<p>应用链的一个特殊操作，每条正常运行的应用链每隔一段时间需要向母链进行状态刷新，并且同时完成：Scs矿工的收益发放；有币应用链和母链之间的货币充提等操作。flush周期可在部署应用链控制合约时设置，当应用链交易数不活跃时，flush周期将变大，直到有交易时收敛到设置值</p>
 </div>
-<div class="section" id="id5">
-<h2>子链多合约基础合约<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p>1.0.8版本后的新功能，用于在子链上部署多合约的基础控制合约</p>
+<div class="section" id="id4">
+<h2>应用链多合约基础合约<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>1.0.8版本后的新功能，用于在应用链上部署多合约的基础控制合约</p>
 </div>
 </div>
 
@@ -218,10 +228,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="子链要点.html" class="btn btn-neutral float-right" title="子链要点" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="子链要点.html" class="btn btn-neutral float-right" title="应用链要点" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="子链" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral" title="应用链" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -230,7 +240,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, MOAC
+        &copy; Copyright 2018-2019, MOAC.
 
     </p>
   </div>
@@ -249,13 +259,20 @@
 
   
 
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-    
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'chn',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 

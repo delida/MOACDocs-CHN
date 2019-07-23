@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-墨客区块链系统和工具
+MOAC区块链系统和工具
 ========================================
 
 .. toctree::

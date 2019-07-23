@@ -1,10 +1,10 @@
-关闭子链
+关闭应用链
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-子链关闭请求
+应用链关闭请求
 ----------------------
 
-子链合约提供了close的方法来支持关闭子链，必须由子链部署账号来发送交易请求。
+应用链合约提供了close的方法来支持关闭应用链，必须由应用链部署账号来发送交易请求。
 
 调用示例:
 ::	
@@ -14,7 +14,7 @@
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
 	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: '0x43d726d6'});
 
-关闭请求发送后，需等待一轮flush后生效，相关子链维护费用也将退回到子链部署账号中。
+关闭请求发送后，需等待一轮flush后生效，相关应用链维护费用也将退回到应用链部署账号中。
 可以通过查询余额进行验证  
 ::		
 	> chain3.mc.getBalance('0x1195cd9769692a69220312e95192e0dcb6a4ec09')

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>子链节点的更替 &mdash; MOACdocs-chn  documentation</title>
+  <title>应用链节点的更替 &mdash; MOACdocs-chn  documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="关闭子链" href="关闭子链.html" />
-    <link rel="prev" title="子链的监听及子链接口调用" href="子链的监听及子链接口调用.html" /> 
+    <link rel="next" title="关闭应用链" href="关闭子链.html" />
+    <link rel="prev" title="应用链的监听及应用链接口调用" href="子链的监听及子链接口调用.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,22 +80,23 @@
             
               <p class="caption"><span class="caption-text">目录:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">墨客系统介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">墨客区块链系统和工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">MOAC系统介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">MOAC区块链系统和工具</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">子链</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="名词解释.html">名词解释</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链要点.html">子链要点</a></li>
-<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">子链业务逻辑的部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">子链节点的更替</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">子链节点添加</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">子链节点退出</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链要点.html">应用链要点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署应用链前的准备工作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">应用链的部署方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">应用链业务逻辑的部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">应用链的监听及应用链接口调用</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">应用链节点的更替</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">应用链节点启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">应用链节点添加</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">应用链节点退出</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭子链</a></li>
-<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭应用链</a></li>
+<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">母应用链货币交互简介</a></li>
 <li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html">多合约的进阶操作</a></li>
 </ul>
 </li>
@@ -149,7 +150,7 @@
         
           <li><a href="index.html">子链</a> &raquo;</li>
         
-      <li>子链节点的更替</li>
+      <li>应用链节点的更替</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -169,12 +170,41 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>子链节点的更替<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>应用链节点的更替<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id2">
-<h2>子链节点添加<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>子链合约提供了registerAdd方法来支持子链添加，必须由子链部署账号来发送交易请求。</p>
+<h2>应用链节点启动<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>在官方下载链接中找到最新的应用程序（<a class="reference external" href="https://github.com/MOACChain/moac-core/releases/">https://github.com/MOACChain/moac-core/releases/</a>），解压后可以看到有scs的目录
+配置好userconfig.json文件，其内容如下：</p>
+<dl class="docutils">
+<dt>&quot;VnodeServiceCfg&quot;:</dt>
+<dd>所连接的SCS的VNODE端的IP和端口，默认为localhost：50062;</dd>
+<dt>&quot;DataDir&quot;:</dt>
+<dd>存储appChain数据的数据路径，默认为“./scsdata”;</dd>
+<dt>&quot;LogPath&quot;:</dt>
+<dd>存储日志数据的数据路径，默认为“./_logs”;</dd>
+<dt>&quot;Beneficiary&quot;:</dt>
+<dd>从appChains获得奖励的有益帐户地址。这与scsserver地址不同。</dd>
+<dt>&quot;VnodechainId&quot;:</dt>
+<dd>所连接的MOAC链的chainId，99 - mainnet，100-devnet，101 -testnet;</dd>
+<dt>&quot;Capability&quot;:</dt>
+<dd>此SCS服务器可以加入的appChains数量，默认为10;</dd>
+<dt>&nbsp;&nbsp;SCS服务器加入的appChain越多，它可以获得的奖励就越多;</dt>
+<dd>但同时要求的网络带宽也有相应增加，如果加入的appChain过多而SCS处理能力不够，会造成数据丢失而被惩罚；</dd>
+<dt>&quot;ReconnectInterval&quot;:</dt>
+<dd>如果SCS服务器处于脱机状态，它将尝试连接回来。这是它尝试连接的块数。</dd>
+<dt>&quot;LogLevel&quot;:</dt>
+<dd>记录详细程度：0 =无声，1 =仅显示错误，2 =显示警告信息，3 =显示所有普通信息，4 =显示调试信息，5 =显示所有详细信息（默认值：4）</dd>
+<dt>&quot;BondLimit&quot;:</dt>
+<dd>加入一个appChain的最低存款额，以moac为单位，默认为每个appChain 2 moac; 如果appChain的要求高于这个限制，那么SCS不会加入；</dd>
+<dt>&quot;ReWardMin&quot;:</dt>
+<dd>加入一个appChain的最低奖励限制，以moac为单位，默认为每块0.0001 moac; 如果一个appChain提供的奖励低于这个限制，SCS不会加入；</dd>
+</dl>
+</div>
+<div class="section" id="id3">
+<h2>应用链节点添加<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>应用链合约提供了registerAdd方法来支持应用链添加，必须由应用链部署账号来发送交易请求。</p>
 <p>需要对应SubChainProtocolBase矿池合约有等待加入的scs节点。</p>
-<p>子链收到请求后，在矿池合约选取scs，开始同步子链区块，等一轮flush后生效，正式加入子链。</p>
+<p>应用链收到请求后，在矿池合约选取scs，开始同步应用链区块，等一轮flush后生效，正式加入应用链。</p>
 <p>registerAdd参数:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>nodeToAdd： 当前scs数+需要加入scs数
 </pre></div>
@@ -191,18 +221,18 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>子链节点退出<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>子链节点退出有两种方式：</p>
+<div class="section" id="id4">
+<h2>应用链节点退出<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>应用链节点退出有两种方式：</p>
 <ol class="arabic simple">
-<li>当子链工作正常时，调用子类合约requestRelease方法请求退出子链，等待一轮flush后生效。</li>
+<li>当应用链工作正常时，调用子类合约requestRelease方法请求退出应用链，等待一轮flush后生效。</li>
 </ol>
 <p>requestRelease参数:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>senderType：     1：scs发起请求       2：收益账号发出请求
 index：          scs序号（参考ScsRPCMethod.GetSubChainInfo中scs的列表）
 </pre></div>
 </div>
-<p>调用示例:</p>
+<p>调用示例（在NODEJS 交互环境下）:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">subchainbase</span><span class="o">.</span><span class="n">requestRelease</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="n">senderType</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="n">subchainaddr</span> <span class="o">=</span> <span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">;</span>
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">unlockAccount</span><span class="p">(</span><span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;123456&#39;</span><span class="p">);</span>
@@ -214,7 +244,7 @@ index：          scs序号（参考ScsRPCMethod.GetSubChainInfo中scs的列表�
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
-<li>当子链工作不正常时，可以调用子类合约requestReleaseImmediate方法请求立即退出子链。</li>
+<li>当应用链工作不正常时，可以调用子类合约requestReleaseImmediate方法请求立即退出应用链。</li>
 </ol>
 <p>requestReleaseImmediate参数:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>senderType：     1：scs发起请求       2：收益账号发出请求
@@ -243,10 +273,10 @@ index：          scs序号（参考ScsRPCMethod.GetSubChainInfo中scs的列表�
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="关闭子链.html" class="btn btn-neutral float-right" title="关闭子链" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="关闭子链.html" class="btn btn-neutral float-right" title="关闭应用链" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="子链的监听及子链接口调用.html" class="btn btn-neutral" title="子链的监听及子链接口调用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="子链的监听及子链接口调用.html" class="btn btn-neutral" title="应用链的监听及应用链接口调用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -255,7 +285,7 @@ index：          scs序号（参考ScsRPCMethod.GetSubChainInfo中scs的列表�
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, MOAC
+        &copy; Copyright 2018-2019, MOAC.
 
     </p>
   </div>
@@ -274,13 +304,20 @@ index：          scs序号（参考ScsRPCMethod.GetSubChainInfo中scs的列表�
 
   
 
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-    
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'chn',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 

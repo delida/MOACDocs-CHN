@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>关闭子链 &mdash; MOACdocs-chn  documentation</title>
+  <title>关闭应用链 &mdash; MOACdocs-chn  documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="母子链货币交互简介" href="母子链货币交互简介.html" />
-    <link rel="prev" title="子链节点的更替" href="子链节点的更替.html" /> 
+    <link rel="next" title="母应用链货币交互简介" href="母子链货币交互简介.html" />
+    <link rel="prev" title="应用链节点的更替" href="子链节点的更替.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,21 +80,21 @@
             
               <p class="caption"><span class="caption-text">目录:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">墨客系统介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">墨客区块链系统和工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">MOAC系统介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">MOAC区块链系统和工具</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">子链</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="名词解释.html">名词解释</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链要点.html">子链要点</a></li>
-<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">子链业务逻辑的部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链节点的更替.html">子链节点的更替</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">关闭子链</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">子链关闭请求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链要点.html">应用链要点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署应用链前的准备工作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">应用链的部署方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">应用链业务逻辑的部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">应用链的监听及应用链接口调用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链节点的更替.html">应用链节点的更替</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">关闭应用链</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">应用链关闭请求</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">母应用链货币交互简介</a></li>
 <li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html">多合约的进阶操作</a></li>
 </ul>
 </li>
@@ -148,7 +148,7 @@
         
           <li><a href="index.html">子链</a> &raquo;</li>
         
-      <li>关闭子链</li>
+      <li>关闭应用链</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -168,10 +168,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>关闭子链<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>关闭应用链<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id2">
-<h2>子链关闭请求<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>子链合约提供了close的方法来支持关闭子链，必须由子链部署账号来发送交易请求。</p>
+<h2>应用链关闭请求<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>应用链合约提供了close的方法来支持关闭应用链，必须由应用链部署账号来发送交易请求。</p>
 <p>调用示例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">根据ABI</span> <span class="n">chain3</span><span class="o">.</span><span class="n">sha3</span><span class="p">(</span><span class="s2">&quot;close()&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mh">0x43d726d69bfad97630bc12e80b1a43c44fecfddf089a314709482b2b0132f662</span>
         <span class="n">取前4个字节</span> <span class="mh">0x43d726d6</span>
@@ -180,7 +180,7 @@
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">sendTransaction</span><span class="p">(</span> <span class="p">{</span> <span class="n">from</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">accounts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">to</span><span class="p">:</span> <span class="n">subchainaddr</span><span class="p">,</span> <span class="n">gas</span><span class="p">:</span> <span class="s2">&quot;2000000&quot;</span><span class="p">,</span> <span class="n">gasPrice</span><span class="p">:</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">gasPrice</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="s1">&#39;0x43d726d6&#39;</span><span class="p">});</span>
 </pre></div>
 </div>
-<p>关闭请求发送后，需等待一轮flush后生效，相关子链维护费用也将退回到子链部署账号中。
+<p>关闭请求发送后，需等待一轮flush后生效，相关应用链维护费用也将退回到应用链部署账号中。
 可以通过查询余额进行验证</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">getBalance</span><span class="p">(</span><span class="s1">&#39;0x1195cd9769692a69220312e95192e0dcb6a4ec09&#39;</span><span class="p">)</span>
 </pre></div>
@@ -196,10 +196,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="母子链货币交互简介.html" class="btn btn-neutral float-right" title="母子链货币交互简介" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="母子链货币交互简介.html" class="btn btn-neutral float-right" title="母应用链货币交互简介" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="子链节点的更替.html" class="btn btn-neutral" title="子链节点的更替" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="子链节点的更替.html" class="btn btn-neutral" title="应用链节点的更替" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -208,7 +208,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, MOAC
+        &copy; Copyright 2018-2019, MOAC.
 
     </p>
   </div>
@@ -227,13 +227,20 @@
 
   
 
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-    
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'chn',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 

@@ -5,7 +5,8 @@ FileStorm 使用指南
 介绍
 ============
 
-星际风暴是一个通过墨客子链将星际文件系统（IPFS）和区块链结合而产生的分布式存储平台。星际风暴构建在墨客子链之上，使得有存储需求的用户可以消耗通证来得到存储空间，而提供存储空间的节点提供者通过竞争来获得通证。这种激励方式可以鼓励大家把闲置的硬盘空间来共享，从而搭建一个可商用的全球化存储空间。更多信息可以访问项目网站（https://www.filestorm.net）。
+星际风暴是一个通过MOAC应用链将星际文件系统（IPFS）和区块链结合而产生的分布式存储平台。星际风暴构建在MOAC应用链之上，使得有存储需求的用户可以消耗通证来得到存储空间，而提供存储空间的节点提供者通过竞争来获得通证。这种激励方式可以鼓励大家把闲置的硬盘空间来共享，从而搭建一个可商用的全球化存储空间。更多信息可以访问项目网站（https://www.filestorm.net）。
+
 
 FileStorm is a decentralized storage platform implemented with IPFS and
 MOAC. The files are stored on millions of data nodes provided by people

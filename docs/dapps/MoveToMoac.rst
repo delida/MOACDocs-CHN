@@ -1,4 +1,4 @@
-移植到墨客平台
+移植到MOAC平台
 ============
 
 MOAC developed its VNODE client based on the

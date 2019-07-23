@@ -2,7 +2,7 @@
 ===========
 
 
-墨客母链客户端使用了和以太坊类似的交互式命令行。用户可以在命令行（console）中执行内置的JAVA script命令或者利用脚本（script），输出结果显示在命令行中。
+MOAC母链客户端使用了和以太坊类似的交互式命令行。用户可以在命令行（console）中执行内置的JAVA script命令或者利用脚本（script），输出结果显示在命令行中。
 这里使用的chain3对象，是MOAC参考以太坊，而开发的一套javascript库，目的是让应用程序能够与MOAC的VNODE和SCS节点进行通信。注意，这里有两层，moac启动了一个MOAC VNODE节点，console参数开启了一个javascript的控制台，这个控制台注入了chain3.js这个库，以使我们可以通过chain3对象与MOAC VNODE节点做交互。
 
 

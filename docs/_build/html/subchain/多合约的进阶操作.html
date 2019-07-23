@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>多合约的进阶操作 &mdash; MOACdocs-chn  documentation</title>
+  <title>应用链上多合约的进阶操作 &mdash; MOACdocs-chn  documentation</title>
   
 
   
@@ -29,7 +29,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Restful API" href="../restapi/index.html" />
-    <link rel="prev" title="母子链货币交互简介" href="母子链货币交互简介.html" /> 
+    <link rel="prev" title="应用链与基础链之间的跨链交互简介" href="母子链货币交互简介.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -80,21 +80,21 @@
             
               <p class="caption"><span class="caption-text">目录:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">墨客系统介绍</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">墨客区块链系统和工具</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">子链</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro/index.html">MOAC系统介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../moac/index.html">MOAC区块链系统和工具</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">应用链</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="名词解释.html">名词解释</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链要点.html">子链要点</a></li>
-<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署子链前的准备工作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">子链的部署方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">子链业务逻辑的部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">子链的监听及子链接口调用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链节点的更替.html">子链节点的更替</a></li>
-<li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭子链</a></li>
-<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">母子链货币交互简介</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">多合约的进阶操作</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">子链业务逻辑合约间的调用</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">子链合约的升级（版本迭代）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链要点.html">应用链要点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署应用链前的准备工作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">应用链的部署方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">应用链业务逻辑的部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">应用链的监听及应用链接口调用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="子链节点的更替.html">应用链节点的更替</a></li>
+<li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭应用链</a></li>
+<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">应用链与基础链之间的跨链交互简介</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">应用链上多合约的进阶操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">应用链业务逻辑合约间的调用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">应用链合约的升级（版本迭代）</a></li>
 </ul>
 </li>
 </ul>
@@ -147,9 +147,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">子链</a> &raquo;</li>
+          <li><a href="index.html">应用链</a> &raquo;</li>
         
-      <li>多合约的进阶操作</li>
+      <li>应用链上多合约的进阶操作</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -169,10 +169,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="id1">
-<h1>多合约的进阶操作<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>1.0.8以后，子链引入了多合约的概念。子链多合约指的是在一条子链中部署多个智能合约，多合约可以将业务逻辑进行拆分，相互调用，合约之间也可以进行升级。</p>
+<h1>应用链上多合约的进阶操作<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>1.0.8以后，应用链引入了多合约的概念。应用链多合约指的是在一条应用链中部署多个智能合约，多合约可以将业务逻辑进行拆分，相互调用，合约之间也可以进行升级。</p>
 <div class="section" id="id2">
-<h2>子链业务逻辑合约间的调用<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>应用链业务逻辑合约间的调用<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>本实例完成一个合约调用另外一个合约中的方法。</p>
 <p>STEP0：部署dappbase.sol</p>
 <p>STEP1：部署合约dapp1.sol，并注册到dappbase中去</p>
@@ -233,7 +233,7 @@
 </div>
 </div>
 <div class="section" id="id3">
-<h2>子链合约的升级（版本迭代）<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>应用链合约的升级（版本迭代）<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>本实例完成一个合约获取另外一个合约中的数据，进而替代另外一个合约中的功能。</p>
 <p>STEP0：部署dappbase.sol</p>
 <p>STEP1：部署合约dapp1.sol，并注册到dappbase中去</p>
@@ -369,7 +369,7 @@
         <a href="../restapi/index.html" class="btn btn-neutral float-right" title="Restful API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="母子链货币交互简介.html" class="btn btn-neutral" title="母子链货币交互简介" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="母子链货币交互简介.html" class="btn btn-neutral" title="应用链与基础链之间的跨链交互简介" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -378,7 +378,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, MOAC
+        &copy; Copyright 2018-2019, MOAC.
 
     </p>
   </div>
@@ -397,13 +397,20 @@
 
   
 
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-    
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            LANGUAGE:'chn',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
 
   
 
