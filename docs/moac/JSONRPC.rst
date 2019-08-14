@@ -1,19 +1,15 @@
 JSON RPC 接口命令
 ================
 
-`JSON <http://json.org/>` is a lightweight data-interchange format. It
-can represent numbers, strings, ordered sequences of values, and
-collections of name/value pairs.
+`JSON <http://json.org/>` ( JavaScript Object Notation) ，是一种轻量级的数据交互格式.
 
-`JSON-RPC <http://www.jsonrpc.org/specification>`is a stateless,
-light-weight remote procedure call (RPC) protocol. Primarily this
-specification defines several data structures and the rules around their
-processing. It is transport agnostic in that the concepts can be used
-within the same process, over sockets, over HTTP, or in many various
-message passing environments. It uses JSON (`RFC
-4627 <http://www.ietf.org/rfc/rfc4627.txt>`) as data format.
+`JSON-RPC <http://www.jsonrpc.org/specification>` 是一个无状态的轻量级远程过程调用（RPC）协议。 
+这个协议定义了一套数据结构和围绕它们的规则处理。 它与传输过程无关，可以通过socket，HTTP或其它多种传输方式使用这些数据。
+通常使用的数据格式是 JSON (`RFC
+4627 <http://www.ietf.org/rfc/rfc4627.txt>`).
 
-MOAC JSON-RPC has some compatibility with ETHEREUM JSON-RPC,
+MOAC 系统中的基础链节点 VNODE 和应用链节点 SCS 都内置了JSON-RPC 接口来方便用户使用。
+MOAC JSON-RPC 部分接口兼容 ETHEREUM JSON-RPC, 如下表所示：
 
 +------------+------------+
 | Chain3     | Web3.js    |
@@ -33,9 +29,8 @@ MOAC JSON-RPC has some compatibility with ETHEREUM JSON-RPC,
 | scs        | n/a        |
 +------------+------------+
 
-MOAC has two additional JSON-RPC objects (vnode and scs) for VNODE and SCS
-services. These RPCs are supported by Nuwa 1.0.4 version and later.
-The most recent RPC is Nuwa 1.0.9.
+MOAC 和 ETHEREUM 相同的接口对象有net, admin 和personal. 此外，chain3 对象中的方法和 web3 中部分方法也可以互用。
+MOAC 独有的两个 JSON-RPC 对象是 VNODE 和 SCS，分别对应VNODE的部分属性和SCS接口。
 
 
 JSON-RPC Endpoint
@@ -53,20 +48,19 @@ JSON-RPC Endpoint
 
 --rpc: 启用HTTP的RPC服务，以便非本机访问该MOAC节点服务；
 
+母链节点
 
 .. code:: bash
 
     moac --rpc
 
-change the default port (8545) and listing address (localhost) with:
+VNODE 默认RPC接口的地址是 localhost，端口号是 8545，可以通过 rpcaddr 和 rpcport 选项进行修改：
 
 .. code:: bash
 
     moac --rpc --rpcaddr <ip> --rpcport <portnumber>
 
-If accessing the RPC from a browser, CORS will need to be enabled with
-the appropriate domain set. Otherwise, JavaScript calls are limit by the
-same-origin policy and requests will fail:
+VNODE和SCS的JSON-RPC接口默认使用同源的服务方式。如果要通过浏览器来访问 JSON-RPC 接口，需要允许CORS选项，否则访问无法成功：
 
 .. code:: bash
 
@@ -74,11 +68,26 @@ same-origin policy and requests will fail:
 
 --rpcapi value: 指定RPC要开放的API服务，默认为"chain3,mc,net"，常用的一般还会配置比如personal,admin,debug,miner,txpool,db,shh等，但是因为RPC服务是明文传输，所以，如果使用personal的时候，要注意安全问题；
 
-For SCS:
+
+应用链节点
+
+启用HTTP的RPC服务，以便非本机访问该MOAC节点服务
 
 .. code:: bash
 
     scsserver --rpc
+
+SCS 默认RPC接口的地址是 localhost，端口号是 8548，可以通过 rpcaddr 和 rpcport 选项进行修改：
+
+.. code:: bash
+
+    scsserver --rpc --rpcaddr <ip> --rpcport <portnumber>
+
+如果要通过浏览器来访问 JSON-RPC 接口，需要允许CORS选项，否则访问无法成功：
+
+.. code:: bash
+
+    scsserver --rpc --rpccorsdomain "http://localhost:8548"
 
 HEX value encoding
 ------------------
@@ -102,13 +111,13 @@ digits per byte. Examples: - 0x41 (size 1, "A") - 0x004200 (size 3,
 
 Currently `MOAC <https://github.com/MOACChain/moac-core/releases>`
 VNODE server provides JSON-RPC communication over http and IPC (unix
-socket Linux and OSX/named pipes on Windows). SCS server provides
-rovides JSON-RPC communication over http only.
+socket Linux and OSX/named pipes on Windows). SCS server provides 
+JSON-RPC communication over http only.
 
-The default block parameter
+默认区块值
 ---------------------------
 
-The following methods have an extra default block parameter:
+以下接口包含默认区块值。如果没有有效区块数值输入，则使用节点的最高区块高度：
 
 -  :ref:`mc\_getBalance <mc_getbalance>`
 -  :ref:`mc\_getCode <mc_getcode>`
@@ -2347,7 +2356,8 @@ API/lib to call MicroChain Dapp functions.
 *Parameters*
 
 
-``Object`` - The transaction call object 
+``Object`` - The transaction call object
+
 - ``from``: ``DATA``, 20 Bytes - (optional) The address the transaction is sent from. 
 - ``to``: ``DATA``, 20 Bytes - The address the transaction is directed to. This
 parameter is the MicroChain address. 
@@ -2542,8 +2552,18 @@ Returns the requested MicroChain information on the connecting SCS. This informa
 
 *Returns*
 
+``Object`` A Micro Chain information object as defined in the MicroChain contract:
 
-``Object`` A Micro Chain information object as defined in the MicroChain contract.
+-  ``balance``: ``Number`` - the native token amount in the MicroChain.
+-  ``blockReward``: ``Number`` - the reward amount at each block for the MicroChain, unit is in Sha = 1e-18 moac.
+-  ``bondLimit``: ``Number`` - the token amount needed as deposit in the MicroChain, unit is in Sha = 1e-18 moac.
+-  ``owner``: ``String``, 20 Bytes - the address of the beneficiary to
+   whom the mining rewards were given.
+-  ``scsList``: ``Array``, List of SCS addresses, 20 Bytes each - the address of the SCS to
+   whom the mining rewards were given.
+-  ``txReward``: ``Number`` - the reward provided to the TX for the MicroChain, unit is in Sha = 1e-18 moac.
+-  ``viaReward``: ``Number`` - the reward provided to the VNODE proxy for the MicroChain, unit is in Sha = 1e-18 moac.   
+
 
 Example
 
@@ -2637,7 +2657,7 @@ None
 *Returns*
 
 
-1. ``String`` - SCS id in the scskeystore directory, used for SCS
+``String`` - SCS id in the scskeystore directory, used for SCS
 identification to send deposit and receive MicroChain mining rewards.
 
 Example
@@ -2670,9 +2690,27 @@ receipt is not available for pending transactions.
 
 *Returns*
 
+``Object`` - A transaction receipt object, or ``null`` when no receipt
+was found:
 
-``Object`` - A transaction receipt object, or null when no receipt was
-found:.
+-  ``transactionHash``: ``DATA``, 32 Bytes - hash of the transaction.
+-  ``transactionIndex``: ``QUANTITY`` - integer of the transactions
+   index position in the block.
+-  ``blockHash``: ``DATA``, 32 Bytes - hash of the block where this
+   transaction was in.
+-  ``blockNumber``: ``QUANTITY`` - block number where this transaction
+   was in.
+
+-  ``contractAddress``: ``DATA``, 20 Bytes - The contract address
+   created, if the transaction was a contract creation, otherwise
+   ``null``.
+-  ``logs``: ``Array`` - Array of log objects, which this transaction
+   generated.
+-  ``logsBloom``: ``DATA``, 256 Bytes - Bloom filter for light clients
+   to quickly retrieve related logs.
+- ``failed``: ``Boolean`` - ``true`` if the filter was successfully uninstalled,
+otherwise ``false``.
+-  ``status``: ``QUANTITY`` either ``1`` (success) or ``0`` (failure)
 
 Example
 
@@ -2707,8 +2745,28 @@ Returns the transaction result by address and nonce on the MicroChain. Note That
 
 *Returns*
 
-``Object`` - A transaction receipt object, or null when no receipt was
-found:.
+``Object`` - A transaction receipt object, or ``null`` when no receipt
+was found:
+
+-  ``transactionHash``: ``DATA``, 32 Bytes - hash of the transaction.
+-  ``transactionIndex``: ``QUANTITY`` - integer of the transactions
+   index position in the block.
+-  ``blockHash``: ``DATA``, 32 Bytes - hash of the block where this
+   transaction was in.
+-  ``blockNumber``: ``QUANTITY`` - block number where this transaction
+   was in.
+
+-  ``contractAddress``: ``DATA``, 20 Bytes - The contract address
+   created, if the transaction was a contract creation, otherwise
+   ``null``.
+-  ``logs``: ``Array`` - Array of log objects, which this transaction
+   generated.
+-  ``logsBloom``: ``DATA``, 256 Bytes - Bloom filter for light clients
+   to quickly retrieve related logs.
+- ``failed``: ``Boolean`` - ``true`` if the filter was successfully uninstalled,
+otherwise ``false``.
+-  ``status``: ``QUANTITY`` either ``1`` (success) or ``0`` (failure)
+
 
 Example
 
@@ -2744,6 +2802,25 @@ receipt is not available for pending transactions.
 
 ``Object`` - A transaction object, or null when no transaction was found.
 
+-  ``transactionHash``: ``DATA``, 32 Bytes - hash of the transaction.
+-  ``transactionIndex``: ``QUANTITY`` - integer of the transactions
+   index position in the block.
+-  ``blockHash``: ``DATA``, 32 Bytes - hash of the block where this
+   transaction was in.
+-  ``blockNumber``: ``QUANTITY`` - block number where this transaction
+   was in.
+
+-  ``contractAddress``: ``DATA``, 20 Bytes - The contract address
+   created, if the transaction was a contract creation, otherwise
+   ``null``.
+-  ``logs``: ``Array`` - Array of log objects, which this transaction
+   generated.
+-  ``logsBloom``: ``DATA``, 256 Bytes - Bloom filter for light clients
+   to quickly retrieve related logs.
+- ``failed``: ``Boolean`` - ``true`` if the filter was successfully uninstalled,
+otherwise ``false``.
+-  ``status``: ``QUANTITY`` either ``1`` (success) or ``0`` (failure)
+
 Example
 
 
@@ -2778,8 +2855,28 @@ receipt is not available for pending transactions.
 *Returns*
 
 
-``Object`` - A transaction receipt object, or null when no receipt was
-found:.
+
+``Object`` - A transaction object, or null when no transaction was found.
+
+-  ``transactionHash``: ``DATA``, 32 Bytes - hash of the transaction.
+-  ``transactionIndex``: ``QUANTITY`` - integer of the transactions
+   index position in the block.
+-  ``blockHash``: ``DATA``, 32 Bytes - hash of the block where this
+   transaction was in.
+-  ``blockNumber``: ``QUANTITY`` - block number where this transaction
+   was in.
+
+-  ``contractAddress``: ``DATA``, 20 Bytes - The contract address
+   created, if the transaction was a contract creation, otherwise
+   ``null``.
+-  ``logs``: ``Array`` - Array of log objects, which this transaction
+   generated.
+-  ``logsBloom``: ``DATA``, 256 Bytes - Bloom filter for light clients
+   to quickly retrieve related logs.
+- ``failed``: ``Boolean`` - ``true`` if the filter was successfully uninstalled,
+otherwise ``false``.
+-  ``status``: ``QUANTITY`` either ``1`` (success) or ``0`` (failure)
+
 
 Example
 
@@ -2865,7 +2962,7 @@ Example
 .. code:: js
 
   // Request
-  curl -X POST --data '{"jsonrpc":"2.0","method":"scs_getExchangeInfo","params":["0x2e4694875de2a7da9c3186a176c52760d58694e4",0,10,0,10],"id":101}' 'localhost:8545'
+  curl -X POST --data '{"jsonrpc":"2.0","method":"scs_getExchangeInfo","params":["0x2e4694875de2a7da9c3186a176c52760d58694e4",0,10,0,10],"id":101}' 'localhost:8548'
 
   // Result
 
@@ -2894,7 +2991,7 @@ Example
 .. code:: js
 
   // Request
-  curl -X POST --data '{"jsonrpc":"2.0","method":"scs_getTxpool","params":["0x2e4694875de2a7da9c3186a176c52760d58694e4"],"id":101}' 'localhost:8545'
+  curl -X POST --data '{"jsonrpc":"2.0","method":"scs_getTxpool","params":["0x25b0102b5826efa7ac469782f54f40ffa72154f5"],"id":101}' 'localhost:8548'
 
   // Result
 

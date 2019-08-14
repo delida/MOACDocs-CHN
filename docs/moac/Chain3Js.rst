@@ -96,28 +96,29 @@ Chain3 Javascript Ðapp API Reference
 ------------------------------------
 
 -  `chain3 <#chain3>`__
--  `version <#chain3versionapi>`__
+   
+   -  `version <#chain3versionapi>`__
 
-   -  `api <#chain3versionapi>`__
-   -  `node <#chain3versionnode>`__
-   -  `network <#chain3versionnetwork>`__
-   -  `moac <#chain3versionmoac>`__
+       -  `api <#chain3versionapi>`__
+       -  `node <#chain3versionnode>`__
+       -  `network <#chain3versionnetwork>`__
+       -  `moac <#chain3versionmoac>`__
 
--  `isConnected() <####chain3isconnected>`__
--  `setProvider(provider) <#chain3setprovider>`__
--  `currentProvider <#chain3currentprovider>`__
--  `reset() <#chain3reset>`__
--  `sha3(string) <#chain3sha3>`__
--  `toHex(stringOrNumber) <#chain3tohex>`__
--  `toAscii(hexString) <#chain3toascii>`__
--  `fromAscii(textString, [padding]) <#chain3fromascii>`__
--  `toDecimal(hexString) <#chain3todecimal>`__
--  `toChecksumAddress(string) <#chain3tochecksumaddress>`__
--  `fromDecimal(number) <#chain3fromdecimal>`__
--  `fromSha(numberStringOrBigNumber, unit) <#chain3fromsha>`__
--  `toSha(numberStringOrBigNumber, unit) <#chain3tosha>`__
--  `toBigNumber(numberOrHexString) <#chain3tobignumber>`__
--  `isAddress(hexString) <#chain3isAddress>`__
+   -  `isConnected() <####chain3isconnected>`__
+   -  `setProvider(provider) <#chain3setprovider>`__
+   -  `currentProvider <#chain3currentprovider>`__
+   -  `reset() <#chain3reset>`__
+   -  `sha3(string) <#chain3sha3>`__
+   -  `toHex(stringOrNumber) <#chain3tohex>`__
+   -  `toAscii(hexString) <#chain3toascii>`__
+   -  `fromAscii(textString, [padding]) <#chain3fromascii>`__
+   -  `toDecimal(hexString) <#chain3todecimal>`__
+   -  `toChecksumAddress(string) <#chain3tochecksumaddress>`__
+   -  `fromDecimal(number) <#chain3fromdecimal>`__
+   -  `fromSha(numberStringOrBigNumber, unit) <#chain3fromsha>`__
+   -  `toSha(numberStringOrBigNumber, unit) <#chain3tosha>`__
+   -  `toBigNumber(numberOrHexString) <#chain3tobignumber>`__
+   -  `isAddress(hexString) <#chain3isAddress>`__
 -  `net <#chain3net>`__
 
    -  `listening/getListening <#chain3netlistening>`__
@@ -176,8 +177,35 @@ Chain3 Javascript Ðapp API Reference
    -  `address <#chain3mcibanaddress>`__
    -  `toString <#chain3mcibantostring>`__
 
-Usage
-~~~~~
+-  vnode
+
+   -  :ref:`address <vnode_address>`
+   -  :ref:`scsService <vnode_scsservice>`
+   -  :ref:`serviceCfg <vnode_servicecfg>`
+   -  :ref:`showToPublic <vnode_showtopublic>`
+   -  :ref:`vnodeIP <vnode_vnodeip>`
+
+-  scs
+
+   -  :ref:`scs_directcall<scs_directcall>`
+   -  :ref:`scs_getblock<scs_getblock>`
+   -  :ref:`scs_getBlockNumber <scs_getblocknumber>`
+   -  :ref:`scs_getDappList <scs_getdapplist>`
+   -  :ref:`scs_getDappState <scs_getdappstate>`
+   -  :ref:`scs_getMicroChainInfo <scs_getmicrochaininfo>`
+   -  :ref:`scs_getMicroChainList <scs_getmicrochainlist>`
+   -  :ref:`scs\_getNonce <scs_getnonce>`
+   -  :ref:`scs\_getSCSId <scs_getscsid>`
+   -  :ref:`scs\_getTransactionByHash <scs_gettransactionbyhash>`
+   -  :ref:`scs\_getTransactionByNonce <scs_gettransactionbynonce>`
+   -  :ref:`scs\_getReceiptByHash <scs_getreceiptbyhash>`
+   -  :ref:`scs\_getReceiptByNonce <scs_getreceiptbynonce>`
+   -  :ref:`scs\_getExchangeByAddress <scs_getexchangebyaddress>`
+   -  :ref:`scs\_getExchangeInfo <scs_getexchangeinfo>`
+   -  :ref:`scs\_getTxpool <scs_gettxpool>`
+
+Chain3
+~~~~~~
 
 
 
@@ -875,6 +903,9 @@ Example
 
 --------------
 
+Net
+~~~
+
 .. raw:: html
 
    <h3 id="chain3net">
@@ -952,6 +983,9 @@ Example
     console.log(peerCount); // 4
 
 --------------
+
+Mc
+~~~
 
 .. raw:: html
 
@@ -2874,3 +2908,807 @@ chain3.mc.iban.toString
 
     var i = new chain3.mc.iban('XE72P8O19KRSWXUGDY294PZ66T4ZGF89INT');
     console.log(i.toString()); // 'XE72P8O19KRSWXUGDY294PZ66T4ZGF89INT'
+
+--------------
+
+VNODE
+~~~~~
+
+**chain3.vnode.address**
+
+.. _vnode_address:
+
+Returns the VNODE benificial address. This is needed for SCS to use in
+the communication.
+
+*Parameters*
+
+none
+
+*Returns*
+
+
+``address``: ``DATA``, 20 Bytes - address from which the VNODE settings
+in the vnodeconfig.json file.
+
+Example
+
+.. code:: js
+
+    // Request
+    console.log(chain3.vnode.address); // '0xa8863fc8ce3816411378685223c03daae9770ebb'
+
+--------------
+
+**chain3.vnode.scsService**
+
+.. _vnode_scsService:
+
+Returns if the VNODE enable the service for SCS servers.
+
+*Parameters*
+
+
+none
+
+*Returns*
+
+
+``Bool`` - true, enable the SCS service; false, not open.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    console.log(chain3.vnode.address()); // true/false
+
+
+--------------
+
+**chain3.vnode.serviceCfg**
+
+.. _vnode_serviceCfg:
+
+Returns the VNODE SCS service ports for connecting with.
+
+*Parameters*
+
+none
+
+*Returns*
+
+
+``String`` - The current service port set in the vnodeconfig.json.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    console.log("VNODE serviceCfg:", chain3.vnode.serviceCfg);//
+
+--------------
+
+**chain3.vnode.showToPublic**
+
+.. _vnode_showToPublic:
+
+Returns if the VNODE enable the public view.
+
+*Parameters*
+
+none
+
+*Returns*
+
+
+``Bool`` - true, open to the public; false, not open.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    console.log("VNODE showtoPublic:", chain3.vnode.showToPublic);
+
+--------------
+
+**chain3.vnode.ip**
+
+.. _vnode_vnodeIP:
+
+Returns VNODE IP for users to access. Note for cloud servers, this could
+be different from the cloud server IP.
+
+*Parameters*
+
+
+none
+
+*Returns*
+
+
+``String`` - The current IP that can be used to access. This is set in
+the vnodeconfig.json.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    console.log("VNODE IP:", chain3.vnode.ip);// return null for local host
+
+--------------
+
+SCS
+~~~~~
+
+用户可以使用 chain3 中的 SCS 对象与应用链节点的JSON-RPC接口进行通信的。与母链节点一样，需要SCS节点打开RPC接口：
+
+::
+
+    ./scsserver --rpc  
+
+
+在调用时，也需要初始化chain3对象：
+
+.. code:: js
+
+    var Chain3 = require('chain3');
+    var chain3 = new Chain3();
+
+    //Create a chain3 object to link with SCS
+    //Setup the SCS monitor with JSON 2.0 commands
+    chain3.setScsProvider(new chain3.providers.HttpProvider('http://localhost:8548'));
+
+
+.. _scs_directcall:
+
+**scs_directCall**
+
+Executes a new constant call of the MicroChain Dapp function without
+creating a transaction on the MicroChain. This RPC call is used by
+API/lib to call MicroChain Dapp functions.
+
+*Parameters*
+
+
+``Object`` - The transaction call object 
+
+- ``from``: ``DATA``, 20 Bytes - (optional) The address the transaction is sent from. 
+
+- ``to``: ``DATA``, 20 Bytes - The address the transaction is directed to. This parameter is the MicroChain address. 
+
+- ``data``: ``DATA`` - (optional) Hash of the method signature and encoded parameters. For details see `Ethereum Contract ABI <https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI>`
+
+*Returns*
+
+
+``DATA`` - the return value of executed Dapp constant function call.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList();
+    mcAddress = mclist[0];
+    console.log("SCS block:", chain3.scs.getBlock(mcAddress, 1));
+
+    // Result
+    {
+      "id":101,
+      "jsonrpc": "2.0",
+      "result": "0x"
+    }
+
+--------------
+
+**chain3.scs.getBlock**
+
+.. _scs_getblock:
+
+Returns information about a block on the AppChain by block number.
+
+*Parameters*
+
+
+1. ``String`` - the address of the MicroChain that Dapp is on.
+2. ``QUANTITY|TAG`` - integer of a block number, or the string
+   ``"earliest"`` or ``"latest"``, as in the `default block
+   parameter <#the-default-block-parameter>`. Note, scs\_getBlock does
+   not support ``"pending"``.
+
+*Returns*
+
+``Object`` - The MicroChain block object:
+
+-  ``number``: ``Number`` - the block number. ``null`` when its pending
+   block.
+-  ``hash``: ``String``, 32 Bytes - hash of the block. ``null`` when its
+   pending block.
+-  ``parentHash``: ``String``, 32 Bytes - hash of the parent block.
+-  ``nonce``: ``String``, 8 Bytes - hash of the generated proof-of-work.
+   ``null`` when its pending block.
+-  ``transactionsRoot``: ``String``, 32 Bytes - the root of the
+   transaction trie of the block
+-  ``stateRoot``: ``String``, 32 Bytes - the root of the final state
+   trie of the block.
+-  ``miner``: ``String``, 20 Bytes - the address of the beneficiary to
+   whom the mining rewards were given.
+-  ``extraData``: ``String`` - the "extra data" field of this block.
+-  ``timestamp``: ``Number`` - the unix timestamp for when the block was
+   collated.
+-  ``transactions``: ``Array`` - Array of transaction objects, or 32
+   Bytes transaction hashes depending on the last given parameter.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList();
+    mcAddress = mclist[0];
+    console.log("SCS block:", chain3.scs.getBlock(mcAddress, 1));
+
+    // Result
+    {"extraData":"0x","hash":"0xc80cbe08bc266b1236f22a8d0b310faae3135961dbef6ad8b6ad4e8cd9537309","number":"0x1","parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0x1a065207da60d8e7a44db2f3b5ed9d3e81052a3059e4108c84701d0bf6a62292","timestamp":"0x0","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}
+
+--------------
+
+**chain3.scs.getBlockList**
+
+.. _scs_getblocklist:
+
+Returns information about multiple MicroChain blocks by block number.
+
+*Parameters*
+
+
+1. ``String`` - the address of the MicroChain that Dapp is on.
+2. ``QUANTITY`` - integer of the start block number.
+3. ``QUANTITY`` - integer of the end block number, need to be larger or equal the start block number.
+
+*Returns*
+
+``Object`` - The MicroChain blockList object:
+
+-  ``blockList``: ``ARRAY``, Array of the MicroChain block objects.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    console.log("SCS blockList 1 - 3:", chain3.scs.getBlockList(mcAddress, 1, 3));
+
+    // Result
+    {"blockList":[{"extraData":"0x","hash":"0x56075838e0fffe6576add14783b957239d4f3c57989bc3a7b7728a3b57eb305a","miner":"0xecd1e094ee13d0b47b72f5c940c17bd0c7630326","number":"0x370","parentHash":"0x56352a3a8bd0901608041115817204cbce943606e406d233d7d0359f449bd4c2","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0xde741a2f6b4a3c865e8f6fc9ba11eadaa1fa04c61d660bcdf0fa1195029699f6","timestamp":"0x5bfb7c1c","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"},{"extraData":"0x","hash":"0xbc3f5791ec039cba99c37310a4f30a68030dd2ab79efb47d23fd9ac5343f54e5","miner":"0xecd1e094ee13d0b47b72f5c940c17bd0c7630326","number":"0x371","parentHash":"0x56075838e0fffe6576add14783b957239d4f3c57989bc3a7b7728a3b57eb305a","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0xde741a2f6b4a3c865e8f6fc9ba11eadaa1fa04c61d660bcdf0fa1195029699f6","timestamp":"0x5bfb7c3a","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"},{"extraData":"0x","hash":"0x601be17c47cb4684053457d1d5f70a6dbeb853b27cda08d160555f857f2da33b","miner":"0xecd1e094ee13d0b47b72f5c940c17bd0c7630326","number":"0x372","parentHash":"0xbc3f5791ec039cba99c37310a4f30a68030dd2ab79efb47d23fd9ac5343f54e5","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0xde741a2f6b4a3c865e8f6fc9ba11eadaa1fa04c61d660bcdf0fa1195029699f6","timestamp":"0x5bfb7c58","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"},{"extraData":"0x","hash":"0x8a0bea649bcdbd2b525690ff485e56d5a83443e9013fcdccd1a0adee56ba4092","miner":"0xecd1e094ee13d0b47b72f5c940c17bd0c7630326","number":"0x373","parentHash":"0x601be17c47cb4684053457d1d5f70a6dbeb853b27cda08d160555f857f2da33b","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0xde741a2f6b4a3c865e8f6fc9ba11eadaa1fa04c61d660bcdf0fa1195029699f6","timestamp":"0x5bfb7c76","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}],"endBlk":"0x373","microchainAddress":"0x7D0CbA876cB9Da5fa310A54d29F4687f5dd93fD7","startBlk":"0x370"}}
+
+--------------
+
+**chain3.scs.getBlockNumber**
+
+.. _scs_getblocknumber:
+
+Returns the number of most recent block .
+
+*Parameters*
+
+1. ``String`` - the address of the MicroChain that Dapp is on.
+
+*Returns*
+
+``QUANTITY`` - integer of the current block number the client is on.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    console.log("SCS blockNumber:", chain3.scs.getBlockNumber(mcAddress));
+
+    // Result
+    SCS block number: 903
+
+--------------
+
+**chain3.scs.getDappList**
+
+.. _scs_getdapplist:
+
+Returns the Dapp addresses on the MicroChain. For nuwa 1.0.8 and later version only, 
+
+*Parameters*
+
+1. ``String`` - the address of the MicroChain that has Dapps.
+
+*Returns*
+
+``ARRAY`` - Array of the DAPP addresses on the MicroChain.
+
+Example
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    console.log("SCS dapp:", chain3.scs.getDappAddrList(mcAddress));
+
+    // Result
+    SCS dapp: [ '0xa6e4e429e48d97a3dd4309d96cabc836f3bb4283' ]
+
+--------------
+
+**chain3.scs.getDappState**
+
+.. _scs_getdappstate:
+
+Returns the Dapp state on the MicroChain.
+
+*Parameters*
+
+1. ``String`` - the address of the MicroChain that Dapp is on.
+
+*Returns*
+
+``QUANTITY`` - 0, no DAPP is deployed on the MicroChain; 1, DAPP is
+deployed on the MicroChain.
+
+Example
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    console.log("SCS state:", chain3.scs.getDappState(mcAddress));
+
+    // Result
+    SCS state: 1
+
+--------------
+**chain3.scs.getMicroChainInfo**
+
+.. _scs_getmicrochaininfo:
+
+Returns the requested MicroChain information on the connecting SCS. This information is the same as the information defined in the MicroChain contract.
+
+*Parameters*
+
+1. `String` - the address of the MicroChain on the SCS.
+
+*Returns*
+
+
+``Object`` A Micro Chain information object as defined in the MicroChain contract:
+
+-  ``balance``: ``Number`` - the native token amount in the MicroChain.
+-  ``blockReward``: ``Number`` - the reward amount at each block for the MicroChain, unit is in Sha = 1e-18 moac.
+-  ``bondLimit``: ``Number`` - the token amount needed as deposit in the MicroChain, unit is in Sha = 1e-18 moac.
+-  ``owner``: ``String``, 20 Bytes - the address of the beneficiary to
+   whom the mining rewards were given.
+-  ``scsList``: ``Array``, List of SCS addresses, 20 Bytes each - the address of the SCS to
+   whom the mining rewards were given.
+-  ``txReward``: ``Number`` - the reward provided to the TX for the MicroChain, unit is in Sha = 1e-18 moac.
+-  ``viaReward``: ``Number`` - the reward provided to the VNODE proxy for the MicroChain, unit is in Sha = 1e-18 moac.   
+
+
+Example
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    console.log("MC info:", chain3.scs.getMicroChainInfo(mcAddress));
+
+    // Result
+    MC info: {"balance":"0x0","blockReward":"0x1c6bf52634000","bondLimit":"0xde0b6b3a7640000","owner":"0xa8863fc8Ce3816411378685223C03DAae9770ebB","scsList":["0xECd1e094Ee13d0B47b72F5c940C17bD0c7630326","0x50C15fafb95968132d1a6ee3617E99cCa1FCF059","0x1b65cE1A393FFd5960D2ce11E7fd6fDB9e991945"],"txReward":"0x174876e800","viaReward":"0x9184e72a000"}
+
+--------------
+**chain3.scs.getMicroChainList**
+
+.. _scs_getmicrochainlist:
+
+Returns the list of MicroChains on the SCS that is connecting with. 
+
+*Parameters*
+
+None
+
+*Returns*
+
+``Array`` - A list of Micro Chain addresses on the SCS.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    console.log("SCS MicroChain List:", mclist);
+
+
+    // Result
+    SCS MicroChain List: [ '0x25b0102b5826efa7ac469782f54f40ffa72154f5', '0x7cfd775c7a97aa632846eff35dcf9dbcf502d0f3' ]
+
+--------------
+
+**chain3.scs.getNonce**
+
+.. _scs_getNonce:
+
+Returns the account nonce on the MicroChain. 
+
+*Parameters*
+
+
+1. ``String`` - the address of the MicroChain that Dapp is on.
+2. ``String`` - the address of the accountn.
+
+*Returns*
+
+
+``QUANTITY`` integer of the number of transactions send from this address on the MicroChain; 
+
+Example
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    tAddress="0xf6a36118751c50f8932d31d6d092b11cc28f2258";
+    console.log("SCS nonce of:", tAddress, " is ", chain3.scs.getNonce(mcAddress,tAddress));
+
+    // Result
+    SCS nonce of: 0xf6a36118751c50f8932d31d6d092b11cc28f2258  is  3
+
+--------------
+
+**chain3.scs.getSCSId**
+
+.. _scs_getSCSId:
+
+Returns the SCS id.
+
+*Parameters*
+
+None
+
+*Returns*
+
+
+``String`` - SCS id in the scskeystore directory, used for SCS
+identification to send deposit and receive MicroChain mining rewards.
+
+Example
+
+.. code:: js
+
+    // Request
+    console.log("SCS ID:", chain3.scs.getSCSId());
+
+    // Result
+    SCS ID: 0xecd1e094ee13d0b47b72f5c940c17bd0c7630326
+
+--------------
+
+**chain3.scs.getReceiptByHash**
+
+.. _scs_getReceiptByHash:
+
+Returns the receipt of a transaction by transaction hash. Note That the
+receipt is not available for pending transactions.
+
+*Parameters*
+
+1. ``String`` - The MicroChain address. 
+2. ``String`` - The transaction hash.
+
+*Returns*
+
+``Object`` - A transaction receipt object, or ``null`` when no receipt
+was found:
+
+-  ``transactionHash``: ``DATA``, 32 Bytes - hash of the transaction.
+-  ``transactionIndex``: ``QUANTITY`` - integer of the transactions
+   index position in the block.
+-  ``blockHash``: ``DATA``, 32 Bytes - hash of the block where this
+   transaction was in.
+-  ``blockNumber``: ``QUANTITY`` - block number where this transaction
+   was in.
+
+-  ``contractAddress``: ``DATA``, 20 Bytes - The contract address
+   created, if the transaction was a contract creation, otherwise
+   ``null``.
+-  ``logs``: ``Array`` - Array of log objects, which this transaction
+   generated.
+-  ``logsBloom``: ``DATA``, 256 Bytes - Bloom filter for light clients
+   to quickly retrieve related logs.
+- ``failed``: ``Boolean`` - ``true`` if the filter was successfully uninstalled,
+otherwise ``false``.
+-  ``status``: ``QUANTITY`` either ``1`` (success) or ``0`` (failure)
+
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    txhash1="0x688456221f7729f5c2c17006bbe4df163d09bea70c1a1ebb66b9b53ca10563df";
+    console.log("TX Receipt:", chain3.scs.getReceiptByHash(mcAddress, txhash1));
+
+    // Result
+    {
+      "id":101,
+      "jsonrpc": "2.0",
+      "result": {contractAddress: '0x0a674edac2ccd47ae2a3197ea3163aa81087fbd1',
+  failed: false,"logs":[{"address":"0x2328537bc943ab1a89fe94a4b562ee7a7b013634","topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x000000000000000000000000a8863fc8ce3816411378685223c03daae9770ebb","0x0000000000000000000000007312f4b8a4457a36827f185325fd6b66a3f8bb8b"],"data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQ=","blockNumber":0,"transactionHash":"0x67bfaa5a704e77a31d5e7eb866f8c662fa8313a7882d13d0d23e377cd66d2a69","transactionIndex":0,"blockHash":"0x78f092ca81a891ad6c467caa2881d00d8e19c8925ddfd71d793294fbfc5f15fe","logIndex":0,"removed":false}],"logsBloom":"0x00000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000008000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000800000000000080000000000000000000000000002000000000000000000000000000000000000080100002000000000000000000000000000000000000000000000000000000000000000000000000000","status":"0x1","transactionHash":"0x67bfaa5a704e77a31d5e7eb866f8c662fa8313a7882d13d0d23e377cd66d2a69"}
+    }
+
+--------------
+
+**chain3.scs.getReceiptByNonce**
+
+.. _scs_getReceiptByNonce:
+
+Returns the transaction result by address and nonce on the MicroChain. Note That the nonce is the nonce on the MicroChain. This nonce can be checked using scs_getNonce. 
+
+*Parameters*
+
+
+1. ``String`` - The MicroChain address. 
+1. ``String`` - The transaction nonce.
+1. ``QUANTITY`` - The nonce of the transaction.
+
+*Returns*
+
+``Object`` - A transaction receipt object, or null when no receipt was
+found:.
+
+Example
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    tAddress="0xf6a36118751c50f8932d31d6d092b11cc28f2258";
+    console.log("SCS receipt:", chain3.scs.getReceiptByNonce(mcAddress, tAddress, 0));
+
+    // Result
+    SCS receipt: {contractAddress: '0x0a674edac2ccd47ae2a3197ea3163aa81087fbd1',
+  failed: false,"logs":[{"address":"0x2328537bc943ab1a89fe94a4b562ee7a7b013634","topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x000000000000000000000000a8863fc8ce3816411378685223c03daae9770ebb","0x0000000000000000000000007312f4b8a4457a36827f185325fd6b66a3f8bb8b"],"data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQ=","blockNumber":0,"transactionHash":"0x67bfaa5a704e77a31d5e7eb866f8c662fa8313a7882d13d0d23e377cd66d2a69","transactionIndex":0,"blockHash":"0x78f092ca81a891ad6c467caa2881d00d8e19c8925ddfd71d793294fbfc5f15fe","logIndex":0,"removed":false}],"logsBloom":"0x00000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000008000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000800000000000080000000000000000000000000002000000000000000000000000000000000000080100002000000000000000000000000000000000000000000000000000000000000000000000000000","status":"0x1","transactionHash":"0x67bfaa5a704e77a31d5e7eb866f8c662fa8313a7882d13d0d23e377cd66d2a69"}
+    
+
+--------------
+
+**chain3.scs.getTransactionByHash**
+
+.. _scs_gettransactionbyhash:
+
+Returns the receipt of a transaction by transaction hash. Note That the
+receipt is not available for pending transactions.
+
+*Parameters*
+
+1. ``String`` - The MicroChain address. 
+2. ``String`` - The transaction hash.
+
+*Returns*
+
+
+``Object`` - A transaction object, or null when no transaction was found.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    txhash1="0x67bfaa5a704e77a31d5e7eb866f8c662fa8313a7882d13d0d23e377cd66d2a69";
+    console.log("TX by hash:", chain3.scs.getTransactionByHash(mcAddress, txhash1));
+
+    // Result
+    TX by hash: {
+      "id":101,
+      "jsonrpc": "2.0",
+      "result": {contractAddress: '0x0a674edac2ccd47ae2a3197ea3163aa81087fbd1',
+  failed: false,"logs":[{"address":"0x2328537bc943ab1a89fe94a4b562ee7a7b013634","topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x000000000000000000000000a8863fc8ce3816411378685223c03daae9770ebb","0x0000000000000000000000007312f4b8a4457a36827f185325fd6b66a3f8bb8b"],"data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQ=","blockNumber":0,"transactionHash":"0x67bfaa5a704e77a31d5e7eb866f8c662fa8313a7882d13d0d23e377cd66d2a69","transactionIndex":0,"blockHash":"0x78f092ca81a891ad6c467caa2881d00d8e19c8925ddfd71d793294fbfc5f15fe","logIndex":0,"removed":false}],"logsBloom":"0x00000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008000000000008000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000800000000000080000000000000000000000000002000000000000000000000000000000000000080100002000000000000000000000000000000000000000000000000000000000000000000000000000","status":"0x1","transactionHash":"0x67bfaa5a704e77a31d5e7eb866f8c662fa8313a7882d13d0d23e377cd66d2a69"}
+    }
+
+--------------
+
+**chain3.scs.getTransactionByNonce**
+
+.. _scs_gettransactionbynonce:
+
+Returns the receipt of a transaction by transaction hash. Note That the
+receipt is not available for pending transactions.
+
+*Parameters*
+
+1. ``String`` - The MicroChain address. 
+1. ``String`` - The transaction nonce.
+1. ``QUANTITY`` - The nonce of the transaction.
+
+*Returns*
+
+
+``Object`` - A transaction receipt object, or null when no receipt was
+found:.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    tAddress="0xf6a36118751c50f8932d31d6d092b11cc28f2258";
+    console.log("SCS TX:", chain3.scs.getTransactionByNonce(mcAddress, tAddress, 0));
+
+
+    // Result
+    SCS TX: { blockHash: '0x45ab47bde3a7caa62d80e8c38bef21ada499d52331e574f3a09d4d943aa133fa',
+  blockNumber: 66,
+  from: '0xf6a36118751c50f8932d31d6d092b11cc28f2258', input: '.....', nonce: 0,
+  r: 1.1336589614028917e+77,
+  s: 1.8585853533200337e+76,
+  shardingFlag: 3,
+  to: '0x25b0102b5826efa7ac469782f54f40ffa72154f5',
+  transactionHash: '0x6eb3d33fab53317007927368238aef5bc00d1d1d9bf082930c372e3dabca507c',
+  transactionIndex: 0,
+  v: 248,
+  value: BigNumber { s: 1, e: 21, c: [ 10000000 ] },
+  gas: 0,
+  gasPrice: BigNumber { s: 1, e: 0, c: [ 0 ] } }
+    
+--------------
+
+**chain3.scs.getExchangeByAddress**
+
+.. _scs_getExchangeByAddress:
+
+Returns the Withdraw/Deposit exchange records between MicroChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
+
+
+*Parameters*
+
+1. `String` - The MicroChain address.
+1. `String` - The address to be checked.
+1. `Int` - Index of Deposit records >= 0.
+1. `Int` - Number of Deposit records extracted.
+1. `Int` - Index of Depositing records >= 0.
+1. `Int` - Number of Depositing records extracted.
+1. `Int` - Index of Withdraw records >= 0.
+1. `Int` - Number of Withdraw records extracted.
+1. `Int` - Index of Withdrawing records >= 0.
+1. `Int` - Number of Withdrawing records extracted.
+
+*Returns*
+
+
+``Object`` - A JSON format object contains the token exchange info.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    tAddress="0xf6a36118751c50f8932d31d6d092b11cc28f2258";
+    console.log("SCS token address exchange:", chain3.scs.getExchangeByAddress(mcAddress, tAddress));
+
+    // Result
+    SCS token address exchange: { DepositRecordCount: 0,
+    DepositRecords: null,
+    DepositingRecordCount: 0,
+    DepositingRecords: null,
+    WithdrawRecordCount: 0,
+    WithdrawRecords: null,
+    WithdrawingRecordCount: 0,
+    WithdrawingRecords: null,
+    microchain: '0x25b0102b5826efa7ac469782f54f40ffa72154f5',
+    sender: '0xf6a36118751c50f8932d31d6d092b11cc28f2258' }
+
+
+--------------
+
+
+**chain3.scs.getExchangeInfo**
+
+.. _scs_getExchangeInfo:
+
+Returns the Withdraw/Deposit exchange records between MicroChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
+
+
+*Parameters*
+
+1. `String` - The MicroChain address.
+1. `String` - The transaction hash.
+1. `Int` - Index of Depositing records >= 0.
+1. `Int` - Number of Depositing records extracted.
+1. `Int` - Index of Withdrawing records >= 0.
+1. `Int` - Number of Withdrawing records extracted.
+
+*Returns*
+
+
+``Object`` - A JSON format object contains the token exchange info.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    console.log("SCS token exchanging info:", chain3.scs.getExchangeInfo(mcAddress));
+
+    // Result
+    SCS token exchanging info: { DepositingRecordCount: 0,
+      DepositingRecords: null,
+      WithdrawingRecordCount: 0,
+      WithdrawingRecords: null,
+      microchain: '0x25b0102b5826efa7ac469782f54f40ffa72154f5',
+      scsid: '0xecd1e094ee13d0b47b72f5c940c17bd0c7630326' }
+--------------
+
+
+**chain3.scs.getTxpool**
+
+.. _scs_gettxpool:
+
+Returns the ongoing transactions in the MicroChain. 
+
+*Parameters*
+
+1. `String` - The MicroChain address.
+
+*Returns*
+
+``Object`` - A JSON format object contains two fields pending and queued. Each of these fields are associative arrays, in which each entry maps an origin-address to a batch of scheduled transactions. These batches themselves are maps associating nonces with actual transactions.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st MicroChain
+    console.log("SCS TXpool:", chain3.scs.getTxpool(mcAddress));
+
+    // Result
+
+    SCS TXpool: {"pending":{},"queued":{}}
+
+--------------
+

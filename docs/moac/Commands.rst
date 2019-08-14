@@ -192,7 +192,7 @@ ACCOUNT OPTIONS:
        --unlock value    Comma separated list of accounts to unlock
        --password value  Password file to use for non-inteactive password input
 
-API AND CONSOLE OPTIONS:
+API和交互命令行选项:
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
@@ -231,16 +231,16 @@ NETWORKING OPTIONS:
        --nodekey value       P2P node key file
        --nodekeyhex value    P2P node key as hex (for testing)
 
-MINER OPTIONS:
+挖矿选项:
 ^^^^^^^^^^^^^^
 
 ::
 
-     --mine                    Enable mining
-     --minerthreads value      Number of CPU threads to use for mining (default: 8)
-     --moacbase value          Public address for block mining rewards (default = first account created) (default: "0")
+     --mine                    开始节点挖矿
+     --minerthreads value      指定用来挖矿的CPU（默认值：8）
+     --moacbase value          挖矿收益的Public address for block mining rewards (default = first account created) (default: "0")
      --targetgaslimit value    Target gas limit sets the artificial target gas floor for the blocks to mine (default: 9000000)
-      --gasprice "18000000000"  Minimal gas price to accept for mining a transactions
+     --gasprice "18000000000"  Minimal gas price to accept for mining a transactions
      --extradata value         Block extra data set by the miner (default = client version)
 
 GAS PRICE ORACLE OPTIONS:
@@ -285,7 +285,7 @@ MISC OPTIONS:
 ::
 
        --fast      Enable fast syncing through state downloads
-       --light     Enable light client mode
+       --light     使用轻节点模式（）
        --help, -h  show help
       
 
