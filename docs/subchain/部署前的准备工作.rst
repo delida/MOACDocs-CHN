@@ -37,7 +37,8 @@ userconfig.json配置：
 	
 	   
 各类账号
-----------------------	
+-------
+
 可以运行concole命令 personal.newAccount() 创建账号； mc.accounts查看账号； 
 
 按序号查询余额：mc.getBalance(mc.accounts[0])   
@@ -52,9 +53,22 @@ userconfig.json配置：
 	主链vnode收益账号：	0xf103bc1c054babcecd13e7ac1cf34f029647b08c 
 	应用链scs收益账号：0xa934198916cd993c73c1aa6e0c0e7b21ce7c735b  0x2e7c076dbf6e61207a0ddb1b942ef7da8fd139f0
 	
-chain3 的 nodejs 环境	
-----------------------	
-安装： npm install chain3  
+
+nodejs 环境及 chain3 软件库
+--------------------------
+
+				
+注意，在windows下，可能还要安装辅助工具 Python 2.X 和 VS2013/2015
+
+1.安装Python 2.X，在这里我安装的是Python 2.7，不能用3及以上版本，安装好了设置环境变量；
+
+2.安装VS2013 或者 VS2015;
+
+3.安装NodeJS及npm工具;
+
+4.安装 chain3 软件库
+::
+npm install chain3  
 
 验证:  
 ::
@@ -62,6 +76,10 @@ chain3 的 nodejs 环境
 	> chain3 = new chain3(); 
 	> chain3.setProvider(new chain3.providers.HttpProvider('http://localhost:8545')); 
 	> chain3.mc.blockNumber  检查是否获得当前区块 
-				
-			   
+
+此外，目前应用链的合约编译仅支持solc 0.4.24版本，需要在工程目录下执行下面命令，更换solc版本
+::
+npm uninstall solc
+npm install solc@0.4.24
+
 

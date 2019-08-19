@@ -20,12 +20,6 @@ MOAC平台上的去中心化应用(DAPP)即可以部署在母链，也可以单�
 DApps 应用链
 ~~~~~~~~~~~~~~~~
 
-DApp runs on MicroChain means it has its own blockchain that supports transactions, 
-data access, control flow in a layered structure. It creates the framework to allow users to execute
-Smart Contract in an efficient way. It also provides the architecture to
-spawn sub blockchains using underlying infrastructure quickly and
-easily. It is a Blockchain platform with necessary plumbing parts
-available to sub blockchains, providing solution for idea test, private
-chain deployment, complex task processing, decentralized applications
-etc.
-
+DApp在应用链上运行意味着DApp可以有自己单独的区块链，可以独立于母链处理合约交易、数据访问、以及控制流程。 这种框架方式允许用户高效地执行
+智能合约。 应用链还可以使用底层基础架构快速生成下一级区块链。这种区块链平台可以为不同的应用区块链提供所需模块，为想法测试提供解决方案，私有
+链部署，复杂任务处理，和各种分布式应用等等

@@ -3071,9 +3071,9 @@ SCS
 
 **scs_directCall**
 
-Executes a new constant call of the MicroChain Dapp function without
-creating a transaction on the MicroChain. This RPC call is used by
-API/lib to call MicroChain Dapp functions.
+
+执行应用链上的合约调用（constant call），仅能查询合约变量状态，不改变合约状态。
+
 
 *Parameters*
 
@@ -3089,7 +3089,7 @@ API/lib to call MicroChain Dapp functions.
 *Returns*
 
 
-``DATA`` - the return value of executed Dapp constant function call.
+``String`` - the return value of executed Dapp constant function call.
 
 Example
 
@@ -3097,16 +3097,16 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList();
-    mcAddress = mclist[0];
-    console.log("SCS block:", chain3.scs.getBlock(mcAddress, 1));
+    // Prepare the data for the contract call
+    var payload = {
+    to: "0xecd1e094ee13d0b47b72f5c940c17bd0c7630326",
+    data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
+    }
+    
+    var output = this._scs.directCall(payload, defaultBlock);
 
     // Result
-    {
-      "id":101,
-      "jsonrpc": "2.0",
-      "result": "0x"
-    }
+    console.log(output); // "0x0000000000000000000000000000000000000000000000000000000000000015"
 
 --------------
 

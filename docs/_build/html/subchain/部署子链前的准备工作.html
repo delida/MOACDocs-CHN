@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="应用链的部署方法" href="子链的部署方法.html" />
-    <link rel="prev" title="应用链要点" href="子链要点.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -79,28 +77,10 @@
             
             
               <p class="caption"><span class="caption-text">目录:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">MOAC系统介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../moac/index.html">MOAC区块链系统和工具</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">应用链</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html">名词解释</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链要点.html">应用链要点</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">部署应用链前的准备工作</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#vnode">Vnode节点软件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scs">SCS节点软件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">各类账号</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#chain3-nodejs">chain3 的 nodejs 环境</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">应用链的部署方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">应用链业务逻辑的部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">应用链的监听及应用链接口调用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链节点的更替.html">应用链节点的更替</a></li>
-<li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭应用链</a></li>
-<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">应用链与基础链之间的跨链交互简介</a></li>
-<li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html">应用链上多合约的进阶操作</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">应用链</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../restapi/index.html">Restful API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sdk/index.html">SDK</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dapps/index.html">DAPPs</a></li>
@@ -148,8 +128,6 @@
   <ul class="wy-breadcrumbs">
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
-        
-          <li><a href="index.html">应用链</a> &raquo;</li>
         
       <li>部署应用链前的准备工作</li>
     
@@ -218,9 +196,14 @@ Beneficiary为收益账号
 </pre></div>
 </div>
 </div>
-<div class="section" id="chain3-nodejs">
-<h2>chain3 的 nodejs 环境<a class="headerlink" href="#chain3-nodejs" title="Permalink to this headline">¶</a></h2>
-<p>安装： npm install chain3</p>
+<div class="section" id="nodejs-chain3">
+<h2>nodejs 环境及 chain3 软件库<a class="headerlink" href="#nodejs-chain3" title="Permalink to this headline">¶</a></h2>
+<p>注意，在windows下，可能还要安装辅助工具 Python 2.X 和 VS2013/2015</p>
+<p>1.安装Python 2.X，在这里我安装的是Python 2.7，不能用3及以上版本，安装好了设置环境变量；</p>
+<p>2.安装VS2013 或者 VS2015;</p>
+<p>3.安装NodeJS及npm工具;</p>
+<p>4.安装 chain3 软件库</p>
+<p>npm install chain3</p>
 <p>验证:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;chain3&#39;</span><span class="p">);</span>
 <span class="o">&gt;</span> <span class="n">chain3</span> <span class="o">=</span> <span class="n">new</span> <span class="n">chain3</span><span class="p">();</span>
@@ -228,6 +211,9 @@ Beneficiary为收益账号
 <span class="o">&gt;</span> <span class="n">chain3</span><span class="o">.</span><span class="n">mc</span><span class="o">.</span><span class="n">blockNumber</span>  <span class="n">检查是否获得当前区块</span>
 </pre></div>
 </div>
+<p>此外，目前应用链的合约编译仅支持solc 0.4.24版本，需要在工程目录下执行下面命令，更换solc版本
+npm uninstall solc
+npm install <a class="reference external" href="mailto:solc&#37;&#52;&#48;0&#46;4&#46;24">solc<span>&#64;</span>0<span>&#46;</span>4<span>&#46;</span>24</a></p>
 </div>
 </div>
 
@@ -236,15 +222,6 @@ Beneficiary为收益账号
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="子链的部署方法.html" class="btn btn-neutral float-right" title="应用链的部署方法" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="子链要点.html" class="btn btn-neutral" title="应用链要点" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

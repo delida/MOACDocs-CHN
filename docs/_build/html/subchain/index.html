@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="名词解释" href="名词解释.html" />
+    <link rel="next" title="应用链要点" href="应用链要点.html" />
     <link rel="prev" title="Chain3 Python 软件库" href="../moac/Chain3Python.html" /> 
 
   
@@ -83,14 +83,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">MOAC系统介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../moac/index.html">MOAC区块链系统和工具</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">应用链</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html">名词解释</a></li>
 <li class="toctree-l2"><a class="reference internal" href="应用链要点.html">应用链要点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="部署前的准备工作.html">部署应用链前的准备工作</a></li>
 <li class="toctree-l2"><a class="reference internal" href="应用链的部署方法.html">应用链的部署方法</a></li>
 <li class="toctree-l2"><a class="reference internal" href="应用链业务逻辑的部署.html">应用链业务逻辑的部署</a></li>
 <li class="toctree-l2"><a class="reference internal" href="应用链节点的更替.html">应用链节点的更替</a></li>
 <li class="toctree-l2"><a class="reference internal" href="关闭应用链.html">关闭应用链</a></li>
 <li class="toctree-l2"><a class="reference internal" href="跨链货币交互简介.html">应用链与基础链之间的跨链交互简介</a></li>
 <li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html">应用链上多合约的进阶操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html">名词解释</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../restapi/index.html">Restful API</a></li>
@@ -165,23 +166,17 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">目录:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="名词解释.html">名词解释</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#basechain-motherchain">基础链 （baseChain, motherchain）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#vnode">Vnode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#appchain-subchain-microchain">应用链 （appChain，subchain, microchain）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#scs">SCS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#scs-pool">应用链矿工池 （SCS pool）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#id2">vnode代理池</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#id3">应用链控制合约</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#monitor">监听节点（Monitor）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#flush">flush</a></li>
-<li class="toctree-l2"><a class="reference internal" href="名词解释.html#id4">应用链多合约基础合约</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="应用链要点.html">应用链要点</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="应用链要点.html#id2">概述</a></li>
 <li class="toctree-l2"><a class="reference internal" href="应用链要点.html#moac">应用链中的MOAC押金和消耗</a></li>
 <li class="toctree-l2"><a class="reference internal" href="应用链要点.html#id3">应用链部署的注意点</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="部署前的准备工作.html">部署应用链前的准备工作</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="部署前的准备工作.html#vnode">Vnode节点软件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="部署前的准备工作.html#scs">SCS节点软件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="部署前的准备工作.html#id2">各类账号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="部署前的准备工作.html#nodejs-chain3">nodejs 环境及 chain3 软件库</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="应用链的部署方法.html">应用链的部署方法</a><ul>
@@ -222,6 +217,19 @@
 <li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html#id3">应用链合约的升级（版本迭代）</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="名词解释.html">名词解释</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html#basechain-motherchain">基础链 （baseChain, motherchain）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html#vnode">Vnode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html#appchain-subchain-microchain">应用链 （appChain，subchain, microchain）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html#scs">SCS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html#scs-pool">应用链矿工池 （SCS pool）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html#id2">vnode代理池</a></li>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html#id3">应用链控制合约</a></li>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html#monitor">监听节点（Monitor）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html#flush">flush</a></li>
+<li class="toctree-l2"><a class="reference internal" href="名词解释.html#id4">应用链多合约基础合约</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -234,7 +242,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="名词解释.html" class="btn btn-neutral float-right" title="名词解释" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="应用链要点.html" class="btn btn-neutral float-right" title="应用链要点" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../moac/Chain3Python.html" class="btn btn-neutral" title="Chain3 Python 软件库" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
