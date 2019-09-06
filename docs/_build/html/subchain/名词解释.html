@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="应用链要点" href="子链要点.html" />
-    <link rel="prev" title="应用链" href="index.html" /> 
+    <link rel="next" title="FAQs" href="FAQs.html" />
+    <link rel="prev" title="应用链上多合约的进阶操作" href="多合约的进阶操作.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -83,28 +83,37 @@
 <li class="toctree-l1"><a class="reference internal" href="../intro/index.html">MOAC系统介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../moac/index.html">MOAC区块链系统和工具</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">应用链</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="应用链要点.html">应用链要点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="部署前的准备工作.html">部署应用链前的准备工作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="应用链的部署方法.html">应用链的部署方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="应用链业务逻辑的部署.html">应用链业务逻辑的部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="应用链的监听及接口调用.html">应用链的监听及应用链接口调用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="应用链节点的更替.html">应用链节点的更替</a></li>
+<li class="toctree-l2"><a class="reference internal" href="关闭应用链.html">关闭应用链</a></li>
+<li class="toctree-l2"><a class="reference internal" href="跨链货币交互简介.html">应用链与基础链之间的跨链交互简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html">应用链上多合约的进阶操作</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">名词解释</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#basechain-motherchain">基础链 （baseChain, motherchain）</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#vnode">Vnode</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#appchain-subchain-microchain">应用链 （appChain，subchain, microchain）</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scs">SCS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#scs-pool">应用链矿工池 （SCS pool）</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">vnode代理池</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">应用链控制合约</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vnode-pool">母链节点代理池（Vnode pool）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">应用链控制合约</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#monitor">监听节点（Monitor）</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#flush">flush</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">应用链多合约基础合约</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flush">刷新（flush）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#owner-account">应用链部署者的地址（Owner account）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#appchain-balance">应用链合约余额 (AppChain Balance)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bondlimit">应用链节点押金(BondLimit)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">应用链节点押金(BondLimit)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cost-of-appchain">应用链维护费用（Cost of AppChain）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#via-reward">接入奖励（Via Reward）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#block-reward">区块奖励（Block reward）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tx-reward">交易奖励（Tx reward）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">应用链多合约版本</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="子链要点.html">应用链要点</a></li>
-<li class="toctree-l2"><a class="reference internal" href="部署子链前的准备工作.html">部署应用链前的准备工作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的部署方法.html">应用链的部署方法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链业务逻辑的部署.html">应用链业务逻辑的部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链的监听及子链接口调用.html">应用链的监听及应用链接口调用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="子链节点的更替.html">应用链节点的更替</a></li>
-<li class="toctree-l2"><a class="reference internal" href="关闭子链.html">关闭应用链</a></li>
-<li class="toctree-l2"><a class="reference internal" href="母子链货币交互简介.html">应用链与基础链之间的跨链交互简介</a></li>
-<li class="toctree-l2"><a class="reference internal" href="多合约的进阶操作.html">应用链上多合约的进阶操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="FAQs.html">FAQs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../restapi/index.html">Restful API</a></li>
@@ -180,43 +189,74 @@
 <h1>名词解释<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="basechain-motherchain">
 <h2>基础链 （baseChain, motherchain）<a class="headerlink" href="#basechain-motherchain" title="Permalink to this headline">¶</a></h2>
-<p>也称为母链，是使用工作量证明（POW）共识的一条公链，可以支持多条应用链。</p>
+<p>也称为母链，是使用工作量证明（POW）共识的一条公链，可以支持多条应用链。有多个Vnode节点组成。每个母链需要有一个chainId，需要在启动VNODE时作为输入参数，以便VNODE接入相应的母链。MOAC的主网chainId为99，测试网为101。</p>
 </div>
 <div class="section" id="vnode">
 <h2>Vnode<a class="headerlink" href="#vnode" title="Permalink to this headline">¶</a></h2>
-<p>MOAC母链节点软件，用于构建母链（又称基础链），可以进行POW挖矿，账本同步，交易以及应用链数据传输的节点。</p>
+<p>MOAC母链节点软件，用于构建母链（又称基础链）和连接应用链，可以进行POW挖矿，账本同步，交易以及应用链数据传输的节点。在启动VNODE时，需要指定接入区块链的编号chainId，默认值为主网99。</p>
 </div>
 <div class="section" id="appchain-subchain-microchain">
 <h2>应用链 （appChain，subchain, microchain）<a class="headerlink" href="#appchain-subchain-microchain" title="Permalink to this headline">¶</a></h2>
-<p>也称为子链，是构建在MOAC基础链之上，用于独立运行一个或者多个智能合约的区块链</p>
+<p>也称为子链，是构建在MOAC基础链之上，用于独立运行一个或者多个智能合约的区块链。每个应用链有自己独立的应用链地址。</p>
 </div>
 <div class="section" id="scs">
 <h2>SCS<a class="headerlink" href="#scs" title="Permalink to this headline">¶</a></h2>
-<p>MOAC应用链节点软件，用于应用链挖矿，应用链账本同步以及应用链业务逻辑执行的节点，也称为应用链矿工</p>
+<p>MOAC应用链节点软件，用于应用链挖矿，应用链账本同步以及应用链业务逻辑执行的节点，也称为应用链矿工。目前MOAC有两种SCS，分别对应两种类型的应用链：ProcWind和FileStorm。</p>
 </div>
 <div class="section" id="scs-pool">
 <h2>应用链矿工池 （SCS pool）<a class="headerlink" href="#scs-pool" title="Permalink to this headline">¶</a></h2>
-<p>存储应用链矿工的池子，本质上池子是一个智能合约，需要应用链节点注册</p>
+<p>存储应用链矿工的池子，本质上是一个智能合约。SCS节点需要注册才能加入应用链的验证。当应用链产生之后，会注册到一个SCS pool里面，并随机抽取符合条件的SCS加入应用链进行验证。</p>
+</div>
+<div class="section" id="vnode-pool">
+<h2>母链节点代理池（Vnode pool）<a class="headerlink" href="#vnode-pool" title="Permalink to this headline">¶</a></h2>
+<p>存储vnode代理节点的池子，本质上池子是一个智能合约，应用链节点注册后，需要vnode节点。</p>
 </div>
 <div class="section" id="id2">
-<h2>vnode代理池<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>存储vnode代理节点，本质上池子是一个智能合约，需要vnode节点</p>
-</div>
-<div class="section" id="id3">
-<h2>应用链控制合约<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>用于控制整个应用链的流程</p>
+<h2>应用链控制合约<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>用于控制整个应用链的流程，文件名一般为DappBase.sol</p>
 </div>
 <div class="section" id="monitor">
 <h2>监听节点（Monitor）<a class="headerlink" href="#monitor" title="Permalink to this headline">¶</a></h2>
 <p>监听节点是一个特殊的SCS节点，可以用来监听某条应用链的运行情况，当一个节点成为监听节点后，其只负责同步该应用链的区块信息，不参与应用链出块。Dapp用户可以通过该节点监控应用链运行情况</p>
 </div>
 <div class="section" id="flush">
-<h2>flush<a class="headerlink" href="#flush" title="Permalink to this headline">¶</a></h2>
-<p>应用链的一个特殊操作，每条正常运行的应用链每隔一段时间需要向母链进行状态刷新，并且同时完成：Scs矿工的收益发放；有币应用链和母链之间的货币充提等操作。flush周期可在部署应用链控制合约时设置，当应用链交易数不活跃时，flush周期将变大，直到有交易时收敛到设置值</p>
+<h2>刷新（flush）<a class="headerlink" href="#flush" title="Permalink to this headline">¶</a></h2>
+<p>应用链的一个特殊操作，每条正常运行的应用链每隔一段时间需要向母链进行状态刷新，并且同时完成：Scs矿工的收益发放；有币应用链和母链之间的货币充提等操作。flush周期可在部署应用链控制合约时设置，当应用链交易数不活跃时，flush周期将变大，直到有交易时收敛到设置值；刷新的发起者为应用链中随机选择的一个SCS验证节点。</p>
+</div>
+<div class="section" id="owner-account">
+<h2>应用链部署者的地址（Owner account）<a class="headerlink" href="#owner-account" title="Permalink to this headline">¶</a></h2>
+<p>部署应用链时需要消耗母链的原生moac，提供这些moac的帐号即成为应用链部署者。目前ProcWind SCS 节点有两种合约部署方式，默认只有应用链部署者可以在应用链上发布合约，也可以调整为所有的帐号都可以发布合约。</p>
+</div>
+<div class="section" id="appchain-balance">
+<h2>应用链合约余额 (AppChain Balance)<a class="headerlink" href="#appchain-balance" title="Permalink to this headline">¶</a></h2>
+<p>应用链帐号的moac余额，由三个部分组成，应用链节点押金，应用链原生货币兑换押金，应用链可用运行押金。其中，SCS节点押金为SCS加入时缴纳，当SCS的网络行为发生异常时，应用链会扣取此SCS的部分押金，为0时，应用链会移除SCS节点；应用链原生货币兑换押金仅在应用链为ASM或者AST的情况下使用；</p>
+</div>
+<div class="section" id="bondlimit">
+<h2>应用链节点押金(BondLimit)<a class="headerlink" href="#bondlimit" title="Permalink to this headline">¶</a></h2>
+<p>当SCS在SCS pool中，被应用链选中时，需要缴纳押金才能为应用链进行验证。这部分押金会被存储在应用链帐号里面，当SCS节点的服务不能满足要求时，相应SCS的押金会被扣除。当一个SCS节点的押金在应用链里面为0时，不能参与应用链共识的过程。</p>
+</div>
+<div class="section" id="id3">
+<h2>应用链节点押金(BondLimit)<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>当SCS在SCS pool中，被应用链选中时，需要缴纳押金才能为应用链进行验证。这部分押金会被存储在应用链帐号里面，当SCS节点的服务不能满足要求时，相应SCS的押金会被扣除。当一个SCS节点的押金在应用链里面为0时，不能参与应用链共识的过程。</p>
+</div>
+<div class="section" id="cost-of-appchain">
+<h2>应用链维护费用（Cost of AppChain）<a class="headerlink" href="#cost-of-appchain" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="via-reward">
+<h2>接入奖励（Via Reward）<a class="headerlink" href="#via-reward" title="Permalink to this headline">¶</a></h2>
+<p>应用链给予VNODE连接节点的奖励。</p>
+</div>
+<div class="section" id="block-reward">
+<h2>区块奖励（Block reward）<a class="headerlink" href="#block-reward" title="Permalink to this headline">¶</a></h2>
+<p>应用链给予每个区块的收益。</p>
+</div>
+<div class="section" id="tx-reward">
+<h2>交易奖励（Tx reward）<a class="headerlink" href="#tx-reward" title="Permalink to this headline">¶</a></h2>
+<p>为了鼓励SCS对更多的交易进行验证，应用链对每个打包的交易都提供了奖励。scs出空块和scs打包10个交易的块，奖励是不一样的。</p>
 </div>
 <div class="section" id="id4">
-<h2>应用链多合约基础合约<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>1.0.8版本后的新功能，用于在应用链上部署多合约的基础控制合约</p>
+<h2>应用链多合约版本<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>nuwa 1.0.8版本后的新功能，用于在应用链上部署多合约的基础控制合约。</p>
 </div>
 </div>
 
@@ -228,10 +268,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="子链要点.html" class="btn btn-neutral float-right" title="应用链要点" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="FAQs.html" class="btn btn-neutral float-right" title="FAQs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="应用链" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="多合约的进阶操作.html" class="btn btn-neutral" title="应用链上多合约的进阶操作" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

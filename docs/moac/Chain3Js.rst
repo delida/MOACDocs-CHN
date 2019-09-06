@@ -25,12 +25,8 @@ protocols. 更多的例子可以在源文件中的example下找到：
 使用回调函数（CALLBACK）
 ---------------
 
-As this API is designed to work with a local RPC node and all its
-functions are by default use synchronous HTTP requests.con
-
-If you want to make an asynchronous request, you can pass an optional
-callback as the last parameter to most functions. All callbacks are
-using an `error first
+默认的API调用方式是HTTP端口的同步调用，
+如果需要进行异步调用，可以把异步调用的函数作为callback的参数传入，可以参考 `error first
 callback <http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/>`__
 style:
 

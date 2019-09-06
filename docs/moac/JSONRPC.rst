@@ -22,6 +22,8 @@ MOAC JSON-RPC 部分接口兼容 ETHEREUM JSON-RPC, 如下表所示：
 +------------+------------+
 | admin      | admin      |
 +------------+------------+
+| txpool     | txpool     |
++------------+------------+
 | personal   | personal   |
 +------------+------------+
 | vnode      | n/a        |
@@ -29,7 +31,7 @@ MOAC JSON-RPC 部分接口兼容 ETHEREUM JSON-RPC, 如下表所示：
 | scs        | n/a        |
 +------------+------------+
 
-MOAC 和 ETHEREUM 相同的接口对象有net, admin 和personal. 此外，chain3 对象中的方法和 web3 中部分方法也可以互用。
+MOAC 和 ETHEREUM 相同的接口对象有net, admin, txpool 和personal. 此外，chain3 对象 mc 中的方法和 web3 中部分方法也可以互用。
 MOAC 独有的两个 JSON-RPC 对象是 VNODE 和 SCS，分别对应VNODE的部分属性和SCS接口。
 
 
@@ -203,6 +205,21 @@ JSON-RPC 命令
    -  :ref:`mc\_getLogs <mc_getlogs>`
    -  :ref:`mc\_getWork <mc_getwork>`
    -  :ref:`mc\_submitWork <mc_submitwork>`
+
+-  admin
+
+   -  :ref:`admin\_addPeer <admin_addPeer>`
+   -  :ref:`admin\_datadir <admin_datadir>`
+   -  :ref:`admin\_lnodeInfo <admin_nodeInfo>`
+   -  :ref:`admin\_peers <admin_peers>`
+   -  :ref:`admin\_stopRPC <admin_stopRPC>`
+   -  :ref:`admin\_startRPC <admin_startRPC>`
+
+-  txpool
+
+   -  :ref:`txpool\_content <txpool_content>`
+   -  :ref:`txpool\_status <txpool_status>`
+   -  :ref:`txpool\_inspec <txpool_inspect>`
 
 -  vnode
 
@@ -2170,6 +2187,81 @@ Example
       "jsonrpc":"2.0",
       "result": true
     }
+
+--------------
+
+ADMIN
+'''''
+
+**admin\__addPeer**
+
+.. __addPeer:
+
+Returns the VNODE benificial address. This is needed for SCS to use in
+the communication.
+
+*Parameters*
+
+none
+
+*Returns*
+
+
+``address``: ``DATA``, 20 Bytes - address from which the VNODE settings
+in the vnodeconfig.json file.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"jsonrpc":"2.0","method":"vnode_address","params":[],"id":101}' localhost:8545
+
+    // Result
+    {
+    "jsonrpc":"2.0",
+    "id":101,
+    "result":"0xa8863fc8ce3816411378685223c03daae9770ebb"
+    }
+
+--------------
+
+TXPOOL
+'''''
+
+**txpool\_content**
+
+.. _txpool_content:
+
+Returns the VNODE benificial address. This is needed for SCS to use in
+the communication.
+
+*Parameters*
+
+none
+
+*Returns*
+
+
+``address``: ``DATA``, 20 Bytes - address from which the VNODE settings
+in the vnodeconfig.json file.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"jsonrpc":"2.0","method":"vnode_address","params":[],"id":101}' localhost:8545
+
+    // Result
+    {
+    "jsonrpc":"2.0",
+    "id":101,
+    "result":"0xa8863fc8ce3816411378685223c03daae9770ebb"
+    }
+
 
 --------------
 
