@@ -17,6 +17,6 @@ MOAC平台使用应用链来实现智能合约的业务逻辑，从而避免了�
    :alt: moac\_key\_person
 
 1. :doc:`MotherChain`
-2. :doc:`MicroChain`
+2. :doc:`AppChain`
 
 

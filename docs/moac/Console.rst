@@ -5,18 +5,20 @@
 MOAC母链客户端使用了和以太坊类似的交互式命令行。用户可以在命令行（console）中执行内置的JAVA script命令或者利用脚本（script），输出结果显示在命令行中。
 这里使用的chain3对象，是MOAC参考以太坊，而开发的一套javascript库，目的是让应用程序能够与MOAC的VNODE和SCS节点进行通信。注意，这里有两层，moac启动了一个MOAC VNODE节点，console参数开启了一个javascript的控制台，这个控制台注入了chain3.js这个库，以使我们可以通过chain3对象与MOAC VNODE节点做交互。
 
+.. _vnode-console:
 
-Interactive use: the JSRE REPL Console
+VNODE和用户交互的命令行界面
 --------------------------------------
 
-The MOAC VNODE CLI executable moac has a JavaScript console (a Read, Evaluate & Print Loop = REPL exposing the JSRE), which can be started with the console or attach subcommand. The console subcommands starts the moac node and then opens the console. The attach subcommand will not start the moac node but instead tries to open the console on a running moac instance.
+MOAC 母链节点的客户端（VNODE）有一个可以和用户交互的JavaScript命令行界面。启动这个命令行可以使用下面两个命令
 
 ::
 
 $ moac console
 $ moac attach
 
-The attach node accepts an endpoint in case the moac node is running with a non default ipc endpoint or you would like to connect over the rpc interface.
+如果使用console参数，moac客户端会首先启动VNODE节点并自动进入命令行界面。 而使用attach参数，moac客户端不会启动VNODE节点，而是去连接一个已经运行的VNODE节点并显示命令行界面。
+
 ::
 
 $ moac attach ipc:/some/custom/path
@@ -34,13 +36,14 @@ console 启动一个交互式的JavaScript环境
 
 Note that by default the moac node doesn't start the http and weboscket service and not all functionality is provided over these interfaces due to security reasons. These defaults can be overridden when the --rpcapi and --wsapi arguments when the moac node is started, or with admin.startRPC and admin.startWS.
 
-If you need log information, start with:
+log 参数会在终端显示更多的信息:
 
 ::
 
 $ moac --verbosity 4 console 2>> /tmp/vnode.log
 
 Otherwise mute your logs, so that it does not pollute your console:
+如果不想被太多的系统信息干扰命令行的界面，可以关掉系统输出
 ::
 
 $ moac console 2>> /dev/null
@@ -57,8 +60,8 @@ Geth has support to load custom JavaScript files into the console through the --
 
 $ moac --preload "/my/scripts/folder/utils.js,/my/scripts/folder/contracts.js" console
 
-Non-interactive use: JSRE script mode
--------------------------------------
+非交互式使用: JSRE 脚本模式
+-------------------------
 
 It's also possible to execute files to the JavaScript interpreter. The console and attach subcommand accept the --exec argument which is a javascript statement.
 
@@ -79,23 +82,23 @@ Use the --jspath <path/to/my/js/root> to set a libdir for your js scripts. Param
 
 You can exit the console cleanly by typing exit or simply with CTRL-C.
 
-Caveat
+注意
 ------
 
-Just like go-ethereum, MOAC's JSRE uses the Otto JS VM which has some limitations:
+MOAC's JSRE 和以太坊的客户端一样采取了Otto JS VM 虚拟机并具有以下限制:
 
-"use strict" will parse, but does nothing.
+"use strict" 语句可以编译通过，但没有相应效果。
 The regular expression engine (re2/regexp) is not fully compatible with the ECMA5 specification.
 Note that the other known limitation of Otto (namely the lack of timers) is taken care of. Ethereum JSRE implements both setTimeout and setInterval. In addition to this, the console provides admin.sleep(seconds) as well as a "blocktime sleep" method admin.sleepBlocks(number).
 
-Since chain3.js uses the bignumber.js library (MIT Expat Licence), it is also autoloded.
+chain3.js 自动加载 bignumber.js 的软件库(MIT Expat Licence)用于大数处理。
 
 Timers
 ------
 
 In addition to the full functionality of JS (as per ECMA5), the moac JSRE is augmented with various timers. It implements setInterval, clearInterval, setTimeout, clearTimeout you may be used to using in browser windows. It also provides implementation for admin.sleep(seconds) and a block based timer, admin.sleepBlocks(n) which sleeps till the number of new blocks added is equal to or greater than n, think "wait for n confirmations".
 
-Management APIs
+高级管理 APIs
 ---------------
 
 Beside the official DApp API interface the VNODE has support for additional management API's. These API's are offered using JSON-RPC and follow the same conventions as used in the DApp API. The VNODE package comes with a console client which has support for all additional API's.

@@ -1,5 +1,5 @@
-安装母链节点
-============
+VNODE节点的启动和使用
+====================
 
 官方发布版本
 ------------
@@ -12,12 +12,11 @@ Debian/Ubuntu/CentOS
 
 1. Untar the file using tar, under the directory, run ./moac
 
-To see the help, use ./moac --help
+如果要看帮助信息, 使用help参数: ./moac --help
 
-To enable the console, run: ./moac console
+如果要启动交互命令行，运行console参数: ./moac console
 
-A mainnet directory will be created under $HOME/.moac/ and some info
-should be seen as:
+主网的存储目录会自动生成，在默认的 $HOME/.moac/ 下面，可以看到下面的信息:
 
 ::
 
@@ -282,26 +281,19 @@ should be seen as:
 
 登录MOAC区块链浏览器页面： http://explorer.moac.io。
 
-.. figure:: ../image/moac_explorer_main.png
-   :alt: moac\_explorer\_0
-
-   moac\_explorer\_0
+.. figure:: ../image/moacExplorerMain.png
 
 在搜索栏输入你的挖矿账号地址，会显示该账号的余额等信息。
 
-.. figure:: ../image/moac_explorer_address.png
-   :alt: moac\_explorer\_1
+.. figure:: ../image/moacExplorerAccount.png
 
-   moac\_explorer\_1
 
 在搜索栏输入你挖到矿的区块号，会显示该区块的信息。
 
 Miner正是你的账号地址。
 
-.. figure:: ../image/moac_explorer_blocks.png
-   :alt: moac\_explorer\_2
+.. figure:: ../image/moacExplorerBlock.png
 
-   moac\_explorer\_2
 
 3.6 停止挖矿
 ''''''''''''

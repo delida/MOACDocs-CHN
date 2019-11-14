@@ -47,7 +47,7 @@ MOAC具有用作mc单位的计量系统。 mc的最小单位，又称为基本�
 
 MOAC平台提供了一个在线钱包 `MOAC Wallet  <https://www.moacwalletonline.com/>`_  来方便用户使用简单的交易功能。
 
-MOAC can also be transferred using the **MOAC console**.
+用户也可以通过 :ref:`MOAC VNODE 操作界面 <vnode-console>`来发送mc.
 
 .. code-block:: console
 
@@ -57,7 +57,7 @@ MOAC can also be transferred using the **MOAC console**.
     > mc.sendTransaction({from:sender, to:des, value: amount})
 
 
-MOAC network, like Ethereum, use mc as a cryptofuel, commonly referred to as "gas". Beyond transaction fees, gas is a central part of every network request and requires the sender to pay for the computing resources consumed. The gas cost is dynamically calculated, based on the volume and complexity of the request and multiplied by the current gas price. Its value as a cryptofuel has the effect of increasing the stability and long-term  demand for mc and MOAC as a whole. 
+MOAC平台里面使用mc作为系统运行的燃料（gas），类似比特币中的BTC和以太坊中的ETH. Beyond transaction fees, gas is a central part of every network request and requires the sender to pay for the computing resources consumed. The gas cost is dynamically calculated, based on the volume and complexity of the request and multiplied by the current gas price. Its value as a cryptofuel has the effect of increasing the stability and long-term  demand for mc and MOAC as a whole. 
 
 .. _gas-and-mc:
 

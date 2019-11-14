@@ -10,3 +10,15 @@ FAQs
 ----------------------
 维护应用链的MOAC消耗主要有三部分：给应用链矿工费用、应用链向母链flush状态，以及母链充提gas返还上。这个维护消耗可以通过调整应用链的参数来改变。比如，延长flush周期从20个block到40个block，会减低flush。
 
+应用链上支持solidity 5.0吗？
+------------------------
+目前应用链仅支持solidity 4.24版本和之前的版本，建议使用4.24。
+
+
+VNODE注册的参数是什么含义？
+------------------------
+这个register函数的功能就是注册一个VNODE进入VNODE POOL
+第一个参数VNODE，是一个钱包地址，作用仅在VNODE POOL退换押金时使用，需要用户自己输入；
+第二个参数是VNODE节点的收益帐号，VnodeBeneficialAddress，在vnodeconfig.json中；
+第三个参数是VNODE的IP地址；
+第四个是VNODE RPC接口地址；

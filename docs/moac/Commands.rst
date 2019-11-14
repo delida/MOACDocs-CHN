@@ -1,8 +1,8 @@
-母链节点命令行
+VNODE节点命令行
 =============
 
-Most Commonly Used Commands：
-----------
+常用的命令行参数：
+---------------
 
 ::
 
@@ -23,7 +23,7 @@ Most Commonly Used Commands：
 As shown below：
 ~~~~~~~~~~
 
-Initiate MOAC VNODEs and connect to mainnet (network ID = 99)
+初始化启动VNODE节点，默认连接到 MOAC 主网(network ID = 99)：
 
 ::
 
@@ -36,6 +36,7 @@ Through local ipc port connecting to MOAC mainnet nodes and start the command li
     ./moac attach
 
 Initiate MOAC nodes and connect to testnet (network ID = 101)
+初始化启动VNODE节点，默认连接到 MOAC 测试网(network ID = 99)：
 
 ::
 
@@ -71,16 +72,16 @@ Initiate MOAC testnet nodes which is nonlocally accessible; personal and debug s
 
     ./moac --testnet --rpc --rpcaddr=0.0.0.0 --rpcapi="db,mc,net,chain3,personal,debug" --rpccorsdomain=""                  
 
-All command line parameters
---------------
+显示所有的命令行参数
+--------------------
 
-On the command line, type：
+在命令行下，输入：
 
 ::
 
     $ ./moac help
 
-or
+或者
 
 ::
 
@@ -294,4 +295,4 @@ COPYRIGHT:
 
 ::
 
-       Copyright 2017-2018 MOAC Authors
+       Copyright 2017-2019 MOAC Authors

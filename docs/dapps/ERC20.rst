@@ -17,7 +17,7 @@ After you read this page, you will be able to:
 -  Compile and deploy it on the MOAC blockchain;
 -  Use the ERC20 token;
 
-Write the ERC20 token smart contract
+编写 ERC20 通证的智能合约
 ------------------------------------
 
 The `ERC20

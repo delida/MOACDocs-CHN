@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 MOAC系统介绍
-========================================
+============
 
 .. toctree::
    :maxdepth: 2
@@ -13,7 +13,8 @@ MOAC系统介绍
    Introduction
    MOACnetwork
    MotherChain
-   MicroChain
+   AppChain
    MOACtoken
+   glossary
    Versions
 
