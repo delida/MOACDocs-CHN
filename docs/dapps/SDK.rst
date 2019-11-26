@@ -1,7 +1,9 @@
+.. _sdk-ref:
+
 SDK 简介
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-为了方便用户接入，MOAC官方提供nodejs 版本的SDK，官方暂不考虑提供其他版本的SDK。
+为了方便用户接入，MOAC Foundation提供nodejs 版本的SDK，官方暂不考虑提供其他版本的SDK。
 
 Node.JS SDK下载安装
 ::

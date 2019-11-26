@@ -7,7 +7,7 @@ MOAC的基础链节点是基于
 
 
 1. 在MOAC基础链上部署Solidity编写的智能合约，确保有能够接入MOAC链的节点，
-可以使用`主网公共节点 <http://gateway.moac.io/mainnet>`__ 或者 `测试网公共节点 <http://gateway.moac.io/testnet>`__。
+可以使用主网公共节点（http://gateway.moac.io/mainnet）或者测试网公共节点（http://gateway.moac.io/testnet）。
 
    -  `Remix <https://remix.ethereum.org/>`__, a browser compiler for
       Solidity.
@@ -28,7 +28,7 @@ MOAC的基础链节点是基于
    -  `chain3 <https://github.com/MOACChain/chain3>`__, developed based
       on web3.js 0.2.x, is the JavaScript library supported by MOAC.
 
-3. 在MOAC应用链上部署Solidity编写的智能合约，需要获得MOAC应用链的地址，或者通过示例子链的 :ref:`REST API <restapi-ref>` 和 SDK进行，
+3. 在MOAC应用链上部署Solidity编写的智能合约，需要获得MOAC应用链的地址，或者通过示例子链的 :ref:`REST API <restapi-ref>` 和 :ref:`SDK <sdk-ref>` 进行，
 也可以通过以下工具进行部署：
    -  `wallet.moac.io <http://wallet.moac.io/>`__, a browser Dapp
       connect with local nodes to deploy contracts.
