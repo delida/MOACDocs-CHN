@@ -13,8 +13,6 @@
    intro/index
    moac/index
    appchain/index
-   restapi/index
-   sdk/index
    dapps/index
 
 

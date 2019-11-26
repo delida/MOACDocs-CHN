@@ -3282,7 +3282,9 @@ Example
     // Result
     SCS state: 1
 
---------------
+
+--------------------------------
+
 **chain3.scs.getMicroChainInfo**
 
 .. _scs_getmicrochaininfo:
@@ -3322,6 +3324,7 @@ Example
     MC info: {"balance":"0x0","blockReward":"0x1c6bf52634000","bondLimit":"0xde0b6b3a7640000","owner":"0xa8863fc8Ce3816411378685223C03DAae9770ebB","scsList":["0xECd1e094Ee13d0B47b72F5c940C17bD0c7630326","0x50C15fafb95968132d1a6ee3617E99cCa1FCF059","0x1b65cE1A393FFd5960D2ce11E7fd6fDB9e991945"],"txReward":"0x174876e800","viaReward":"0x9184e72a000"}
 
 --------------
+
 **chain3.scs.getMicroChainList**
 
 .. _scs_getmicrochainlist:
@@ -3360,8 +3363,8 @@ Returns the account nonce on the MicroChain.
 *Parameters*
 
 
-1. ``String`` - the address of the MicroChain that Dapp is on.
-2. ``String`` - the address of the accountn.
+1. ``String`` - the address of the MicroChain.
+2. ``String`` - the address of the account.
 
 *Returns*
 
@@ -3479,8 +3482,8 @@ Returns the transaction result by address and nonce on the MicroChain. Note That
 
 
 1. ``String`` - The MicroChain address. 
-1. ``String`` - The transaction nonce.
-1. ``QUANTITY`` - The nonce of the transaction.
+2. ``String`` - The transaction nonce.
+3. ``QUANTITY`` - The nonce of the transaction.
 
 *Returns*
 
@@ -3641,7 +3644,6 @@ Example
 
 --------------
 
-
 **chain3.scs.getExchangeInfo**
 
 .. _scs_getExchangeInfo:
@@ -3680,8 +3682,8 @@ Example
       WithdrawingRecords: null,
       microchain: '0x25b0102b5826efa7ac469782f54f40ffa72154f5',
       scsid: '0xecd1e094ee13d0b47b72f5c940c17bd0c7630326' }
---------------
 
+--------------
 
 **chain3.scs.getTxpool**
 

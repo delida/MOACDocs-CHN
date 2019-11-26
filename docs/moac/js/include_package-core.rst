@@ -2,7 +2,7 @@ options
 =====================
 
 An Chain3 module does provide several options for configuring the transaction confirmation worklfow or for defining default values.
-These are the currently available option properties on a Web3 module:
+These are the currently available option properties on a Chain3 module:
 
 .. _chain3-module-options:
 
@@ -65,12 +65,12 @@ You can override it by passing the block parameter if a block is required.
 
 Example:
 
-- :ref:`chain3.eth.getBalance() <eth-getbalance>`
-- :ref:`chain3.eth.getCode() <eth-code>`
-- :ref:`chain3.eth.getTransactionCount() <eth-gettransactioncount>`
-- :ref:`chain3.eth.getStorageAt() <eth-getstorageat>`
-- :ref:`chain3.eth.call() <eth-call>`
-- :ref:`new chain3.eth.Contract() -> myContract.methods.myMethod().call() <contract-call>`
+- :ref:`chain3.mc.getBalance() <eth-getbalance>`
+- :ref:`chain3.mc.getCode() <eth-code>`
+- :ref:`chain3.mc.getTransactionCount() <eth-gettransactioncount>`
+- :ref:`chain3.mc.getStorageAt() <eth-getstorageat>`
+- :ref:`chain3.mc.call() <eth-call>`
+- :ref:`new chain3.mc.Contract() -> myContract.methods.myMethod().call() <contract-call>`
 
 -------
 Returns
@@ -95,8 +95,7 @@ defaultAccount
 .. code-block:: javascript
 
     chain3.defaultAccount
-    chain3.eth.defaultAccount
-    chain3.shh.defaultAccount
+    chain3.mc.defaultAccount
     ...
 
 This default address is used as the default ``"from"`` property, if no ``"from"`` property is specified.
@@ -117,8 +116,7 @@ defaultGasPrice
 .. code-block:: javascript
 
     chain3.defaultGasPrice
-    chain3.eth.defaultGasPrice
-    chain3.shh.defaultGasPrice
+    chain3.mc.defaultGasPrice
     ...
 
 The default gas price which will be used for a request.
@@ -140,8 +138,7 @@ defaultGas
 .. code-block:: javascript
 
     chain3.defaultGas
-    chain3.eth.defaultGas
-    chain3.shh.defaultGas
+    chain3.mc.defaultGas
     ...
 
 The default gas which will be used for a request.
@@ -162,8 +159,7 @@ transactionBlockTimeout
 .. code-block:: javascript
 
     chain3.transactionBlockTimeout
-    chain3.eth.transactionBlockTimeout
-    chain3.shh.transactionBlockTimeout
+    chain3.mc.transactionBlockTimeout
     ...
 
 The ``transactionBlockTimeout`` will be used over a socket based connection. This option does define the amount of new blocks it should wait until the first confirmation happens.
@@ -186,8 +182,7 @@ transactionConfirmationBlocks
 .. code-block:: javascript
 
     chain3.transactionConfirmationBlocks
-    chain3.eth.transactionConfirmationBlocks
-    chain3.shh.transactionConfirmationBlocks
+    chain3.mc.transactionConfirmationBlocks
     ...
 
 This defines the number of blocks it requires until a transaction will be handled as confirmed.
@@ -210,8 +205,7 @@ transactionPollingTimeout
 .. code-block:: javascript
 
     chain3.transactionPollingTimeout
-    chain3.eth.transactionPollingTimeout
-    chain3.shh.transactionPollingTimeout
+    chain3.mc.transactionPollingTimeout
     ...
 
 The ``transactionPollingTimeout``  will be used over a HTTP connection.
@@ -234,13 +228,13 @@ transactionSigner
 
 .. code-block:: javascript
 
-    chain3.eth.transactionSigner
+    chain3.mc.transactionSigner
     ...
 
 
 
 The ``transactionSigner`` property does provide us the possibility to customize the signing process
-of the ``Eth`` module and the related sub-modules.
+of the ``Mc`` module and the related sub-modules.
 
 The interface of a ``TransactionSigner``:
 
@@ -274,8 +268,7 @@ setProvider
 .. code-block:: javascript
 
     chain3.setProvider(myProvider)
-    chain3.eth.setProvider(myProvider)
-    chain3.shh.setProvider(myProvider)
+    chain3.mc.setProvider(myProvider)
     ...
 
 Will change the provider for its module.
@@ -301,26 +294,26 @@ Example
 
 .. code-block:: javascript
 
-    import Web3 from 'chain3';
+    import Chain3 from 'chain3';
 
-    const chain3 = new Web3('http://localhost:8545');
+    const chain3 = new Chain3('http://localhost:8545');
 
     // or
-    const chain3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    const chain3 = new Chain3(new Chain3.providers.HttpProvider('http://localhost:8545'));
 
     // change provider
     chain3.setProvider('ws://localhost:8546');
     // or
-    chain3.setProvider(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
+    chain3.setProvider(new Chain3.providers.WebsocketProvider('ws://localhost:8546'));
 
     // Using the IPC provider in node.js
     const net = require('net');
-    const chain3 = new Web3('/Users/myuser/Library/Ethereum/geth.ipc', net); // mac os path
+    const chain3 = new Chain3('/Users/myuser/Library/MoacNode/moac.ipc', net); // mac os path
 
     // or
-    const chain3 = new Web3(new Web3.providers.IpcProvider('/Users/myuser/Library/Ethereum/geth.ipc', net)); // mac os path
-    // on windows the path is: '\\\\.\\pipe\\geth.ipc'
-    // on linux the path is: '/users/myuser/.ethereum/geth.ipc'
+    const chain3 = new Chain3(new Chain3.providers.IpcProvider('/Users/myuser/Library/MoacNode/moac.ipc', net)); // mac os path
+    // on windows the path is: '\\\\.\\pipe\\moac.ipc'
+    // on linux the path is: '/users/myuser/.moac/moac.ipc'
 
 ------------------------------------------------------------------------------
 
@@ -329,8 +322,8 @@ providers
 
 .. code-block:: javascript
 
-    Web3.providers
-    Eth.providers
+    Chain3.providers
+    Mc.providers
     ...
 
 Contains the current available providers.
@@ -351,20 +344,20 @@ Example
 
 .. code-block:: javascript
 
-    const Web3 = require('chain3');
+    const Chain3 = require('chain3');
     // use the given Provider, e.g in Mist, or instantiate a new websocket provider
-    const chain3 = new Web3(Web3.givenProvider || 'ws://localhost:8546');
+    const chain3 = new Chain3(Chain3.givenProvider || 'ws://localhost:8546');
     // or
-    const chain3 = new Web3(Web3.givenProvider || new Web3.providers.WebsocketProvider('ws://localhost:8546'));
+    const chain3 = new Chain3(Chain3.givenProvider || new Chain3.providers.WebsocketProvider('ws://localhost:8546'));
 
     // Using the IPC provider in node.js
     const net = require('net');
 
-    const chain3 = new Web3('/Users/myuser/Library/Ethereum/geth.ipc', net); // mac os path
+    const chain3 = new Chain3('/Users/myuser/Library/Ethereum/moac.ipc', net); // mac os path
     // or
-    const chain3 = new Web3(new Web3.providers.IpcProvider('/Users/myuser/Library/Ethereum/geth.ipc', net)); // mac os path
-    // on windows the path is: '\\\\.\\pipe\\geth.ipc'
-    // on linux the path is: '/users/myuser/.ethereum/geth.ipc'
+    const chain3 = new Chain3(new Chain3.providers.IpcProvider('/Users/myuser/Library/Ethereum/moac.ipc', net)); // mac os path
+    // on windows the path is: '\\\\.\\pipe\\moac.ipc'
+    // on linux the path is: '/users/myuser/.moadnode/moac.ipc'
 
 ------------------------------------------------------------------------------
 
@@ -373,8 +366,8 @@ givenProvider
 
 .. code-block:: javascript
 
-    Web3.givenProvider
-    chain3.eth.givenProvider
+    Chain3.givenProvider
+    chain3.mc.givenProvider
     chain3.shh.givenProvider
     ...
 
@@ -394,7 +387,7 @@ Example
 
 .. code-block:: javascript
 
-    chain3.setProvider(Web3.givenProvider || 'ws://localhost:8546');
+    chain3.setProvider(Chain3.givenProvider || 'ws://localhost:8546');
 
 
 ------------------------------------------------------------------------------
@@ -406,7 +399,7 @@ currentProvider
 .. code-block:: javascript
 
     chain3.currentProvider
-    chain3.eth.currentProvider
+    chain3.mc.currentProvider
     chain3.shh.currentProvider
     ...
 
@@ -437,8 +430,7 @@ BatchRequest
 .. code-block:: javascript
 
     new chain3.BatchRequest()
-    new chain3.eth.BatchRequest()
-    new chain3.shh.BatchRequest()
+    new chain3.mc.BatchRequest()
     ...
 
 Class to create and execute batch requests.
@@ -464,9 +456,9 @@ Example
 
 .. code-block:: javascript
 
-    const contract = new chain3.eth.Contract(abi, address);
+    const contract = new chain3.mc.Contract(abi, address);
 
     const batch = new chain3.BatchRequest();
-    batch.add(chain3.eth.getBalance.request('0x0000000000000000000000000000000000000000', 'latest'));
+    batch.add(chain3.mc.getBalance.request('0x0000000000000000000000000000000000000000', 'latest'));
     batch.add(contract.methods.balance(address).call.request({from: '0x0000000000000000000000000000000000000000'}));
     batch.execute().then(...);

@@ -96,7 +96,7 @@ MOAC母链的交易数据结构与以太坊的相比，加入了三个新变量�
 ----------------------
 
 VNODE 客户端是接入MOAC母链的软件。VNODE 客户端可以进行母链的POW共识，并和应用链的SCS客户端相连，以支持应用链的共识。 
-
+客户端的更新可以在 `MOAC GITHUB  <https://github.com/MOACChain/moac-core/releases>`_ 上查看到。
 
 外部链接
 --------------

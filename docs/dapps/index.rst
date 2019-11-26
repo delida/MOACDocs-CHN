@@ -15,4 +15,6 @@ DAPPs
    ERC721
    FileStormUserGuide
    MoveToMoac
+   RestfulAPI
+   SDK
 

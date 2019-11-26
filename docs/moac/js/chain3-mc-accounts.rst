@@ -12,9 +12,9 @@ The ``chain3.mc.accounts`` contains functions to generate Ethereum accounts and 
 
 .. code-block:: javascript
 
-    import {Accounts} from 'web3-mc-accounts';
+    import {Accounts} from 'chain3-mc-accounts';
 
-    // Passing in the eth or web3 package is necessary to allow retrieving chainId, gasPrice and nonce automatically
+    // Passing in the mc or chain3 package is necessary to allow retrieving chainId, gasPrice and nonce automatically
     // for accounts.signTransaction().
     const accounts = new Accounts('ws://localhost:8546', null, options);
 

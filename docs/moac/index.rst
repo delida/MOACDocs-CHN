@@ -21,11 +21,5 @@
    Chain3Go
    Chain3Java
    Chain3Python
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Chain3 JavaScript 
-
    Chain3Js
-
    js/index
