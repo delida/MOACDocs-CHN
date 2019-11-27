@@ -2632,6 +2632,7 @@ Example
     }
 
 --------------
+
 **scs\_getMicroChainInfo**
 
 .. _scs_getmicrochaininfo:
@@ -2672,6 +2673,7 @@ Example
     }
 
 --------------
+
 **scs\_getMicroChainList**
 
 .. _scs_getmicrochainlist:
@@ -3026,7 +3028,6 @@ Example
 
 --------------
 
-
 **scs\_getExchangeInfo**
 
 .. _scs_getExchangeInfo:
@@ -3061,7 +3062,6 @@ Example
   {"jsonrpc":"2.0","id":100,"result":{"DepositingRecordCount":0,"DepositingRecords":null,"WithdrawingRecordCount":0,"WithdrawingRecords":null,"microchain":"0x2e4694875de2a7da9c3186a176c52760d58694e4","scsid":"0x50c15fafb95968132d1a6ee3617e99cca1fcf059"}}
 
 --------------
-
 
 **scs\_getTxpool**
 
