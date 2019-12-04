@@ -18,8 +18,8 @@
    Commands
    Console
    JSONRPC
-   Chain3Go
-   Chain3Java
-   Chain3Python
    Chain3Js
    js/index
+   Chain3Java
+   Chain3Python
+   Chain3Go

@@ -12,6 +12,7 @@
 
    intro/index
    moac/index
+   scs/index
    appchain/index
    dapps/index
 

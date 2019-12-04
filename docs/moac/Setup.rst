@@ -1,16 +1,17 @@
-VNODE节点的启动和使用
-====================
+VNODE节点快速上手指南
+=====================
 
-官方发布版本
+官方版本下载
 ------------
 
-最新的MOAC软件可以从官方的发布地址下载 `release
+最新的MOAC VNODE软件可以从官方的发布地址下载 `release
 link <https://github.com/MOACChain/moac-core/releases>`__
 
 Debian/Ubuntu/CentOS
 ~~~~~~~~~~~~~~~~~~~~
 
-1. Untar the file using tar, under the directory, run ./moac
+1. 使用 tar 来解压缩，在当前目录下运行：
+ ./moac
 
 如果要看帮助信息, 使用help参数: ./moac --help
 
@@ -22,19 +23,19 @@ Debian/Ubuntu/CentOS
 
     INFO [04-24|11:24:26.506] 86161:IPC endpoint closed: /home/user/.moac/moac.ipc 
 
-from another terminal, run moac again to attach the running node
+再打开另一个命令行终端，再次运行：
 
 ::
 
     ./moac attach 
 
-or
+或者制定ipc文件：
 
 ::
 
     ./moac attach $HOME/.moac/moac.ipc
 
-2. from console prompt, create coinbase account
+2. 进入命令行（console）后，产生一个新帐号：
 
    ::
 
@@ -96,7 +97,7 @@ should be seen as:
 
 ::
 
-    D:\moacPangu0.8.2-win>moac --help
+    D:\moac-win>moac --help
 
 显示帮助信息，包含但不限于以下内容：
 
@@ -106,7 +107,7 @@ should be seen as:
 
 ::
 
-    D:\ moacPangu0.8.2-win>moac --help
+    D:\ moac-win>moac --help
 
 显示帮助信息，包含但不限于以下内容：
 
@@ -135,7 +136,7 @@ should be seen as:
 
 ::
 
-    D:\ moacPangu0.8.2-win>moac
+    D:\ moac-win>moac
 
 显示如下信息：
 
@@ -169,7 +170,7 @@ should be seen as:
 
 ::
 
-    D:\ moacPangu0.8.2-win>moac console
+    D:\ moac-win>moac console
 
 之后一直滚屏以同步区块数据。
 
@@ -177,7 +178,7 @@ should be seen as:
 
 ::
 
-    D:\ moacPangu0.8.2-win>moac attach
+    D:\ moac-win>moac attach
 
 .. figure:: ../image/moac_install_win_1.png
    :alt: moac\_install\_win\_1

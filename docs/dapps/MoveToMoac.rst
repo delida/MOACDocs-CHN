@@ -1,5 +1,5 @@
 移植到MOAC平台
-============
+^^^^^^^^^^^^^^
 
 MOAC的基础链节点是基于
 `以太坊 <https://github.com/ethereum/go-ethereum>`__ 项目开发的，具有类似的借口环境。
@@ -28,13 +28,16 @@ MOAC的基础链节点是基于
    -  `chain3 <https://github.com/MOACChain/chain3>`__, developed based
       on web3.js 0.2.x, is the JavaScript library supported by MOAC.
 
-3. 在MOAC应用链上部署Solidity编写的智能合约，需要获得MOAC应用链的地址，或者通过示例子链的 :ref:`REST API <restapi-ref>` 和 :ref:`SDK <sdk-ref>` 进行，
+3. 在MOAC应用链上部署Solidity编写的智能合约，需要获得MOAC应用链的地址，或者通过测试应用链的 :ref:`REST API <restapi-ref>` 和 :ref:`SDK <sdk-ref>` 进行，
 也可以通过以下工具进行部署：
    -  `wallet.moac.io <http://wallet.moac.io/>`__, a browser Dapp
       connect with local nodes to deploy contracts.
    -  `Node.Js Solidity
       compiler <https://www.npmjs.com/package/solc>`__, a JavaScript
       bindings for the Solidity compiler.
+
+可以参考：
+
 
 示例
 ~~~~~~~

@@ -45,9 +45,9 @@
 
 应用链合约提供了registerAdd方法来支持应用链添加，必须由应用链部署账号来发送交易请求。
 
-需要对应SubChainProtocolBase矿池合约有等待加入的scs节点。
+需要对应SubChainProtocolBase节点池合约有等待加入的scs节点。
 
-应用链收到请求后，在矿池合约选取scs，开始同步应用链区块，等一轮flush后生效，正式加入应用链。
+应用链收到请求后，在节点池合约选取scs，开始同步应用链区块，等一轮flush后生效，正式加入应用链。
 
 registerAdd参数:
 ::

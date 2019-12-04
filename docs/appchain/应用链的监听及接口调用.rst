@@ -33,7 +33,7 @@ Monitor不参与应用链的交易共识，只是同步区块数据，提供数�
 	> subchainbase = SubChainBaseContract.at('0xb877bf4e4cc94fd9168313e00047b77217760930')	
 	> subchainbase.getMonitorInfo.call()
 
-应用链RPC接口
+应用链RPCDEBUG接口
 ----------------------
 
 根据应用链启动的参数，用户可以访问对应端口，调用接口获取应用链相关数据
