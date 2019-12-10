@@ -2169,7 +2169,6 @@ Used for submitting a proof-of-work solution.
 
 *Returns*
 
-
 ``Boolean`` - returns ``true`` if the provided solution is valid,
 otherwise ``false``.
 
@@ -2193,22 +2192,22 @@ Example
 ADMIN
 '''''
 
-**admin\__addPeer**
+**admin\_addPeer**
 
-.. __addPeer:
+.. _admin_addPeer:
 
-Returns the VNODE benificial address. This is needed for SCS to use in
-the communication.
+The addPeer administrative method requests adding a new remote node to the list of tracked static nodes. The node will try to maintain connectivity to these nodes at all times, reconnecting every once in a while if the remote connection goes down.
+
+The method accepts a single argument, the enode URL of the remote peer to start tracking and returns a BOOL indicating whether the peer was accepted for tracking or some error occurred.
 
 *Parameters*
 
-none
+``string``: ``url``, 20 Bytes - address from which the VNODE settings
+in the vnodeconfig.json file.
 
 *Returns*
 
-
-``address``: ``DATA``, 20 Bytes - address from which the VNODE settings
-in the vnodeconfig.json file.
+``Boolean`` - returns ``true`` if the operation is successfully, otherwise ``false``.
 
 Example
 
@@ -2216,17 +2215,129 @@ Example
 .. code:: js
 
     // Request
-    curl -X POST --data '{"jsonrpc":"2.0","method":"vnode_address","params":[],"id":101}' localhost:8545
+    curl -X POST --data '{"method": "admin_addPeer", "params": ["enode://a979fb575495b8d6db44f750317d0f4622bf4c2aa3365d6af7c284339968eef29b69ad0dce72a4d8db5ebb4968de0e3bec910127f134779fbcb0cb6d3331163c@2.1.188.187:30333"]}' localhost:8545
 
     // Result
-    {
-    "jsonrpc":"2.0",
-    "id":101,
-    "result":"0xa8863fc8ce3816411378685223c03daae9770ebb"
-    }
+    true
 
 --------------
 
+**admin\_datadir**
+
+.. _admin_datadir:
+
+The datadir administrative property can be queried for the absolute path the running Geth node currently uses to store all its databases.
+
+*Parameters*
+
+``string``: ``url``, 20 Bytes - address from which the VNODE settings
+in the vnodeconfig.json file.
+
+*Returns*
+
+``Boolean`` - returns ``true`` if the operation is successfully, otherwise ``false``.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"method": "admin_addPeer", "params": ["enode://a979fb575495b8d6db44f750317d0f4622bf4c2aa3365d6af7c284339968eef29b69ad0dce72a4d8db5ebb4968de0e3bec910127f134779fbcb0cb6d3331163c@2.1.188.187:30333"]}' localhost:8545
+
+    // Result
+    true
+
+--------------
+**admin\_nodeInfo**
+
+.. _admin_nodeInfo:
+
+admin_lnodeInfo
+admin_peers
+admin_stopRPC
+admin_startRPC
+The nodeInfo administrative property can be queried for all the information known about the running Geth node at the networking granularity. These include general information about the node itself as a participant of the ÐΞVp2p P2P overlay protocol, as well as specialized information added by each of the running application protocols 
+
+*Parameters*
+
+``string``: ``url``, 20 Bytes - address from which the VNODE settings
+in the vnodeconfig.json file.
+
+*Returns*
+
+``Boolean`` - returns ``true`` if the operation is successfully, otherwise ``false``.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"method": "admin_addPeer", "params": ["enode://a979fb575495b8d6db44f750317d0f4622bf4c2aa3365d6af7c284339968eef29b69ad0dce72a4d8db5ebb4968de0e3bec910127f134779fbcb0cb6d3331163c@2.1.188.187:30333"]}' localhost:8545
+
+    // Result
+    true
+
+--------------
+**admin\_addPeer**
+
+.. _admin_addPeer:
+
+The addPeer administrative method requests adding a new remote node to the list of tracked static nodes. The node will try to maintain connectivity to these nodes at all times, reconnecting every once in a while if the remote connection goes down.
+
+The method accepts a single argument, the enode URL of the remote peer to start tracking and returns a BOOL indicating whether the peer was accepted for tracking or some error occurred.
+
+*Parameters*
+
+``string``: ``url``, 20 Bytes - address from which the VNODE settings
+in the vnodeconfig.json file.
+
+*Returns*
+
+``Boolean`` - returns ``true`` if the operation is successfully, otherwise ``false``.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"method": "admin_addPeer", "params": ["enode://a979fb575495b8d6db44f750317d0f4622bf4c2aa3365d6af7c284339968eef29b69ad0dce72a4d8db5ebb4968de0e3bec910127f134779fbcb0cb6d3331163c@2.1.188.187:30333"]}' localhost:8545
+
+    // Result
+    true
+
+--------------
+**admin\_addPeer**
+
+.. _admin_addPeer:
+
+The addPeer administrative method requests adding a new remote node to the list of tracked static nodes. The node will try to maintain connectivity to these nodes at all times, reconnecting every once in a while if the remote connection goes down.
+
+The method accepts a single argument, the enode URL of the remote peer to start tracking and returns a BOOL indicating whether the peer was accepted for tracking or some error occurred.
+
+*Parameters*
+
+``string``: ``url``, 20 Bytes - address from which the VNODE settings
+in the vnodeconfig.json file.
+
+*Returns*
+
+``Boolean`` - returns ``true`` if the operation is successfully, otherwise ``false``.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"method": "admin_addPeer", "params": ["enode://a979fb575495b8d6db44f750317d0f4622bf4c2aa3365d6af7c284339968eef29b69ad0dce72a4d8db5ebb4968de0e3bec910127f134779fbcb0cb6d3331163c@2.1.188.187:30333"]}' localhost:8545
+
+    // Result
+    true
+
+--------------
 TXPOOL
 '''''
 

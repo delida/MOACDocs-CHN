@@ -1,5 +1,7 @@
+.. _scs_chain3js01x:
+
 JSON RPC 接口命令
-^^^^^^^^^^^^^^^^
+----------------
 
 `JSON <http://json.org/>` ( JavaScript Object Notation) ，是一种轻量级的数据交互格式.
 
@@ -10,7 +12,7 @@ JSON RPC 接口命令
 
 
 JSON-RPC 接入方式
------------------
+=================
 
 
 MOAC 平台中的应用链节点 SCS 内置了两种 JSON-RPC 接口来方便用户使用。
@@ -27,7 +29,7 @@ MOAC 平台中的应用链节点 SCS 内置了两种 JSON-RPC 接口来方便用
 +----------+----------+---------------------------+
 
 应用链 RPC 接口
-----------------------
+=================
 
 在SCS节点启动时，可以使用 HTTP JSON-RPC 选项``--rpc`` 命令来开启：
 
@@ -54,7 +56,7 @@ SCS 默认RPC接口的地址是 localhost，端口号是 8548，可以通过 rpc
     scsserver --rpc --rpccorsdomain "http://localhost:8548"
 
 应用链RPCDEBUG接口
-----------------------
+=================
 
 
 在SCS节点启动时，可以使用 HTTP JSON-RPC 选项``--rpc`` 命令来开启：
@@ -112,13 +114,12 @@ SCS 默认RPC接口的地址是 localhost，端口号是 8548/rpc，可以通过
 
 
 默认区块值
----------
+=================
 
 以下接口包含默认区块值。如果没有有效区块数值输入，则使用应用链的最高区块高度：
 
 -  :ref:`scs\_getBalance <scs_getbalance>`
--  :ref:`scs\_getCode <scs_getcode>`
--  :ref:`scs\_call <scs_call>`
+-  :ref:`scs\_directCall <scs_directcall>`
 
 When requests are made that act on the state of moac, the last default
 block parameter determines the height of the block.
@@ -131,7 +132,7 @@ The following options are possible for the defaultBlock parameter:
 -  ``String "pending"`` - for the pending state/transactions
 
 Curl 命令示例
-------------
+=================
 
 The curl options below might return a response where the node complains
 about the content type, this is because the --data option sets the
@@ -145,17 +146,18 @@ localhost:8545 or '127.0.0.1', which must be the last argument given to
 curl.
 
 JSON-RPC 命令
--------------
+=================
 
 -  rpc
 
-   -  :ref:`scs_directcall<scs_directcall>`
-   -  :ref:`scs_getblock<scs_getblock>`
+   -  :ref:`scs_directCall<scs_directcall>`
+   -  :ref:`scs_getBalance<scs_getbalance>`   
+   -  :ref:`scs_getBlock<scs_getblock>`
    -  :ref:`scs_getBlockNumber <scs_getblocknumber>`
    -  :ref:`scs_getDappList <scs_getdapplist>`
-   -  :ref:`scs_getDappState <scs_getdappstate>`
-   -  :ref:`scs_getMicroChainInfo <scs_getmicrochaininfo>`
-   -  :ref:`scs_getMicroChainList <scs_getmicrochainlist>`
+   -  :ref:`scs_getDappState <scs-getdappstate>`
+   -  :ref:`scs_getAppChainInfo <scs_getmicrochaininfo>`
+   -  :ref:`scs_getAppChainList <scs_getmicrochainlist>`
    -  :ref:`scs\_getNonce <scs_getnonce>`
    -  :ref:`scs\_getSCSId <scs_getscsid>`
    -  :ref:`scs\_getTransactionByHash <scs_gettransactionbyhash>`
@@ -169,13 +171,13 @@ JSON-RPC 命令
 -  rpcdebug
 
    -  :ref:`ScsRPCMethod\_GetNonce <rpcdebug_GetNonce>`
+   -  :ref:`ScsRPCMethod\_GetBalance <rpcdebug_GetBalance>`   
    -  :ref:`ScsRPCMethod\_GetBlockNumber <rpcdebug_GetBlockNumber>`
    -  :ref:`ScsRPCMethod\_GetBlock <rpcdebug_GetBlock>`
    -  :ref:`ScsRPCMethod\_GetBlocks <rpcdebug_GetBlocks>`
    -  :ref:`ScsRPCMethod\_GetSubChainInfo <rpcdebug_GetSubChainInfo>`
    -  :ref:`ScsRPCMethod\_GetTxpool <rpcdebug_GetTxpool>`
    -  :ref:`ScsRPCMethod\_GetTxpoolCount <rpcdebug_GetTxpoolCount>`
-   -  :ref:`ScsRPCMethod\_GetBalance <rpcdebug_GetBalance>`
    -  :ref:`ScsRPCMethod\_GetDappState <rpcdebug_GetDappState>`
    -  :ref:`ScsRPCMethod\_GetDappAddrList <rpcdebug_GetDappAddrList>`
    -  :ref:`ScsRPCMethod\_GetExchangeInfo <rpcdebug_GetExchangeInfo>`
@@ -195,9 +197,9 @@ RPC
 
 **scs_directCall**
 
-Executes a new constant call of the MicroChain Dapp function without
-creating a transaction on the MicroChain. This RPC call is used by
-API/lib to call MicroChain Dapp functions.
+Executes a new constant call of the AppChain Dapp function without
+creating a transaction on the AppChain. This RPC call is used by
+API/lib to call AppChain Dapp functions.
 
 *Parameters*
 
@@ -206,7 +208,7 @@ API/lib to call MicroChain Dapp functions.
 
 - ``from``: ``DATA``, 20 Bytes - (optional) The address the transaction is sent from. 
 - ``to``: ``DATA``, 20 Bytes - The address the transaction is directed to. This
-parameter is the MicroChain address. 
+parameter is the AppChain address. 
 - ``data``: ``DATA`` - (optional) Hash of the method signature and encoded parameters. For details see
 `Ethereum Contract ABI <https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI>`
 
@@ -231,17 +233,45 @@ Example
     }
 
 --------------
+**scs\_getBalance**
 
-**scs\_getBlock**
+.. _scs_getbalance:
 
-.. _scs_getblock:
-
-Returns information about a block on the MicroChain by block number.
+Returns information about the balance of the input account on the AppChain by block number.
 
 *Parameters*
 
 
-1. ``String`` - the address of the MicroChain that Dapp is on.
+1. ``String`` - the address of the AppChain that Dapp is on.
+2. ``String`` - the address of the account on the AppChain.
+
+*Returns*
+
+
+``DATA`` - Data in the block on the AppChain.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"jsonrpc":"2.0","method":"scs_getBalance","params":["0x9d711986ccc8c89db2dfaf0894acadeb5a383ee8","0xa8863fc8ce3816411378685223c03daae9770ebb"],"id":101}' localhost:8548
+
+    // Result
+   {"jsonrpc":"2.0","id":101,"result":"0x1c6b60233b000"}
+
+--------------------
+**scs\_getBlock**
+
+.. _scs_getblock:
+
+Returns information about a block on the AppChain by block number.
+
+*Parameters*
+
+
+1. ``String`` - the address of the AppChain that Dapp is on.
 2. ``QUANTITY|TAG`` - integer of a block number, or the string
    ``"earliest"`` or ``"latest"``, as in the `default block
    parameter <#the-default-block-parameter>`. Note, scs\_getBlock does
@@ -250,7 +280,7 @@ Returns information about a block on the MicroChain by block number.
 *Returns*
 
 
-``DATA`` - Data in the block on the MicroChain.
+``DATA`` - Data in the block on the AppChain.
 
 Example
 
@@ -269,19 +299,19 @@ Example
 
 .. _scs_getblocklist:
 
-Returns information about multiple MicroChain blocks by block number.
+Returns information about multiple AppChain blocks by block number.
 
 *Parameters*
 
 
-1. ``String`` - the address of the MicroChain that Dapp is on.
+1. ``String`` - the address of the AppChain that Dapp is on.
 2. ``QUANTITY`` - integer of the start block number.
 3. ``QUANTITY`` - integer of the end block number, need to be larger or equal the start block number.
 
 *Returns*
 
 
-``ARRAY`` - Array of the block infromation on the MicroChain.
+``ARRAY`` - Array of the block infromation on the AppChain.
 
 Example
 
@@ -304,7 +334,7 @@ Returns the number of most recent block .
 
 *Parameters*
 
-1. ``String`` - the address of the MicroChain that Dapp is on.
+1. ``String`` - the address of the AppChain that Dapp is on.
 
 *Returns*
 
@@ -330,15 +360,15 @@ Example
 
 .. _scs_getdapplist:
 
-Returns the Dapp addresses on the MicroChain. For nuwa 1.0.8 and later version only, 
+Returns the Dapp addresses on the AppChain. For nuwa 1.0.8 and later version only, 
 
 *Parameters*
 
-1. ``String`` - the address of the MicroChain that has Dapps.
+1. ``String`` - the address of the AppChain that has Dapps.
 
 *Returns*
 
-``ARRAY`` - Array of the DAPP addresses on the MicroChain.
+``ARRAY`` - Array of the DAPP addresses on the AppChain.
 
 Example
 
@@ -358,18 +388,18 @@ Example
 
 **scs\_getDappState**
 
-.. _scs_getdappstate:
+.. _scs-getdappstate:
 
-Returns the Dapp state on the MicroChain.
+Returns the Dapp state on the AppChain.
 
 *Parameters*
 
-1. ``String`` - the address of the MicroChain that Dapp is on.
+1. ``String`` - the address of the AppChain that Dapp is on.
 
 *Returns*
 
-``QUANTITY`` - 0, no DAPP is deployed on the MicroChain; 1, DAPP is
-deployed on the MicroChain.
+``QUANTITY`` - 0, no DAPP is deployed on the AppChain; 1, DAPP is
+deployed on the AppChain.
 
 Example
 
@@ -387,29 +417,29 @@ Example
 
 --------------
 
-**scs\_getMicroChainInfo**
+**scs\_getAppChainInfo**
 
 .. _scs_getmicrochaininfo:
 
-Returns the requested MicroChain information on the connecting SCS. This information is the same as the information defined in the MicroChain contract.
+Returns the requested AppChain information on the connecting SCS. This information is the same as the information defined in the AppChain contract.
 
 *Parameters*
 
-1. `String` - the address of the MicroChain on the SCS.
+1. `String` - the address of the AppChain on the SCS.
 
 *Returns*
 
-``Object`` A Micro Chain information object as defined in the MicroChain contract:
+``Object`` A Micro Chain information object as defined in the AppChain contract:
 
--  ``balance``: ``Number`` - the native token amount in the MicroChain.
--  ``blockReward``: ``Number`` - the reward amount at each block for the MicroChain, unit is in Sha = 1e-18 moac.
--  ``bondLimit``: ``Number`` - the token amount needed as deposit in the MicroChain, unit is in Sha = 1e-18 moac.
+-  ``balance``: ``Number`` - the native token amount in the AppChain.
+-  ``blockReward``: ``Number`` - the reward amount at each block for the AppChain, unit is in Sha = 1e-18 moac.
+-  ``bondLimit``: ``Number`` - the token amount needed as deposit in the AppChain, unit is in Sha = 1e-18 moac.
 -  ``owner``: ``String``, 20 Bytes - the address of the beneficiary to
    whom the mining rewards were given.
 -  ``scsList``: ``Array``, List of SCS addresses, 20 Bytes each - the address of the SCS to
    whom the mining rewards were given.
--  ``txReward``: ``Number`` - the reward provided to the TX for the MicroChain, unit is in Sha = 1e-18 moac.
--  ``viaReward``: ``Number`` - the reward provided to the VNODE proxy for the MicroChain, unit is in Sha = 1e-18 moac.   
+-  ``txReward``: ``Number`` - the reward provided to the TX for the AppChain, unit is in Sha = 1e-18 moac.
+-  ``viaReward``: ``Number`` - the reward provided to the VNODE proxy for the AppChain, unit is in Sha = 1e-18 moac.   
 
 
 Example
@@ -417,7 +447,7 @@ Example
 .. code:: js
 
     // Request
-    curl -X POST --data '{"jsonrpc":"2.0","method":"scs_getMicroChainInfo","params":[],"id":101}' 'localhost:8545'
+    curl -X POST --data '{"jsonrpc":"2.0","method":"scs_getAppChainInfo","params":[],"id":101}' 'localhost:8545'
 
     // Result
     {
@@ -428,11 +458,11 @@ Example
 
 --------------
 
-**scs\_getMicroChainList**
+**scs\_getAppChainList**
 
 .. _scs_getmicrochainlist:
 
-Returns the list of MicroChains on the SCS that is connecting with. 
+Returns the list of AppChains on the SCS that is connecting with. 
 
 *Parameters*
 
@@ -448,7 +478,7 @@ Example
 .. code:: js
 
     // Request
-    curl -X POST --data '{"jsonrpc":"2.0","method":"scs_getMicroChainList","params":[],"id":101}' 'localhost:8545'
+    curl -X POST --data '{"jsonrpc":"2.0","method":"scs_getAppChainList","params":[],"id":101}' 'localhost:8545'
 
     // Result
     {
@@ -463,18 +493,18 @@ Example
 
 .. _scs_getNonce:
 
-Returns the account nonce on the MicroChain. 
+Returns the account nonce on the AppChain. 
 
 *Parameters*
 
 
-1. ``String`` - the address of the MicroChain that Dapp is on.
+1. ``String`` - the address of the AppChain that Dapp is on.
 2. ``String`` - the address of the accountn.
 
 *Returns*
 
 
-``QUANTITY`` integer of the number of transactions send from this address on the MicroChain; 
+``QUANTITY`` integer of the number of transactions send from this address on the AppChain; 
 
 Example
 
@@ -506,7 +536,7 @@ None
 
 
 ``String`` - SCS id in the scskeystore directory, used for SCS
-identification to send deposit and receive MicroChain mining rewards.
+identification to send deposit and receive AppChain mining rewards.
 
 Example
 
@@ -582,7 +612,7 @@ Example
 
 .. _scs_getReceiptByNonce:
 
-Returns the transaction result by address and nonce on the MicroChain. Note That the nonce is the nonce on the MicroChain. This nonce can be checked using scs_getNonce. 
+Returns the transaction result by address and nonce on the AppChain. Note That the nonce is the nonce on the AppChain. This nonce can be checked using scs_getNonce. 
 
 *Parameters*
 
@@ -747,21 +777,21 @@ Example
 
 .. _scs_getExchangeByAddress:
 
-Returns the Withdraw/Deposit exchange records between MicroChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
+Returns the Withdraw/Deposit exchange records between AppChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
 
 
 *Parameters*
 
 1. `String` - 应用链合约地址.
-1. `String` - The address to be checked.
-1. `Int` - Index of Deposit records >= 0.
-1. `Int` - Number of Deposit records extracted.
-1. `Int` - Index of Depositing records >= 0.
-1. `Int` - Number of Depositing records extracted.
-1. `Int` - Index of Withdraw records >= 0.
-1. `Int` - Number of Withdraw records extracted.
-1. `Int` - Index of Withdrawing records >= 0.
-1. `Int` - Number of Withdrawing records extracted.
+2. `String` - The address to be checked.
+3. `Int` - Index of Deposit records >= 0.
+4. `Int` - Number of Deposit records extracted.
+5. `Int` - Index of Depositing records >= 0.
+6. `Int` - Number of Depositing records extracted.
+7. `Int` - Index of Withdraw records >= 0.
+8. `Int` - Number of Withdraw records extracted.
+9. `Int` - Index of Withdrawing records >= 0.
+10. `Int` - Number of Withdrawing records extracted.
 
 *Returns*
 
@@ -786,7 +816,7 @@ Example
 
 .. _scs_getExchangeInfo:
 
-Returns the Withdraw/Deposit exchange records between MicroChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
+Returns the Withdraw/Deposit exchange records between AppChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
 
 
 *Parameters*
@@ -821,7 +851,7 @@ Example
 
 .. _scs_gettxpool:
 
-Returns the ongoing transactions in the MicroChain. 
+Returns the ongoing transactions in the AppChain. 
 
 *Parameters*
 
@@ -863,7 +893,7 @@ RPCDEBUG
 *Parameters*
 
 1. `String` - SubChainAddr, 应用链合约地址.
-1. `String` - Sender, 查询账号， 每个账号在应用链有不同的nonce.
+2. `String` - Sender, 查询账号， 每个账号在应用链有不同的nonce.
 
 *Returns*
 
@@ -876,14 +906,35 @@ RPCDEBUG
          }
       }
 
-.. _rpcdebug_GetBlockNumber:
 
-GetBlockNumber：获得当前应用链的区块高度
-::
-  SubChainAddr: 应用链合约地址
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetBlockNumber",
-      "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"}
+
+**GetBalance**
+
+.. _rpcdebug_GetBalance:
+
+获得对应账号在应用链中的原生币余额。
+
+*输入参数*
+
+1. `String` - 应用链合约地址.
+2. `String` - 查询帐号地址.
+
+*输出结果*
+
+``Object`` - A JSON format object contains two fields pending and queued. Each of these fields are associative arrays, in which each entry maps an origin-address to a batch of scheduled transactions. These batches themselves are maps associating nonces with actual transactions.
+
+Example
+
+
+.. code:: js
+
+  // Request
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetBalance",
+      "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
+        "Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"
+        }
       }
+  
 
 .. _rpcdebug_GetBlock:
 
@@ -905,6 +956,15 @@ GetBlocks: 获取某一区间内的区块信息
   Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetBlocks",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"
         "Start":10, "End":20}
+      }
+
+.. _rpcdebug_GetBlockNumber:
+
+GetBlockNumber：获得当前应用链的区块高度
+::
+  SubChainAddr: 应用链合约地址
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetBlockNumber",
+      "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"}
       }
 
 .. _rpcdebug_GetSubChainInfo:
@@ -936,18 +996,6 @@ GetTxpoolCount：获得应用链交易池中不同类型交易的数量
        }
       }
 
-.. _rpcdebug_GetBalance:
-
-GetBalance：获得对应账号在应用链中的余额
-::
-  SubChainAddr: 应用链合约地址
-  Sender：查询账号
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetBalance",
-      "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
-        "Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"
-        }
-      }
-  
 .. _rpcdebug_GetDappState:
 
 GetDappState：获得应用链基础合约合约的状态

@@ -1,4 +1,4 @@
-.. _chain3js0.1:
+.. _scs_chain3js01x:
 
 Chain3 JavaScript 软件库 0.1.x
 ------------------------------
@@ -48,13 +48,15 @@ Chain3 Javascript Ðapp API Reference
 
 -  scs
 
-   -  :ref:`scs_directcall <jsscs_directcall>`
-   -  :ref:`scs_getblock <jsscs_getblock>`
+   -  :ref:`scs_directCall <jsscs_directcall>`
+   -  :ref:`scs_getBalance <jsscs_getbalance>`
+   -  :ref:`scs_getBlock <jsscs_getblock>`
+   -  :ref:`scs_getBlockList <jsscs_getblocklist>`
    -  :ref:`scs_getBlockNumber <jsscs_getblocknumber>`
    -  :ref:`scs_getDappList <jsscs_getdapplist>`
    -  :ref:`scs_getDappState <jsscs_getdappstate>`
-   -  :ref:`scs_getMicroChainInfo <jsscs_getmicrochaininfo>`
-   -  :ref:`scs_getMicroChainList <jsscs_getmicrochainlist>`
+   -  :ref:`scs_getAppChainInfo <jsscs_getmicrochaininfo>`
+   -  :ref:`scs_getAppChainList <jsscs_getmicrochainlist>`
    -  :ref:`scs\_getNonce <jsscs_getnonce>`
    -  :ref:`scs\_getSCSId <jsscs_getscsid>`
    -  :ref:`scs\_getTransactionByHash <jsscs_gettransactionbyhash>`
@@ -102,7 +104,7 @@ SCS
 
 - ``from``: ``DATA``, 20 Bytes - (optional) The address the transaction is sent from. 
 
-- ``to``: ``DATA``, 20 Bytes - The address the transaction is directed to. This parameter is the MicroChain address. 
+- ``to``: ``DATA``, 20 Bytes - The address the transaction is directed to. This parameter is the AppChain address. 
 
 - ``data``: ``DATA`` - (optional) Hash of the method signature and encoded parameters. For details see `Ethereum Contract ABI <https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI>`
 
@@ -130,24 +132,21 @@ Example
 
 --------------
 
-**chain3.scs.getBlock**
+**chain3.scs.getBalance**
 
-.. _jsscs_getblock:
+.. _jsscs_getbalance:
 
 Returns information about a block on the AppChain by block number.
 
 *Parameters*
 
 
-1. ``String`` - the address of the MicroChain that Dapp is on.
-2. ``QUANTITY|TAG`` - integer of a block number, or the string
-   ``"earliest"`` or ``"latest"``, as in the `default block
-   parameter <#the-default-block-parameter>`. Note, scs\_getBlock does
-   not support ``"pending"``.
+1. ``String`` - the address of the AppChain.
+2. ``String`` - the address of the account.
 
 *Returns*
 
-``Object`` - The MicroChain block object:
+``Object`` - A big number object:
 
 -  ``number``: ``Number`` - the block number. ``null`` when its pending
    block.
@@ -174,7 +173,61 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList();
+    var mclist = chain3.scs.getAppChainList();
+    mcAddress = mclist[0];
+    console.log("Account balance:", chain3.scs.getBalance(mcAddress, coinbase));
+
+    // Result is a bigNubmer object, can be convert to other format
+    SCS balance: BigNumber { s: 1, e: 0, c: [ 0 ] }
+    {"extraData":"0x","hash":"0xc80cbe08bc266b1236f22a8d0b310faae3135961dbef6ad8b6ad4e8cd9537309","number":"0x1","parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0x1a065207da60d8e7a44db2f3b5ed9d3e81052a3059e4108c84701d0bf6a62292","timestamp":"0x0","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}
+
+--------------
+
+**chain3.scs.getBlock**
+
+.. _jsscs_getblock:
+
+Returns information about a block on the AppChain by block number.
+
+*Parameters*
+
+
+1. ``String`` - the address of the AppChain that Dapp is on.
+2. ``QUANTITY|TAG`` - integer of a block number, or the string
+   ``"earliest"`` or ``"latest"``, as in the `default block
+   parameter <#the-default-block-parameter>`. Note, scs\_getBlock does
+   not support ``"pending"``.
+
+*Returns*
+
+``Object`` - The AppChain block object:
+
+-  ``number``: ``Number`` - the block number. ``null`` when its pending
+   block.
+-  ``hash``: ``String``, 32 Bytes - hash of the block. ``null`` when its
+   pending block.
+-  ``parentHash``: ``String``, 32 Bytes - hash of the parent block.
+-  ``nonce``: ``String``, 8 Bytes - hash of the generated proof-of-work.
+   ``null`` when its pending block.
+-  ``transactionsRoot``: ``String``, 32 Bytes - the root of the
+   transaction trie of the block
+-  ``stateRoot``: ``String``, 32 Bytes - the root of the final state
+   trie of the block.
+-  ``miner``: ``String``, 20 Bytes - the address of the beneficiary to
+   whom the mining rewards were given.
+-  ``extraData``: ``String`` - the "extra data" field of this block.
+-  ``timestamp``: ``Number`` - the unix timestamp for when the block was
+   collated.
+-  ``transactions``: ``Array`` - Array of transaction objects, or 32
+   Bytes transaction hashes depending on the last given parameter.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    var mclist = chain3.scs.getAppChainList();
     mcAddress = mclist[0];
     console.log("SCS block:", chain3.scs.getBlock(mcAddress, 1));
 
@@ -187,20 +240,20 @@ Example
 
 .. _jsscs_getblocklist:
 
-Returns information about multiple MicroChain blocks by block number.
+Returns information about multiple AppChain blocks by block number.
 
 *Parameters*
 
 
-1. ``String`` - the address of the MicroChain that Dapp is on.
+1. ``String`` - the address of the AppChain that Dapp is on.
 2. ``QUANTITY`` - integer of the start block number.
 3. ``QUANTITY`` - integer of the end block number, need to be larger or equal the start block number.
 
 *Returns*
 
-``Object`` - The MicroChain blockList object:
+``Object`` - The AppChain blockList object:
 
--  ``blockList``: ``ARRAY``, Array of the MicroChain block objects.
+-  ``blockList``: ``ARRAY``, Array of the AppChain block objects.
 
 Example
 
@@ -208,8 +261,8 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     console.log("SCS blockList 1 - 3:", chain3.scs.getBlockList(mcAddress, 1, 3));
 
     // Result
@@ -225,7 +278,7 @@ Returns the number of most recent block .
 
 *Parameters*
 
-1. ``String`` - the address of the MicroChain that Dapp is on.
+1. ``String`` - the address of the AppChain that Dapp is on.
 
 *Returns*
 
@@ -237,8 +290,8 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     console.log("SCS blockNumber:", chain3.scs.getBlockNumber(mcAddress));
 
     // Result
@@ -250,23 +303,23 @@ Example
 
 .. _jsscs_getdapplist:
 
-Returns the Dapp addresses on the MicroChain. For nuwa 1.0.8 and later version only, 
+Returns the Dapp addresses on the AppChain. For nuwa 1.0.8 and later version only, 
 
 *Parameters*
 
-1. ``String`` - the address of the MicroChain that has Dapps.
+1. ``String`` - the address of the AppChain that has Dapps.
 
 *Returns*
 
-``ARRAY`` - Array of the DAPP addresses on the MicroChain.
+``ARRAY`` - Array of the DAPP addresses on the AppChain.
 
 Example
 
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     console.log("SCS dapp:", chain3.scs.getDappAddrList(mcAddress));
 
     // Result
@@ -278,24 +331,24 @@ Example
 
 .. _jsscs_getdappstate:
 
-Returns the Dapp state on the MicroChain.
+Returns the Dapp state on the AppChain.
 
 *Parameters*
 
-1. ``String`` - the address of the MicroChain that Dapp is on.
+1. ``String`` - the address of the AppChain that Dapp is on.
 
 *Returns*
 
-``QUANTITY`` - 0, no DAPP is deployed on the MicroChain; 1, DAPP is
-deployed on the MicroChain.
+``QUANTITY`` - 0, no DAPP is deployed on the AppChain; 1, DAPP is
+deployed on the AppChain.
 
 Example
 
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     console.log("SCS state:", chain3.scs.getDappState(mcAddress));
 
     // Result
@@ -304,30 +357,30 @@ Example
 
 --------------------------------
 
-**chain3.scs.getMicroChainInfo**
+**chain3.scs.getAppChainInfo**
 
 .. _jsscs_getmicrochaininfo:
 
-Returns the requested MicroChain information on the connecting SCS. This information is the same as the information defined in the MicroChain contract.
+Returns the requested AppChain information on the connecting SCS. This information is the same as the information defined in the AppChain contract.
 
 *Parameters*
 
-1. `String` - the address of the MicroChain on the SCS.
+1. `String` - the address of the AppChain on the SCS.
 
 *Returns*
 
 
-``Object`` A Micro Chain information object as defined in the MicroChain contract:
+``Object`` A Micro Chain information object as defined in the AppChain contract:
 
--  ``balance``: ``Number`` - the native token amount in the MicroChain.
--  ``blockReward``: ``Number`` - the reward amount at each block for the MicroChain, unit is in Sha = 1e-18 moac.
--  ``bondLimit``: ``Number`` - the token amount needed as deposit in the MicroChain, unit is in Sha = 1e-18 moac.
+-  ``balance``: ``Number`` - the native token amount in the AppChain.
+-  ``blockReward``: ``Number`` - the reward amount at each block for the AppChain, unit is in Sha = 1e-18 moac.
+-  ``bondLimit``: ``Number`` - the token amount needed as deposit in the AppChain, unit is in Sha = 1e-18 moac.
 -  ``owner``: ``String``, 20 Bytes - the address of the beneficiary to
    whom the mining rewards were given.
 -  ``scsList``: ``Array``, List of SCS addresses, 20 Bytes each - the address of the SCS to
    whom the mining rewards were given.
--  ``txReward``: ``Number`` - the reward provided to the TX for the MicroChain, unit is in Sha = 1e-18 moac.
--  ``viaReward``: ``Number`` - the reward provided to the VNODE proxy for the MicroChain, unit is in Sha = 1e-18 moac.   
+-  ``txReward``: ``Number`` - the reward provided to the TX for the AppChain, unit is in Sha = 1e-18 moac.
+-  ``viaReward``: ``Number`` - the reward provided to the VNODE proxy for the AppChain, unit is in Sha = 1e-18 moac.   
 
 
 Example
@@ -335,20 +388,20 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
-    console.log("MC info:", chain3.scs.getMicroChainInfo(mcAddress));
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
+    console.log("MC info:", chain3.scs.getAppChainInfo(mcAddress));
 
     // Result
     MC info: {"balance":"0x0","blockReward":"0x1c6bf52634000","bondLimit":"0xde0b6b3a7640000","owner":"0xa8863fc8Ce3816411378685223C03DAae9770ebB","scsList":["0xECd1e094Ee13d0B47b72F5c940C17bD0c7630326","0x50C15fafb95968132d1a6ee3617E99cCa1FCF059","0x1b65cE1A393FFd5960D2ce11E7fd6fDB9e991945"],"txReward":"0x174876e800","viaReward":"0x9184e72a000"}
 
 --------------
 
-**chain3.scs.getMicroChainList**
+**chain3.scs.getAppChainList**
 
 .. _jsscs_getmicrochainlist:
 
-Returns the list of MicroChains on the SCS that is connecting with. 
+Returns the list of AppChains on the SCS that is connecting with. 
 
 *Parameters*
 
@@ -364,12 +417,12 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    console.log("SCS MicroChain List:", mclist);
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    console.log("SCS AppChain List:", mclist);
 
 
     // Result
-    SCS MicroChain List: [ '0x25b0102b5826efa7ac469782f54f40ffa72154f5', '0x7cfd775c7a97aa632846eff35dcf9dbcf502d0f3' ]
+    SCS AppChain List: [ '0x25b0102b5826efa7ac469782f54f40ffa72154f5', '0x7cfd775c7a97aa632846eff35dcf9dbcf502d0f3' ]
 
 --------------
 
@@ -377,26 +430,26 @@ Example
 
 .. _jsscs_getNonce:
 
-Returns the account nonce on the MicroChain. 
+Returns the account nonce on the AppChain. 
 
 *Parameters*
 
 
-1. ``String`` - the address of the MicroChain.
+1. ``String`` - the address of the AppChain.
 2. ``String`` - the address of the account.
 
 *Returns*
 
 
-``QUANTITY`` integer of the number of transactions send from this address on the MicroChain; 
+``QUANTITY`` integer of the number of transactions send from this address on the AppChain; 
 
 Example
 
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     tAddress="0xf6a36118751c50f8932d31d6d092b11cc28f2258";
     console.log("SCS nonce of:", tAddress, " is ", chain3.scs.getNonce(mcAddress,tAddress));
 
@@ -419,7 +472,7 @@ None
 
 
 ``String`` - SCS id in the scskeystore directory, used for SCS
-identification to send deposit and receive MicroChain mining rewards.
+identification to send deposit and receive AppChain mining rewards.
 
 Example
 
@@ -442,7 +495,7 @@ receipt is not available for pending transactions.
 
 *Parameters*
 
-1. ``String`` - The MicroChain address. 
+1. ``String`` - The AppChain address. 
 2. ``String`` - The transaction hash.
 
 *Returns*
@@ -476,8 +529,8 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     txhash1="0x688456221f7729f5c2c17006bbe4df163d09bea70c1a1ebb66b9b53ca10563df";
     console.log("TX Receipt:", chain3.scs.getReceiptByHash(mcAddress, txhash1));
 
@@ -495,12 +548,12 @@ Example
 
 .. _jsscs_getReceiptByNonce:
 
-Returns the transaction result by address and nonce on the MicroChain. Note That the nonce is the nonce on the MicroChain. This nonce can be checked using scs_getNonce. 
+Returns the transaction result by address and nonce on the AppChain. Note That the nonce is the nonce on the AppChain. This nonce can be checked using scs_getNonce. 
 
 *Parameters*
 
 
-1. ``String`` - The MicroChain address. 
+1. ``String`` - The AppChain address. 
 2. ``String`` - The transaction nonce.
 3. ``QUANTITY`` - The nonce of the transaction.
 
@@ -514,8 +567,8 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     tAddress="0xf6a36118751c50f8932d31d6d092b11cc28f2258";
     console.log("SCS receipt:", chain3.scs.getReceiptByNonce(mcAddress, tAddress, 0));
 
@@ -535,7 +588,7 @@ receipt is not available for pending transactions.
 
 *Parameters*
 
-1. ``String`` - The MicroChain address. 
+1. ``String`` - The AppChain address. 
 2. ``String`` - The transaction hash.
 
 *Returns*
@@ -549,8 +602,8 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     txhash1="0x67bfaa5a704e77a31d5e7eb866f8c662fa8313a7882d13d0d23e377cd66d2a69";
     console.log("TX by hash:", chain3.scs.getTransactionByHash(mcAddress, txhash1));
 
@@ -573,9 +626,9 @@ receipt is not available for pending transactions.
 
 *Parameters*
 
-1. ``String`` - The MicroChain address. 
-1. ``String`` - The transaction nonce.
-1. ``QUANTITY`` - The nonce of the transaction.
+1. ``String`` - The AppChain address. 
+2. ``String`` - The transaction nonce.
+3. ``QUANTITY`` - The nonce of the transaction.
 
 *Returns*
 
@@ -589,8 +642,8 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     tAddress="0xf6a36118751c50f8932d31d6d092b11cc28f2258";
     console.log("SCS TX:", chain3.scs.getTransactionByNonce(mcAddress, tAddress, 0));
 
@@ -616,21 +669,21 @@ Example
 
 .. _jsscs_getExchangeByAddress:
 
-Returns the Withdraw/Deposit exchange records between MicroChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
+Returns the Withdraw/Deposit exchange records between AppChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
 
 
 *Parameters*
 
-1. `String` - The MicroChain address.
-1. `String` - The address to be checked.
-1. `Int` - Index of Deposit records >= 0.
-1. `Int` - Number of Deposit records extracted.
-1. `Int` - Index of Depositing records >= 0.
-1. `Int` - Number of Depositing records extracted.
-1. `Int` - Index of Withdraw records >= 0.
-1. `Int` - Number of Withdraw records extracted.
-1. `Int` - Index of Withdrawing records >= 0.
-1. `Int` - Number of Withdrawing records extracted.
+1. `String` - The AppChain address.
+2. `String` - The address to be checked.
+3. `Int` - Index of Deposit records >= 0.
+4. `Int` - Number of Deposit records extracted.
+5. `Int` - Index of Depositing records >= 0.
+6. `Int` - Number of Depositing records extracted.
+7. `Int` - Index of Withdraw records >= 0.
+8. `Int` - Number of Withdraw records extracted.
+9. `Int` - Index of Withdrawing records >= 0.
+10. `Int` - Number of Withdrawing records extracted.
 
 *Returns*
 
@@ -643,8 +696,8 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     tAddress="0xf6a36118751c50f8932d31d6d092b11cc28f2258";
     console.log("SCS token address exchange:", chain3.scs.getExchangeByAddress(mcAddress, tAddress));
 
@@ -667,17 +720,17 @@ Example
 
 .. _jsscs_getExchangeInfo:
 
-Returns the Withdraw/Deposit exchange records between MicroChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
+Returns the Withdraw/Deposit exchange records between AppChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
 
 
 *Parameters*
 
-1. `String` - The MicroChain address.
-1. `String` - The transaction hash.
-1. `Int` - Index of Depositing records >= 0.
-1. `Int` - Number of Depositing records extracted.
-1. `Int` - Index of Withdrawing records >= 0.
-1. `Int` - Number of Withdrawing records extracted.
+1. `String` - The AppChain address.
+2. `String` - The transaction hash.
+3. `Int` - Index of Depositing records >= 0.
+4. `Int` - Number of Depositing records extracted.
+5. `Int` - Index of Withdrawing records >= 0.
+6. `Int` - Number of Withdrawing records extracted.
 
 *Returns*
 
@@ -690,8 +743,8 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     console.log("SCS token exchanging info:", chain3.scs.getExchangeInfo(mcAddress));
 
     // Result
@@ -708,11 +761,11 @@ Example
 
 .. _jsscs_gettxpool:
 
-Returns the ongoing transactions in the MicroChain. 
+Returns the ongoing transactions in the AppChain. 
 
 *Parameters*
 
-1. `String` - The MicroChain address.
+1. `String` - The AppChain address.
 
 *Returns*
 
@@ -724,8 +777,8 @@ Example
 .. code:: js
 
     // Request
-    var mclist = chain3.scs.getMicroChainList(); //find the MicroChain on the SCS
-    mcAddress = mclist[0]; //locate the 1st MicroChain
+    var mclist = chain3.scs.getAppChainList(); //find the AppChain on the SCS
+    mcAddress = mclist[0]; //locate the 1st AppChain
     console.log("SCS TXpool:", chain3.scs.getTxpool(mcAddress));
 
     // Result

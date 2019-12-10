@@ -39,14 +39,15 @@ SCS通过VNODE代理节点接入MOAC母链，每个运行的SCS可以支持多�
 ProcWind 通证
 ====================
 
-ProcWind 应用链支持应用链上的原生通证（TOKEN），并且提供母链货币和应用链之间的兑换，具体做法可以参考
+ProcWind 应用链支持应用链上的原生通证（TOKEN），并且提供母链货币和应用链之间的兑换，
+具体做法可以参考
 
-:ref:`ProcWind 跨链<proc-wind-as>` 
+:ref:`ProcWind 跨链指南<proc-wind-as>` 
 
 ProcWind 应用链的部署
 ====================
 
-ProcWind 应用链的部署参考
+详细介绍请参考
 :ref:`ProcWind 应用链的部署<proc-wind-setup>` 
 
 ProcWind Dapp开发指南
