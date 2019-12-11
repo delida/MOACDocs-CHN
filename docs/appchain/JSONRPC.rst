@@ -150,9 +150,9 @@ JSON-RPC 命令
 
 -  rpc
 
-   -  :ref:`scs_directCall<scs_directcall>`
-   -  :ref:`scs_getBalance<scs_getbalance>`   
-   -  :ref:`scs_getBlock<scs_getblock>`
+   -  :ref:`scs_directCall <scs_directcall>`
+   -  :ref:`scs_getBalance <scs_getbalance>`   
+   -  :ref:`scs_getBlock <scs_getblock>`
    -  :ref:`scs_getBlockNumber <scs_getblocknumber>`
    -  :ref:`scs_getDappList <scs_getdapplist>`
    -  :ref:`scs_getDappState <scs-getdappstate>`
