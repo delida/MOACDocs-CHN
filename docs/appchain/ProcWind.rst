@@ -1,6 +1,7 @@
+.. _proc-wind:
+
 ProcWind 应用链
 --------------
-.. _proc-wind:
 
 ProcWind 共识
 ====================
@@ -36,22 +37,37 @@ SCS通过VNODE代理节点接入MOAC母链，每个运行的SCS可以支持多�
 * 用于业务监控的SCS
 * 准备参与业务逻辑的SCS
 
+节点的操作可以参考：
+
+:doc:`Setup`
+
 ProcWind 通证
 ====================
 
-ProcWind 应用链支持应用链上的原生通证（TOKEN），并且提供母链货币和应用链之间的兑换，
-具体做法可以参考
+ProcWind 应用链支持应用链上的原生通证（TOKEN），其发行方式是在应用链合约中设定，
+详细介绍请参考：
+:ref:`ProcWind 应用链的部署<proc-wind-setup>` 
 
-:ref:`ProcWind 跨链指南<proc-wind-as>` 
+应用链通证可以和母链的原生货币或者ERC20代币直接进行兑换，
+具体做法可以参考：
+
+:doc:`ProcWindExchange`
 
 ProcWind 应用链的部署
 ====================
 
-详细介绍请参考
-:ref:`ProcWind 应用链的部署<proc-wind-setup>` 
+目前ProcWind应用链有以下几个功能：
+
+详细介绍请参考：
+
+:doc:`ProcWindSetup`
 
 ProcWind Dapp开发指南
 ====================
 
-详细介绍可参看这篇 :ref:`ProcWind Dapp开发指南 <proc-wind-dapps>` 
+当部署完应用链后，可以在上面开发DAPP，
+详细介绍可参看这篇：
+
+:ref:`ProcWind Dapp开发指南 <proc-wind-dapps>` 
+
 

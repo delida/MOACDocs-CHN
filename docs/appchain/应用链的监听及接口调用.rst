@@ -170,7 +170,7 @@ GetExchangeInfo：获得应用链指定数量正在充提的信息
 	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetExchangeInfo",
 			"params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
 			"EnteringRecordIndex":0, "EnteringRecordSize": 10,
-			"RedeemingRecordIndex":0, "RedeemingRecordSize", 10
+			"RedeemingRecordIndex":0, "RedeemingRecordSize": 10
 			 }
 		  }
 
@@ -190,6 +190,7 @@ GetExchangeByAddress：获得应用链指定账号指定数量的充提信息
 	RedeemingRecordSize： 正在提币记录的长度
 	Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetExchangeByAddress",
 			"params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
+			
 			"EnterRecordIndex":0, "EnterRecordSize": 10,
 			"RedeemRecordIndex":0, "RedeemRecordSize", 10
 			"EnteringRecordIndex":0, "EnteringRecordSize": 10,

@@ -99,15 +99,18 @@ npm install solc@0.4.24
 部署应用链合约  
 =============
 
-现在我们可以部署一个应用链合约
+根据需要使用的合约类型，确定好合约文件。目前主要有ASM和AST两种类型的ProcWind。最新的合约可以从
+ `MOAC 开源地址 <https://github.com/MOACChain/moac-core/tree/master>`__ 处获取。
+现在我们可以部署一个应用链合约。
 
-部署SubChainBase.sol示例:
+部署ChainBaseASM.sol示例，首先运行Node.js，在node命令行下:
 ::
+
 	> chain3 = require('chain3')
 	> solc = require('solc')
 	> chain3 = new chain3();
 	> chain3.setProvider(new chain3.providers.HttpProvider('http://localhost:8545'));
-	> input = {'': fs.readFileSync('SubChainBase.sol', 'utf8'), 'SubChainProtocolBase.sol': fs.readFileSync('SubChainProtocolBase.sol', 'utf8')};
+	> input = {'': fs.readFileSync('ChainBaseASM.sol', 'utf8'), 'SubChainProtocolBase.sol': fs.readFileSync('SubChainProtocolBase.sol', 'utf8')};
 	> output = solc.compile({sources: input}, 1);			
 	> abi = output.contracts[':SubChainBase'].interface;
 	> bin = output.contracts[':SubChainBase'].bytecode;
@@ -159,7 +162,8 @@ npm install solc@0.4.24
 应用链关闭注册
 =============
 
-等到两个scs都注册完毕后，即注册SCS数目大于等于应用链要求的最小数目时，调用应用链合约里的函数 registerClose关闭注册
+等到两个scs都注册完毕后，即注册SCS数目大于等于应用链要求的最小数目时，调用应用链合约里的函数 registerClose关闭注册：
+
 ::
 	根据ABI chain3.sha3("registerClose()") = 0x69f3576fc10c82561bd84b0045ee48d80d59a866174f2513fdef43d65702bf70
 		取前4个字节 0x69f3576f 
@@ -173,7 +177,8 @@ npm install solc@0.4.24
 =============
 
 部署完成应用链后，可以手工加入SCS节点或者去除SCS节点，也可以加入监听节点，具体可以参考：
-:ref:`SCS节点加入应用链 <scs-add-appchain>` 
+
+:ref:`SCS节点加入应用链 <scs-join-appchain>` 
 
 :ref:`SCS节点退出应用链 <scs-exit-appchain>` 
 
@@ -193,6 +198,7 @@ npm install solc@0.4.24
 	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: '0x43d726d6'});
 
 关闭请求发送后，需等待一轮flush后生效，相关应用链维护费用也将退回到应用链部署账号中。
-可以通过查询余额进行验证  
+可以通过查询余额进行验证：
+
 ::		
 	> chain3.mc.getBalance('0x1195cd9769692a69220312e95192e0dcb6a4ec09')

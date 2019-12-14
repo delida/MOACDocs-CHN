@@ -942,7 +942,7 @@ GetBlock:  获得当前应用链的指定的区块信息
 ::
   SubChainAddr: 应用链合约地址
   Sender：查询账号
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetBlock",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetBlock",
       "params":{"number":1000,"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"}
       }
 
@@ -953,8 +953,8 @@ GetBlocks: 获取某一区间内的区块信息
   SubChainAddr: 应用链合约地址
   Start: 开始block
   End： 结束block
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetBlocks",
-      "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetBlocks",
+      "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
         "Start":10, "End":20}
       }
 
@@ -963,7 +963,7 @@ GetBlocks: 获取某一区间内的区块信息
 GetBlockNumber：获得当前应用链的区块高度
 ::
   SubChainAddr: 应用链合约地址
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetBlockNumber",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetBlockNumber",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"}
       }
 
@@ -972,7 +972,7 @@ GetBlockNumber：获得当前应用链的区块高度
 GetSubChainInfo：获得当前应用链的信息
 ::
   SubChainAddr: 应用链合约地址
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetSubChainInfo",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetSubChainInfo",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"}
       }
 
@@ -981,7 +981,7 @@ GetSubChainInfo：获得当前应用链的信息
 GetTxpool：获得应用链交易池信息
 ::
   SubChainAddr: 应用链合约地址
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetTxpool",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetTxpool",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"
        }
       }
@@ -991,7 +991,7 @@ GetTxpool：获得应用链交易池信息
 GetTxpoolCount：获得应用链交易池中不同类型交易的数量
 ::
   SubChainAddr: 应用链合约地址
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetTxpoolCount",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetTxpoolCount",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"
        }
       }
@@ -1002,7 +1002,7 @@ GetDappState：获得应用链基础合约合约的状态
 ::
   SubChainAddr: 应用链合约地址
   Sender：应用链合约地址创建者地址
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetDappState",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetDappState",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
         "Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"
        }
@@ -1010,10 +1010,11 @@ GetDappState：获得应用链基础合约合约的状态
 
 .. _rpcdebug_GetDappAddrList:
 
-GetDappAddrList：通过subchainaddr获取应用链内所有多合约的地址列表，需要应用链业务逻辑合约调用基础合约registerDapp方法后才能生效，具体请参见“母应用链货币交互简介”中的示例
+GetDappAddrList：通过应用链地址获取应用链内所有多合约的地址列表，需要应用链业务逻辑合约调用基础合约registerDapp方法后才能生效，
+具体请参见 :ref:`ProcWind 跨链指南<proc-wind-as>` 中的示例
 ::
   SubChainAddr: 应用链合约地址
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetDappAddrList",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetDappAddrList",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"
        }
       }
@@ -1031,10 +1032,10 @@ GetExchangeInfo：获得应用链指定数量正在充提的信息
   EnteringRecordSize: 正在充值记录的长度
   RedeemingRecordIndex： 正在提币记录的起始位置(0)
   RedeemingRecordSize： 正在提币记录的长度
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetExchangeInfo",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetExchangeInfo",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
       "EnteringRecordIndex":0, "EnteringRecordSize": 10,
-      "RedeemingRecordIndex":0, "RedeemingRecordSize", 10
+      "RedeemingRecordIndex":0, "RedeemingRecordSize": 10
        }
       }
 
@@ -1054,8 +1055,9 @@ GetExchangeByAddress：获得应用链指定账号指定数量的充提信息
   EnteringRecordSize: 正在充值记录的长度
   RedeemingRecordIndex： 正在提币记录的起始位置(0)
   RedeemingRecordSize： 正在提币记录的长度
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetExchangeByAddress",
-      "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetExchangeByAddress",
+      "params":{"Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736",
+      "SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
       "EnterRecordIndex":0, "EnterRecordSize": 10,
       "RedeemRecordIndex":0, "RedeemRecordSize", 10
       "EnteringRecordIndex":0, "EnteringRecordSize": 10,
@@ -1075,19 +1077,19 @@ GetTransactionByNonce: 通过账号和Nonce获取应用链的tx信息
 ::
   SubChainAddr: 应用链合约地址
   Sender：查询账号
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetTransactionByNonce",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetTransactionByNonce",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
-        "Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"， "Nonce":9,
+        "Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"， "Nonce": 9,
         }
       }
 
 .. _rpcdebug_GetTransactionByHash:
 
-GetTransactionByHash: 通过交易hash获取应用链的tx信息
+GetTransactionByHash: 通过交易HASH获取应用链的交易信息，注意HASH可以用:ref:`GetTransactionByNonce<rpcdebug_GetTransactionByNonce>` 方法获得。
 ::
   SubChainAddr: 应用链合约地址
   Hash: 交易hash
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetTransactionByHash",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetTransactionByHash",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
         "Hash":"0x87e369172af1e817ebd8d63bcd9f685a513a6736fsne3lkgkvu65kkwlcd"
         }
@@ -1099,7 +1101,7 @@ GetReceiptByNonce: 通过账号和Nonce获取应用链的tx执行结果
 ::
   SubChainAddr: 应用链合约地址
   Sender：查询账号
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetReceiptByNonce",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetReceiptByNonce",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
         "Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"， "Nonce":9
         }
@@ -1109,11 +1111,11 @@ GetReceiptByNonce: 通过账号和Nonce获取应用链的tx执行结果
 
 .. _rpcdebug_GetReceiptByHash:
 
-GetReceiptByHash: 通过交易hash获取应用链的tx执行结果
+GetReceiptByHash: 通过交易hash获取应用链的tx执行结果，注意HASH可以用:ref:`GetReceiptByNonce<rpcdebug_GetReceiptByNonce>` 方法获得
 ::
   SubChainAddr: 应用链合约地址
   Sender：查询账号
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetReceiptByHash",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetReceiptByHash",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
         "Hash":"0x87e369172af1e817ebd8d63bcd9f685a513a6736fsne3lkgkvu65kkwlcd"
         }

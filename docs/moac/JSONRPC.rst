@@ -2226,16 +2226,15 @@ Example
 
 .. _admin_datadir:
 
-The datadir administrative property can be queried for the absolute path the running Geth node currently uses to store all its databases.
+The datadir administrative property can be queried for the absolute path the running MOAC VNODE node currently uses to store all its databases.
 
 *Parameters*
 
-``string``: ``url``, 20 Bytes - address from which the VNODE settings
-in the vnodeconfig.json file.
+none
 
 *Returns*
 
-``Boolean`` - returns ``true`` if the operation is successfully, otherwise ``false``.
+``string`` - returns the absolute path running the MOAC VNODE.
 
 Example
 
@@ -2243,30 +2242,26 @@ Example
 .. code:: js
 
     // Request
-    curl -X POST --data '{"method": "admin_addPeer", "params": ["enode://a979fb575495b8d6db44f750317d0f4622bf4c2aa3365d6af7c284339968eef29b69ad0dce72a4d8db5ebb4968de0e3bec910127f134779fbcb0cb6d3331163c@2.1.188.187:30333"]}' localhost:8545
+    curl -X POST --data '{"method": "admin_datadir", "params": [],"id":106}' localhost:8545
 
     // Result
-    true
+    {"jsonrpc":"2.0","id":101,"result":"/Users/moac/src/github.com/innowells/moac-vnode/test101"}
 
 --------------
+
 **admin\_nodeInfo**
 
 .. _admin_nodeInfo:
 
-admin_lnodeInfo
-admin_peers
-admin_stopRPC
-admin_startRPC
-The nodeInfo administrative property can be queried for all the information known about the running Geth node at the networking granularity. These include general information about the node itself as a participant of the ÐΞVp2p P2P overlay protocol, as well as specialized information added by each of the running application protocols 
+The nodeInfo administrative property can be queried for all the information known about the running MOAC VNODE at the networking granularity. These include general information about the node itself as a participant of the ÐΞVp2p P2P overlay protocol, as well as specialized information added by each of the running application protocols.
 
 *Parameters*
 
-``string``: ``url``, 20 Bytes - address from which the VNODE settings
-in the vnodeconfig.json file.
+none
 
 *Returns*
 
-``Boolean`` - returns ``true`` if the operation is successfully, otherwise ``false``.
+``object`` - returns ``true`` if the operation is successfully, otherwise ``false``.
 
 Example
 
@@ -2274,15 +2269,15 @@ Example
 .. code:: js
 
     // Request
-    curl -X POST --data '{"method": "admin_addPeer", "params": ["enode://a979fb575495b8d6db44f750317d0f4622bf4c2aa3365d6af7c284339968eef29b69ad0dce72a4d8db5ebb4968de0e3bec910127f134779fbcb0cb6d3331163c@2.1.188.187:30333"]}' localhost:8545
+    curl -X POST --data '{"method": "admin_nodeInfo", "params": [],"id":101}' localhost:8545
 
     // Result
-    true
+    {"jsonrpc":"2.0","id":101,"result":{"id":"a6f486af99679e00ec1a2bf77304e8c7f183987c8138a7c515a08ee42c5bebbda9f01474d43ba7176f891989dbdb78a6cbade67a941e6c2d5a83751039adba36","name":"Moac/v1.0.11-rc-2b24668f/darwin-amd64/go1.13.1","enode":"enode://a6f486af99679e00ec1a2bf77304e8c7f183987c8138a7c515a08ee42c5bebbda9f01474d43ba7176f891989dbdb78a6cbade67a941e6c2d5a83751039adba36@71.166.46.131:30336?servicecfgport=:50062\u0026showtopublic=true\u0026beneficialaddress=0xD814F2ac2c4cA49b33066582E4e97EBae02F2aB9\u0026ip=","ip":"71.166.46.131","ports":{"discovery":30336,"listener":30336},"listenAddr":"[::]:30336","protocols":{"mc":{"network":101,"difficulty":1476985363965,"genesis":"0x4e2972df43453f5b658656de1f2af40866b6d86b4e11b0c49eb1fc1a854d9796","head":"0x941bb3a1c9a8a26e0bc2f747c2a7ea805135e1e995464957aa7e09814a1575d7"}}}}
 
 --------------
-**admin\_addPeer**
+**admin\_peers**
 
-.. _admin_addPeer:
+.. _admin_peers:
 
 The addPeer administrative method requests adding a new remote node to the list of tracked static nodes. The node will try to maintain connectivity to these nodes at all times, reconnecting every once in a while if the remote connection goes down.
 
@@ -2290,8 +2285,7 @@ The method accepts a single argument, the enode URL of the remote peer to start 
 
 *Parameters*
 
-``string``: ``url``, 20 Bytes - address from which the VNODE settings
-in the vnodeconfig.json file.
+none
 
 *Returns*
 
@@ -2309,13 +2303,44 @@ Example
     true
 
 --------------
-**admin\_addPeer**
+**admin\_startRPC**
 
-.. _admin_addPeer:
+.. _admin_startRPC:
 
-The addPeer administrative method requests adding a new remote node to the list of tracked static nodes. The node will try to maintain connectivity to these nodes at all times, reconnecting every once in a while if the remote connection goes down.
+The startRPC administrative method starts an HTTP based JSON RPC API webserver to handle client requests. All the parameters are optional:
 
-The method accepts a single argument, the enode URL of the remote peer to start tracking and returns a BOOL indicating whether the peer was accepted for tracking or some error occurred.
+host: network interface to open the listener socket on (defaults to "localhost")
+port: network port to open the listener socket on (defaults to 8545)
+cors: cross-origin resource sharing header to use (defaults to "")
+apis: API modules to offer over this interface (defaults to "mc,net,chain3")
+
+*Parameters*
+
+``string``: ``url``, 20 Bytes - address from which the VNODE settings
+in the vnodeconfig.json file.
+
+*Returns*
+
+``Boolean`` - returns ``true`` if the HTTP RPC listener was opened successfully, otherwise ``false``. Please note, only one HTTP endpoint is allowed to be active at any time. So this is a dump method, you can't use it :).
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"method": "admin_startRPC", "params": ["127.0.0.1",8546], "id":101}' localhost:8545
+
+    // Result
+    {"jsonrpc":"2.0","id":106,"error":{"code":-32000,"message":"HTTP RPC already running on 127.0.0.1:8545"}}
+
+--------------
+
+**admin\_stopRPC**
+
+.. _admin_stopRPC:
+
+The stopRPC administrative method closes the currently open HTTP RPC endpoint. As the node can only have a single HTTP endpoint running, this method takes no parameters, returning a boolean whether the endpoint was closed or not.
 
 *Parameters*
 
@@ -2332,12 +2357,13 @@ Example
 .. code:: js
 
     // Request
-    curl -X POST --data '{"method": "admin_addPeer", "params": ["enode://a979fb575495b8d6db44f750317d0f4622bf4c2aa3365d6af7c284339968eef29b69ad0dce72a4d8db5ebb4968de0e3bec910127f134779fbcb0cb6d3331163c@2.1.188.187:30333"]}' localhost:8545
+    curl -X POST --data '{"method": "admin_stopRPC", }' localhost:8545
 
     // Result
     true
 
 --------------
+
 TXPOOL
 '''''
 

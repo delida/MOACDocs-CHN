@@ -63,7 +63,9 @@ FileStorm 应用链的部署
 FileStorm Dapp开发指南
 =====================
 
-详细介绍可参看这篇 :ref:`FileStorm Dapp开发指南 <file-storm-dapps>` 
+详细介绍可参看这篇：
+
+:ref:`FileStorm Dapp开发指南 <file-storm-dapps>` 
 
 
 

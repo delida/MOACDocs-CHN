@@ -64,7 +64,7 @@ SCS节点池部署
 	> chain3.mc.getBalance('0x3e21ba36b396936c6cc9adc3674655b912e5fa54')
 	> chain3.mc.getBalance('0x03c74ecc8ad9493a6a3d14f4e48d5eb551fe1be5')
 	
-将scs加入应用链节点池
+SCS 加入应用链节点池
 ----------------------
 
 调用应用链节点池合约register方法加入节点池
