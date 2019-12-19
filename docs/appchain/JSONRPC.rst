@@ -863,7 +863,6 @@ Returns the ongoing transactions in the AppChain.
 
 Example
 
-
 .. code:: js
 
   // Request
@@ -896,6 +895,20 @@ RPCDEBUG
 2. `String` - Sender, 查询账号， 每个账号在应用链有不同的nonce.
 
 *Returns*
+
+
+Example:
+
+.. code:: js
+
+  // Request
+  curl -X POST --header "Content-Type:application/json" --header "Accept:application/json" --data '{"jsonrpc":"2.0","method":"ScsRPCMethod.GetScsId","params":{},"id":101}' 127.0.0.1:8548/rpc
+
+  // Result
+
+  {"jsonrpc":"2.0","id":100,"result":{"pending":{},"queued":{}}}
+
+
 
 ::
   SubChainAddr: 应用链合约地址

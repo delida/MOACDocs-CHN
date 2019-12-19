@@ -88,7 +88,8 @@ SCS
     //Setup the SCS monitor with JSON 2.0 commands
     chain3.setScsProvider(new chain3.providers.HttpProvider('http://localhost:8548'));
 
-
+    // Check if the SCS RPC is connected
+    
 .. _jsscs_directcall:
 
 **scs_directCall**

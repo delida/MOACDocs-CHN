@@ -2371,8 +2371,11 @@ TXPOOL
 
 .. _txpool_content:
 
-Returns the VNODE benificial address. This is needed for SCS to use in
-the communication.
+The content inspection property can be queried to list the exact details of all the transactions currently pending for inclusion in the next block(s), as well as the ones that are being scheduled for future execution only.
+
+The result is an object with two fields pending and queued. Each of these fields are associative arrays, in which each entry maps an origin-address to a batch of scheduled transactions. These batches themselves are maps associating nonces with actual transactions.
+
+Please note, there may be multiple transactions associated with the same account and nonce. This can happen if the user broadcast mutliple ones with varying gas allowances (or even complerely different transactions).
 
 *Parameters*
 
@@ -2381,8 +2384,7 @@ none
 *Returns*
 
 
-``address``: ``DATA``, 20 Bytes - address from which the VNODE settings
-in the vnodeconfig.json file.
+``result``: Object with two fields pending and queued. Each of these fields are associative arrays, in which each entry maps an origin-address to a batch of scheduled transactions. These batches themselves are maps associating nonces with actual transactions.
 
 Example
 
@@ -2390,15 +2392,82 @@ Example
 .. code:: js
 
     // Request
-    curl -X POST --data '{"jsonrpc":"2.0","method":"vnode_address","params":[],"id":101}' localhost:8545
+    curl -X POST --data '{"jsonrpc":"2.0","method":"txpool_content","params":[],"id":106}' localhost:8545
 
     // Result
     {
     "jsonrpc":"2.0",
     "id":101,
-    "result":"0xa8863fc8ce3816411378685223c03daae9770ebb"
+    "result":{"pending":{"0xf6a36118751C50F8932d31d6d092B11Cc28f2258":{"349":{"blockHash":"0x0000000000000000000000000000000000000000000000000000000000000000","blockNumber":null,"from":"0xf6a36118751c50f8932d31d6d092b11cc28f2258","gas":"0x1e8480","gasPrice":"0x4a817c800","hash":"0xdf81d14a6857549d11a82aba6471874af6410e04e73eac003161fabc9220f953","input":"0x6bbded70","nonce":"0x15d","syscnt":"0x0","to":"0x7097302333beef4813eef53d12dff987241e3c3c","transactionIndex":"0x0","value":"0xde0b6b3a7640000","v":"0xf8","r":"0xfbafb9051495c3b8f8626bb50f0b17b1bf4d611ce12403940765a74e0f2c96e2","s":"0x4c8d2b5f6dc014edfed908c8ca5149bd7dd4270753b44edc55f1693aff589866","shardingFlag":"0x0"}}},"queued":{}}
     }
 
+--------------
+
+**txpool\_status**
+
+.. _txpool_status:
+
+The status inspection property can be queried for the number of transactions currently pending for inclusion in the next block(s), as well as the ones that are being scheduled for future execution only.
+
+The result is an object with two fields pending and queued, each of which is a counter representing the number of transactions in that particular state.
+
+*Parameters*
+
+none
+
+*Returns*
+
+``result``: Object with two fields pending and queued. Each of which is a counter representing the number of transactions in that particular state.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"jsonrpc":"2.0","method":"txpool_status","params":[],"id":106}' localhost:8545
+
+    // Result
+    {
+    "jsonrpc":"2.0",
+    "id":101,
+    "result":{"pending":"0x1","queued":"0x0"}
+    }
+
+--------------
+
+**txpool\_inspect**
+
+.. _txpool_inspect:
+
+The inspect inspection property can be queried to list a textual summary of all the transactions currently pending for inclusion in the next block(s), as well as the ones that are being scheduled for future execution only. This is a method specifically tailored to developers to quickly see the transactions in the pool and find any potential issues.
+
+The result is an object with two fields pending and queued. Each of these fields are associative arrays, in which each entry maps an origin-address to a batch of scheduled transactions. These batches themselves are maps associating nonces with transactions summary strings.
+
+Please note, there may be multiple transactions associated with the same account and nonce. This can happen if the user broadcast mutliple ones with varying gas allowances (or even complerely different transactions).
+
+*Parameters*
+
+none
+
+*Returns*
+
+``result``: Object with two fields pending and queued. Each of these fields are associative arrays, in which each entry maps an origin-address to a batch of scheduled transactions. These batches themselves are maps associating nonces with transactions summary strings.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"jsonrpc":"2.0","method":"txpool_inspect","params":[],"id":106}' localhost:8545
+
+    // Result
+    {
+    "jsonrpc":"2.0",
+    "id":101,
+    "result":{"pending":{"0xf6a36118751C50F8932d31d6d092B11Cc28f2258":{"349":"0x7097302333Beef4813EEf53d12dfF987241E3C3C: 1000000000000000000 sha + 2000000 × 20000000000 gas"}},"queued":{}
+    }
 
 --------------
 
@@ -2417,7 +2486,6 @@ the communication.
 none
 
 *Returns*
-
 
 ``address``: ``DATA``, 20 Bytes - address from which the VNODE settings
 in the vnodeconfig.json file.
