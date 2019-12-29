@@ -40,7 +40,9 @@ userconfig.json配置：
 各类账号
 ========
 
-可以运行concole命令 personal.newAccount() 创建账号； mc.accounts查看账号； 
+可以运行concole命令:
+personal.newAccount() 创建账号； 
+mc.accounts查看账号； 
 
 按序号查询余额：mc.getBalance(mc.accounts[0])   
 

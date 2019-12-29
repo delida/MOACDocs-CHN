@@ -5,7 +5,7 @@
 Chain3
 =======
 
-    The Chain3 class is a wrapper to house all Ethereum related modules.
+    The Chain3 class is a wrapper to house all MOAC related modules.
 
 .. _api-ref:
 
