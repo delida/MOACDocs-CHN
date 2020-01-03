@@ -29,11 +29,12 @@ ProcWind 应用链支持有币应用链，并且提供母链货币和应用链�
 	
 
 
-subchainbase 部署
-====================	
+应用链合约ASM部署
+================
 
-注意这个应用链合约在官方基础上进行了修改，对应v1目录下的SubChainBase.sol（带tokensupply和exchangerate参数）。
-部署SubChainBase.sol示例:
+ProcWind的ASM应用链合约在官方网站上可以下载，需要在目录下的SubChainBase.sol里面设置tokensupply和exchangerate两个参数。
+在基础链上部署SubChainBase.sol的步骤示例如下:
+
 ::
 	> chain3 = require('chain3')
 	> solc = require('solc')
@@ -71,7 +72,7 @@ subchainbase 部署
 		
 	
 dappbase合约部署
-================	
+===============
 
 应用链开放注册后，待scs开始出块即成功完成部署应用链，方法请参见"应用链的部署方法"。
 按照多合约部署步骤，需要首先部署dappbase合约，方法请参见"应用链业务逻辑的部署"。
@@ -105,7 +106,7 @@ dappbase合约部署
 
 		
 dapp 充值
-================		
+=========
 	
 调用 subchainbase 的 buyMintToken方法充值， 用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
  
@@ -126,7 +127,7 @@ dapp 充值
 
 
 dapp 提币
-================	
+===========
 
 **请注意data前需要加上dappbase合约地址**			
 
@@ -177,7 +178,7 @@ dapp 提币
 	
 	
 erc20 部署
-================	
+===========
 
 默认一个标准的erc20合约，通过allowance，transferFrom，balanceOf，transfer等标准的方法支持货币的转移。
 
@@ -205,11 +206,13 @@ erc20 部署
 	> contractInstance.balanceOf.call('0x87e369172af1e817ebd8d63bcd9f685a513a6736')
 	
 
-subchainbase 部署
-=====================	
+应用链合约AST部署
+================
 
-注意这个应用链合约在官方基础上进行了修改，增加了erc20合约地址和兑换比例的参数
-部署SubChainBase.sol示例:
+ProcWind的AST应用链合约在官方网站上可以下载，需要在目录下的SubChainBase.sol里面设置ERC20合约地址和exchangerate两个参数。
+在基础链上部署SubChainBase.sol的步骤示例如下:
+
+
 ::
 	> chain3 = require('chain3')
 	> solc = require('solc')
@@ -234,7 +237,6 @@ subchainbase 部署
 部署完毕后, 获得应用链合约地址  0xb877bf4e4cc94fd9168313e00047b77217760930
 
 
-
 验证：  
  | 访问应用链合约的 BALANCE 与 ERC20的 totalsupply 对应
  | 应该是10的23次方 : 即 1000000(ERC20的totalsupply) * 10(兑换比率) * 10的18次方(应用链原生币decimals) / 10的2次方(ERC20的decimals)
@@ -248,11 +250,11 @@ subchainbase 部署
 调用monitor的方法 ScsRPCMethod.GetBalance 查询对应部署账号地址的余额，应该等于10的23次方			
 
 	
-dappbase合约部署
-================	
+应用链控制合约部署
+================
 
-应用链开放注册后，待scs开始出块即成功完成部署应用链，方法请参见"应用链的部署方法"。
-按照多合约部署步骤，需要首先部署dappbase合约，方法请参见"应用链业务逻辑的部署"。
+应用链开放注册后，待SCS开始出块即成功完成部署应用链，方法请参见"应用链的部署方法"。
+按照多合约部署步骤，需要首先在应用链上部署应用链控制合约dappbase.sol，方法请参见:ref:`应用链业务逻辑部署<scs-dappbase>`。
 
 注意部署dappbase合约的value为 ERC20的totalsupply * 10(兑换比率) * 10的18次方(应用链原生币decimals) / 10的2次方(ERC20的decimals)
 
@@ -279,8 +281,8 @@ dappbase合约部署
  | 调用monitor的方法 ScsRPCMethod.GetBalance 查询对应部署账号地址的余额，应该等于0
  | 调用monitor的方法 ScsRPCMethod.GetReceipt 传入对应Nonce，从contractAddress字段内容获得合约地址
 		
-dapp 充值
-================		
+应用链帐号充值
+==============
 	
 调用 subchainbase 的 buyMintToken方法充值， 用户账号为发出sendTransaction的账号 ，参数分别为应用链合约地址和erc20的数量。
 注意：buyMintToken方法首先调用erc20合约的allowance检查授权，再调用transferFrom方法将token从用户账号地址转到合约地址
@@ -302,8 +304,8 @@ dapp 充值
  | 检查应用链对应账号的原生币是否增加20000000000000000000:  调用monitor的方法 ScsRPCMethod.GetBalance
  | 检查应用链dappbase合约地址的原生币是否减少20000000000000000000:  调用monitor的方法 ScsRPCMethod.GetBalance
 
-dapp 提币
-================					
+应用链帐号提币
+=============
 
 **请注意data前需要加上dappbase合约地址**
 

@@ -17,8 +17,11 @@ ProcWind Dapp开发指南
 从发布链接下载多合约基础合约dappbase.sol
 
 
+.. _procwind-dappbase:
+
 DAPP智能合约的部署
-------------------------------
+--------------------
+
 
 DAPP智能合约也通过主链的sendTransaction发送交易到 proxy vnode 的方式进行部署。
 
@@ -58,6 +61,8 @@ DappBasePublic 允许除应用链拥有者(owner)之外的用户在应用链上�
   dapp合约地址:6ab296062d8a147297851719682fb5ffe081f1d3
   dapp合约地址可调用monitor的rpc接口ScsRPCMethod.GetReceipt，传入对应Nonce，获得contractAddress字段内容
 
+
+.. _procwind-dapp:
 
 STEP2：在应用链上部署业务逻辑合约 dapp1.sol，部署方法和上面雷同
   合约地址可调用monitor的rpc接口ScsRPCMethod.GetReceipt，传入对应Nonce，获得contractAddress字段内容

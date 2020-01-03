@@ -12,7 +12,7 @@ Chain3 JavaScript 软件库是MOAC开发的一套javascript库，目的是让应
 
 开发者可以通过``chain3``对象来对DApp的函数进行调用。chain3 通过 `RPC
 calls <https://github.com/MOACChain/moac-core/wiki/RPC>`__ 来和母链服务器 VNODE. 
-但注意要求连接的VNODE服务器打开 RPC 接口：
+但注意要求连接的 SCS 服务器打开 RPC 接口：
 
 .. code:: 
 

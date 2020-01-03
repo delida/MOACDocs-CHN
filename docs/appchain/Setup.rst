@@ -45,7 +45,7 @@ link <https://github.com/MOACChain/moac-core/releases>`__，
 
 
 Debian/Ubuntu/CentOS
-~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 1. 使用 tar 来解压缩，可以看到scs目录下有三个文件：
 README          - 说明文件;

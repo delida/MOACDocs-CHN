@@ -112,24 +112,35 @@ SCS 默认RPC接口的地址是 localhost，端口号是 8548/rpc，可以通过
   > data = {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetScsId","params":{}};
   > request({ url: url, method: "POST", json: true, body: data, headers: {"Content-Type": 'application/json', "Accept": 'application/json'}}, function(error, response, result) {if (!error && response.statusCode == 200) {console.log(result)}});
 
+如果使用curl命令，则需要加入header信息如下：
+
+.. code:: js
+
+  // Request
+  curl -X POST --header "Content-Type:application/json" --header "Accept:application/json" --data '{"jsonrpc":"2.0","method":"ScsRPCMethod.GetNonce","params":{
+     "SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
+          "Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"
+         },"id":101}' 127.0.0.1:8548/rpc
+
+  // Result
+
+  {"jsonrpc":"2.0","id":101,"result":1}
 
 默认区块值
 =================
 
-以下接口包含默认区块值。如果没有有效区块数值输入，则使用应用链的最高区块高度：
+以下接口返回的值是使用默认区块高度。如果没有有效区块数值输入，则使用应用链的最高区块高度：
 
 -  :ref:`scs\_getBalance <scs_getbalance>`
 -  :ref:`scs\_directCall <scs_directcall>`
 
-When requests are made that act on the state of moac, the last default
-block parameter determines the height of the block.
 
-The following options are possible for the defaultBlock parameter:
+默认区块高度可以使用下面这些参数：
 
--  ``HEX String`` - an integer block number
--  ``String "earliest"`` for the earliest/genesis block
--  ``String "latest"`` - for the latest mined block
--  ``String "pending"`` - for the pending state/transactions
+-  ``HEX String`` - 一个正整数的区块值；
+-  ``String "earliest"`` - 使用创世区块作为默认区块高度；
+-  ``String "latest"`` - 使用最新共识的区块作为默认区块高度；
+-  ``String "pending"`` - 使用正在处理的区块高度作为默认区块高度；
 
 Curl 命令示例
 =================
@@ -207,18 +218,15 @@ API/lib to call AppChain Dapp functions.
 ``Object`` - The transaction call object
 
 - ``from``: ``DATA``, 20 Bytes - (optional) The address the transaction is sent from. 
-- ``to``: ``DATA``, 20 Bytes - The address the transaction is directed to. This
-parameter is the AppChain address. 
+- ``to``: ``DATA``, 20 Bytes - The address the transaction is directed to. This parameter is the AppChain address. 
 - ``data``: ``DATA`` - (optional) Hash of the method signature and encoded parameters. For details see
 `Ethereum Contract ABI <https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI>`
 
 *Returns*
 
-
 ``DATA`` - the return value of executed Dapp constant function call.
 
 Example
-
 
 .. code:: js
 
@@ -232,10 +240,12 @@ Example
       "result": "0x"
     }
 
---------------
-**scs\_getBalance**
 
 .. _scs_getbalance:
+
+--------------------
+
+**scs\_getBalance**
 
 Returns information about the balance of the input account on the AppChain by block number.
 
@@ -248,7 +258,7 @@ Returns information about the balance of the input account on the AppChain by bl
 *Returns*
 
 
-``DATA`` - Data in the block on the AppChain.
+``QUANTITY`` - integer of the current balance in native token.
 
 Example
 
@@ -262,6 +272,7 @@ Example
    {"jsonrpc":"2.0","id":101,"result":"0x1c6b60233b000"}
 
 --------------------
+
 **scs\_getBlock**
 
 .. _scs_getblock:
@@ -354,6 +365,7 @@ Example
       "jsonrpc": "2.0",
       "result": "0x4b7" // 1207
     }
+
 --------------
 
 **scs\_getDappList**
@@ -616,10 +628,9 @@ Returns the transaction result by address and nonce on the AppChain. Note That t
 
 *Parameters*
 
-
 1. ``String`` - 应用链合约地址. 
-1. ``String`` - The transaction nonce.
-1. ``QUANTITY`` - The nonce of the transaction.
+2. ``String`` - 发出交易的帐号地址.
+3. ``QUANTITY`` - The nonce of the transaction.
 
 *Returns*
 
@@ -727,8 +738,8 @@ receipt is not available for pending transactions.
 *Parameters*
 
 1. ``String`` - 应用链合约地址. 
-1. ``String`` - The transaction nonce.
-1. ``QUANTITY`` - The nonce of the transaction.
+2. ``String`` - The transaction nonce.
+3. ``QUANTITY`` - The nonce of the transaction.
 
 *Returns*
 
@@ -782,16 +793,16 @@ Returns the Withdraw/Deposit exchange records between AppChain and MotherChain f
 
 *Parameters*
 
-1. `String` - 应用链合约地址.
-2. `String` - The address to be checked.
-3. `Int` - Index of Deposit records >= 0.
-4. `Int` - Number of Deposit records extracted.
-5. `Int` - Index of Depositing records >= 0.
-6. `Int` - Number of Depositing records extracted.
-7. `Int` - Index of Withdraw records >= 0.
-8. `Int` - Number of Withdraw records extracted.
-9. `Int` - Index of Withdrawing records >= 0.
-10. `Int` - Number of Withdrawing records extracted.
+1. ``String`` - 应用链合约地址.
+2. ``String`` - The address to be checked.
+3. ``Int`` - Index of Deposit records >= 0.
+4. ``Int`` - Number of Deposit records extracted.
+5. ``Int`` - Index of Depositing records >= 0.
+6. ``Int`` - Number of Depositing records extracted.
+7. ``Int`` - Index of Withdraw records >= 0.
+8. ``Int`` - Number of Withdraw records extracted.
+9. ``Int`` - Index of Withdrawing records >= 0.
+10. ``Int`` - Number of Withdrawing records extracted.
 
 *Returns*
 
@@ -821,12 +832,12 @@ Returns the Withdraw/Deposit exchange records between AppChain and MotherChain f
 
 *Parameters*
 
-1. `String` - 应用链合约地址.
-1. `String` - 交易HASH值.
-1. `Int` - Index of Depositing records >= 0.
-1. `Int` - Number of Depositing records extracted.
-1. `Int` - Index of Withdrawing records >= 0.
-1. `Int` - Number of Withdrawing records extracted.
+1. ``String`` - 应用链合约地址.
+2. ``String`` - 交易HASH值.
+3. ``Int`` - Index of Depositing records >= 0.
+4. ``Int`` - Number of Depositing records extracted.
+5. ``Int`` - Index of Withdrawing records >= 0.
+6. ``Int`` - Number of Withdrawing records extracted.
 
 *Returns*
 
@@ -855,7 +866,7 @@ Returns the ongoing transactions in the AppChain.
 
 *Parameters*
 
-1. `String` - 应用链合约地址.
+1. ``String`` - 应用链合约地址.
 
 *Returns*
 
@@ -877,13 +888,13 @@ Example
 RPCDEBUG
 '''''''''
 
-以下是几个常用的rpcdebug接口及调用body示例（nuwa v1.0.9以上）
+以下是常用的rpcdebug接口说明，及使用CURL发送命令和POSTMAN调用body的示例（nuwa v1.0.9以上）
 
 ***通用类***
 
-此部分接口和应用链区块本身相关，业务逻辑无关。
+此部分接口和应用链上的帐号和区块相关，与应用链上的合约无关。
 
-**GetNonce**
+**ScsRPCMethod.GetNonce**
 
 .. _rpcdebug_GetNonce:
 
@@ -891,37 +902,33 @@ RPCDEBUG
 
 *Parameters*
 
-1. `String` - SubChainAddr, 应用链合约地址.
-2. `String` - Sender, 查询账号， 每个账号在应用链有不同的nonce.
+1. ``String`` - SubChainAddr, 应用链合约地址.
+2. ``String`` - Sender, 查询账号， 每个账号在应用链有不同的nonce.
 
 *Returns*
 
+``QUANTITY`` - integer of the number of transactions send from this address on the AppChain;
 
 Example:
 
 .. code:: js
 
-  // Request
+  // Curl Request
   curl -X POST --header "Content-Type:application/json" --header "Accept:application/json" --data '{"jsonrpc":"2.0","method":"ScsRPCMethod.GetScsId","params":{},"id":101}' 127.0.0.1:8548/rpc
+
+  // Request
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetNonce",
+      "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
+        "Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"
+       }
+    }
 
   // Result
 
   {"jsonrpc":"2.0","id":100,"result":{"pending":{},"queued":{}}}
 
 
-
-::
-  SubChainAddr: 应用链合约地址
-  Sender：查询账号， 每个账号在应用链有不同的nonce
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetNonce",
-        "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
-          "Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"
-         }
-      }
-
-
-
-**GetBalance**
+**ScsRPCMethod.GetBalance**
 
 .. _rpcdebug_GetBalance:
 
@@ -929,39 +936,61 @@ Example:
 
 *输入参数*
 
-1. `String` - 应用链合约地址.
-2. `String` - 查询帐号地址.
+1. ``String`` - 应用链合约地址.
+2. ``String`` - 查询帐号地址.
 
 *输出结果*
 
-``Object`` - A JSON format object contains two fields pending and queued. Each of these fields are associative arrays, in which each entry maps an origin-address to a batch of scheduled transactions. These batches themselves are maps associating nonces with actual transactions.
+``QUANTITY`` - integer of the current balance in native token.
 
-Example
-
+Example：
 
 .. code:: js
 
+  // Curl Request
+  curl -X POST --data '{"jsonrpc":"2.0","method":"ScsRPCMethod.GetBalance","params":{"0x1195cd9769692a69220312e95192e0dcb6a4ec09","0x87e369172af1e817ebd8d63bcd9f685a513a6736"},"id":101}' --header "Content-Type:application/json" --header "Accept:application/json" 127.0.0.1:8548/rpc
+
   // Request
-  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod\_GetBalance",
+  Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetBalance",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
         "Sender":"0x87e369172af1e817ebd8d63bcd9f685a513a6736"
         }
       }
   
+  // Result
+  {"jsonrpc":"2.0","id":101,"result":"0x1c6b60233b000"}
 
 .. _rpcdebug_GetBlock:
 
-GetBlock:  获得当前应用链的指定的区块信息
-::
-  SubChainAddr: 应用链合约地址
-  Sender：查询账号
+**ScsRPCMethod.GetBlock**
+
+获得当前应用链的指定的区块信息。
+
+*输入参数*
+
+1. ``String`` - 应用链合约地址.
+2. ``QUANTITY|TAG`` - integer of a block number, or the string "earliest" or "latest", as in the default block parameter. Note, scs_getBlock does not support "pending".
+
+*输出结果*
+
+``Object`` - A block object, or null when no block was found.
+
+
+.. code:: js
+
+  // Request
   Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetBlock",
       "params":{"number":1000,"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"}
       }
 
+  // Result
+  {"jsonrpc":"2.0","id":101,"result":{"extraData":"0x","hash":"0xc80cbe08bc266b1236f22a8d0b310faae3135961dbef6ad8b6ad4e8cd9537309","number":"0x1","parentHash":"0x0000000000000000000000000000000000000000000000000000000000000000","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0x1a065207da60d8e7a44db2f3b5ed9d3e81052a3059e4108c84701d0bf6a62292","timestamp":"0x0","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}}
+
+**ScsRPCMethod.GetBlocks**
+
 .. _rpcdebug_GetBlocks:
 
-GetBlocks: 获取某一区间内的区块信息
+获取某一区间内的区块信息
 ::
   SubChainAddr: 应用链合约地址
   Start: 开始block
@@ -970,19 +999,27 @@ GetBlocks: 获取某一区间内的区块信息
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09",
         "Start":10, "End":20}
       }
+  // Result
+  {"jsonrpc":"2.0","id":101,"result":{"blockList":[{"extraData":"0x","hash":"0x56075838e0fffe6576add14783b957239d4f3c57989bc3a7b7728a3b57eb305a","miner":"0xecd1e094ee13d0b47b72f5c940c17bd0c7630326","number":"0x370","parentHash":"0x56352a3a8bd0901608041115817204cbce943606e406d233d7d0359f449bd4c2","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0xde741a2f6b4a3c865e8f6fc9ba11eadaa1fa04c61d660bcdf0fa1195029699f6","timestamp":"0x5bfb7c1c","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"},{"extraData":"0x","hash":"0xbc3f5791ec039cba99c37310a4f30a68030dd2ab79efb47d23fd9ac5343f54e5","miner":"0xecd1e094ee13d0b47b72f5c940c17bd0c7630326","number":"0x371","parentHash":"0x56075838e0fffe6576add14783b957239d4f3c57989bc3a7b7728a3b57eb305a","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0xde741a2f6b4a3c865e8f6fc9ba11eadaa1fa04c61d660bcdf0fa1195029699f6","timestamp":"0x5bfb7c3a","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"},{"extraData":"0x","hash":"0x601be17c47cb4684053457d1d5f70a6dbeb853b27cda08d160555f857f2da33b","miner":"0xecd1e094ee13d0b47b72f5c940c17bd0c7630326","number":"0x372","parentHash":"0xbc3f5791ec039cba99c37310a4f30a68030dd2ab79efb47d23fd9ac5343f54e5","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0xde741a2f6b4a3c865e8f6fc9ba11eadaa1fa04c61d660bcdf0fa1195029699f6","timestamp":"0x5bfb7c58","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"},{"extraData":"0x","hash":"0x8a0bea649bcdbd2b525690ff485e56d5a83443e9013fcdccd1a0adee56ba4092","miner":"0xecd1e094ee13d0b47b72f5c940c17bd0c7630326","number":"0x373","parentHash":"0x601be17c47cb4684053457d1d5f70a6dbeb853b27cda08d160555f857f2da33b","receiptsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421","stateRoot":"0xde741a2f6b4a3c865e8f6fc9ba11eadaa1fa04c61d660bcdf0fa1195029699f6","timestamp":"0x5bfb7c76","transactions":[],"transactionsRoot":"0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"}],"endBlk":"0x373","microchainAddress":"0x7D0CbA876cB9Da5fa310A54d29F4687f5dd93fD7","startBlk":"0x370"}}
 
 .. _rpcdebug_GetBlockNumber:
 
-GetBlockNumber：获得当前应用链的区块高度
+**ScsRPCMethod.GetBlockNumber**
+
+获得当前应用链的区块高度
 ::
   SubChainAddr: 应用链合约地址
   Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetBlockNumber",
       "params":{"SubChainAddr":"0x1195cd9769692a69220312e95192e0dcb6a4ec09"}
       }
+      // Result
+  {"id":101,"jsonrpc": "2.0","result": "0x4b7"}
 
 .. _rpcdebug_GetSubChainInfo:
 
-GetSubChainInfo：获得当前应用链的信息
+**ScsRPCMethod.GetSubChainInfo**
+
+获得当前应用链的信息
 ::
   SubChainAddr: 应用链合约地址
   Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetSubChainInfo",
@@ -991,7 +1028,9 @@ GetSubChainInfo：获得当前应用链的信息
 
 .. _rpcdebug_GetTxpool:
 
-GetTxpool：获得应用链交易池信息
+**ScsRPCMethod.GetTxpool**
+
+获得应用链交易池信息
 ::
   SubChainAddr: 应用链合约地址
   Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetTxpool",
@@ -1001,7 +1040,7 @@ GetTxpool：获得应用链交易池信息
 
 .. _rpcdebug_GetTxpoolCount:
 
-GetTxpoolCount：获得应用链交易池中不同类型交易的数量
+**ScsRPCMethod.GetTxpoolCount：获得应用链交易池中不同类型交易的数量
 ::
   SubChainAddr: 应用链合约地址
   Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetTxpoolCount",
@@ -1011,7 +1050,9 @@ GetTxpoolCount：获得应用链交易池中不同类型交易的数量
 
 .. _rpcdebug_GetDappState:
 
-GetDappState：获得应用链基础合约合约的状态
+**ScsRPCMethod.GetDappState**
+
+获得应用链基础合约合约的状态
 ::
   SubChainAddr: 应用链合约地址
   Sender：应用链合约地址创建者地址
@@ -1023,7 +1064,9 @@ GetDappState：获得应用链基础合约合约的状态
 
 .. _rpcdebug_GetDappAddrList:
 
-GetDappAddrList：通过应用链地址获取应用链内所有多合约的地址列表，需要应用链业务逻辑合约调用基础合约registerDapp方法后才能生效，
+**ScsRPCMethod.GetDappAddrList**
+
+通过应用链地址获取应用链内所有多合约的地址列表，需要应用链业务逻辑合约调用基础合约registerDapp方法后才能生效，
 具体请参见 :ref:`ProcWind 跨链指南<proc-wind-as>` 中的示例
 ::
   SubChainAddr: 应用链合约地址
@@ -1034,11 +1077,12 @@ GetDappAddrList：通过应用链地址获取应用链内所有多合约的地�
 
 返回result中，第零位是dappbase的地址，从第一位开始时业务逻辑合约地址
 
-***充提类***
+**充提类**
 
 .. _rpcdebug_GetExchangeInfo:
 
-GetExchangeInfo：获得应用链指定数量正在充提的信息
+**ScsRPCMethod.GetExchangeInfo**
+ 获得应用链指定数量正在充提的信息
 ::
   SubChainAddr: 应用链合约地址
   EnteringRecordIndex： 正在充值记录的起始位置(0)
@@ -1056,7 +1100,8 @@ GetExchangeInfo：获得应用链指定数量正在充提的信息
 
 .. _rpcdebug_GetExchangeByAddress:
 
-GetExchangeByAddress：获得应用链指定账号指定数量的充提信息
+**ScsRPCMethod.GetExchangeByAddress**
+ 获得应用链指定账号指定数量的充提信息
 ::
   SubChainAddr: 应用链合约地址
   Sender：需要查询的账号地址
@@ -1086,7 +1131,8 @@ GetExchangeByAddress：获得应用链指定账号指定数量的充提信息
 
 .. _rpcdebug_GetTransactionByNonce:
 
-GetTransactionByNonce: 通过账号和Nonce获取应用链的tx信息
+**ScsRPCMethod.GetTransactionByNonce**
+ 通过账号和Nonce获取应用链的TX信息
 ::
   SubChainAddr: 应用链合约地址
   Sender：查询账号
@@ -1098,7 +1144,8 @@ GetTransactionByNonce: 通过账号和Nonce获取应用链的tx信息
 
 .. _rpcdebug_GetTransactionByHash:
 
-GetTransactionByHash: 通过交易HASH获取应用链的交易信息，注意HASH可以用:ref:`GetTransactionByNonce<rpcdebug_GetTransactionByNonce>` 方法获得。
+**ScsRPCMethod.GetTransactionByHash**
+ 通过交易HASH获取应用链的交易信息，注意HASH可以用:ref:`GetTransactionByNonce<rpcdebug_GetTransactionByNonce>` 方法获得。
 ::
   SubChainAddr: 应用链合约地址
   Hash: 交易hash
@@ -1110,7 +1157,8 @@ GetTransactionByHash: 通过交易HASH获取应用链的交易信息，注意HAS
 
 .. _rpcdebug_GetReceiptByNonce:
 
-GetReceiptByNonce: 通过账号和Nonce获取应用链的tx执行结果
+**ScsRPCMethod.GetReceiptByNonce**
+ 通过账号和Nonce获取应用链的tx执行结果
 ::
   SubChainAddr: 应用链合约地址
   Sender：查询账号
@@ -1120,11 +1168,13 @@ GetReceiptByNonce: 通过账号和Nonce获取应用链的tx执行结果
         }
       }
 
-注意：如果这是个合约部署的交易，则在contractAddress将会显示合约地址；如果是一个有返回值的方法调用，则在result中显示调用结果
+注意：如果这是个合约部署的交易，则在contractAddress将会显示合约地址；
+如果是一个有返回值的方法调用，则在result中显示调用结果。
 
 .. _rpcdebug_GetReceiptByHash:
 
-GetReceiptByHash: 通过交易hash获取应用链的tx执行结果，注意HASH可以用:ref:`GetReceiptByNonce<rpcdebug_GetReceiptByNonce>` 方法获得
+**ScsRPCMethod.GetReceiptByHash**
+通过交易hash获取应用链的tx执行结果，注意HASH可以用:ref:`GetReceiptByNonce <rpcdebug_GetReceiptByNonce>` 方法获得
 ::
   SubChainAddr: 应用链合约地址
   Sender：查询账号
@@ -1138,9 +1188,9 @@ GetReceiptByHash: 通过交易hash获取应用链的tx执行结果，注意HASH�
 
 ***业务类***
 
-此部分合约需要指明是哪个业务逻辑合约
+此部分接口用于调用应用链上的合约，需要指明是哪个业务逻辑合约。
 
-**AnyCall**
+**ScsRPCMethod.AnyCall**
 
 .. _rpcdebug_AnyCall:
 
