@@ -60,11 +60,14 @@ ProcWind 跨链
 ProcWind 应用链的部署
 ====================
 
-目前ProcWind应用链有以下几个功能：
-
-详细介绍请参考：
+ProcWind应用链的部署步骤请参考：
 
 :doc:`ProcWindSetup`
+
+建议初学者重点参考以下内容：
+
+:ref:`ProcWind 应用链推荐设置 <procwind-optimize>` 
+
 
 ProcWind Dapp开发指南
 ====================
