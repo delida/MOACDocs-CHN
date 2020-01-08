@@ -11,19 +11,15 @@ VNODE和用户交互的命令行界面
 --------------------------------------
 
 MOAC 母链节点的客户端（VNODE）有一个可以和用户交互的JavaScript命令行界面。启动这个命令行可以使用下面两个命令
-
 ::
-
-$ moac console
-$ moac attach
+    $ moac console
+    $ moac attach
 
 如果使用console参数，moac客户端会首先启动VNODE节点并自动进入命令行界面。 而使用attach参数，moac客户端不会启动VNODE节点，而是去连接一个已经运行的VNODE节点并显示命令行界面。
-
 ::
-
-$ moac attach ipc:/some/custom/path
-$ moac attach http://127.0.0.1:8545
-$ moac attach ws://127.0.0.1:8546
+    $ moac attach ipc:/some/custom/path
+    $ moac attach http://127.0.0.1:8545
+    $ moac attach ws://127.0.0.1:8546
 
 参数说明
 --datadir  数据库和秘钥存储路径
@@ -32,18 +28,14 @@ $ moac attach ws://127.0.0.1:8546
 --rpccorsdomain 允许连接到rpc的url匹配模式 *代表任意
 console 启动一个交互式的JavaScript环境
 
-
-
-Note that by default the moac node doesn't start the http and weboscket service and not all functionality is provided over these interfaces due to security reasons. These defaults can be overridden when the --rpcapi and --wsapi arguments when the moac node is started, or with admin.startRPC and admin.startWS.
+请注意，默认情况下，MOAC VNODE节点不会启动http和weboscket服务，并且由于安全原因，并非所有功能都通过这些接口提供。 当启动VNODE节点时使用--rpcapi和--wsapi参数，或者使用admin.startRPC和admin.startWS，可以覆盖这些默认值。
 
 log 参数会在终端显示更多的信息:
-
 ::
 
 $ moac --verbosity 4 console 2>> /tmp/vnode.log
 
-Otherwise mute your logs, so that it does not pollute your console:
-如果不想被太多的系统信息干扰命令行的界面，可以关掉系统输出
+如果不想被太多的系统信息干扰命令行的界面，可以关掉系统输出：
 ::
 
 $ moac console 2>> /dev/null
@@ -54,7 +46,7 @@ or
 
 $ moac --verbosity 0 console
 
-Geth has support to load custom JavaScript files into the console through the --preload argument. This can be used to load often used functions, setup chain3 contract objects, or
+MOAC支持在交互命令行（console）中通过--preload参数使用用户定义的JavaScript脚本文件。
 
 ::
 
@@ -63,24 +55,21 @@ $ moac --preload "/my/scripts/folder/utils.js,/my/scripts/folder/contracts.js" c
 非交互式使用: JSRE 脚本模式
 -------------------------
 
-It's also possible to execute files to the JavaScript interpreter. The console and attach subcommand accept the --exec argument which is a javascript statement.
-
+VNODE也可以执行文件到JavaScript解释器。 console和attach子命令接受--exec参数，这是一个javascript语句。
 ::
 
 $ moac --exec "mc.blockNumber" attach
 
-This prints the current block number of a running moac instance.
-
-Or execute a local script with more complex statements on a remote node over http:
-
+这将打印正在运行的MOAC VNODE上的当前区块号。
+或通过http在远程节点上执行带有更复杂语句的本地脚本：
 ::
 
 $ moac --exec 'loadScript("/tmp/checkbalances.js")' attach http://127.0.0.1:8545
 $ moac --jspath "/tmp" --exec 'loadScript("checkbalances.js")' attach http://127.0.0.1:8545
 
-Use the --jspath <path/to/my/js/root> to set a libdir for your js scripts. Parameters to loadScript() with no absolute path will be understood relative to this directory.
+使用--jspath <path / to / my / js / root>为您的js脚本设置一个libdir。 相对于该目录，将理解没有绝对路径的loadScript（）参数。
 
-You can exit the console cleanly by typing exit or simply with CTRL-C.
+您可以通过键入exit或直接使用CTRL-C退出控制台。
 
 注意
 ------
@@ -88,18 +77,18 @@ You can exit the console cleanly by typing exit or simply with CTRL-C.
 MOAC's JSRE 和以太坊的客户端一样采取了Otto JS VM 虚拟机并具有以下限制:
 
 "use strict" 语句可以编译通过，但没有相应效果。
-The regular expression engine (re2/regexp) is not fully compatible with the ECMA5 specification.
-Note that the other known limitation of Otto (namely the lack of timers) is taken care of. Ethereum JSRE implements both setTimeout and setInterval. In addition to this, the console provides admin.sleep(seconds) as well as a "blocktime sleep" method admin.sleepBlocks(number).
+正则表达式引擎（re2 / regexp）与ECMA5规范不完全兼容。
+注意，Otto的另一个已知限制（即缺少计时器）已得到解决。 以太坊JSRE同时实现setTimeout和setInterval。 除此之外，控制台还提供admin.sleep（seconds）以及“ blocktime sleep”方法admin.sleepBlocks（number）。
 
 chain3.js 自动加载 bignumber.js 的软件库(MIT Expat Licence)用于大数处理。
 
-Timers
-------
+时钟（Timers）
+--------------
 
-In addition to the full functionality of JS (as per ECMA5), the moac JSRE is augmented with various timers. It implements setInterval, clearInterval, setTimeout, clearTimeout you may be used to using in browser windows. It also provides implementation for admin.sleep(seconds) and a block based timer, admin.sleepBlocks(n) which sleeps till the number of new blocks added is equal to or greater than n, think "wait for n confirmations".
+除了JS的全部功能（按照ECMA5）之外，MOAC VNODE的JSRE还增加了各种计时器。 它实现了在浏览器窗口中使用的setInterval，clearInterval，setTimeout，clearTimeout。 它还提供了admin.sleep（seconds）和基于块的计时器admin.sleepBlocks（n）的实现，该定时器一直休眠直到添加的新块的数量等于或大于n为止，认为“等待n个确认”。
 
 高级管理 APIs
 ---------------
 
-Beside the official DApp API interface the VNODE has support for additional management API's. These API's are offered using JSON-RPC and follow the same conventions as used in the DApp API. The VNODE package comes with a console client which has support for all additional API's.
+除了官方的API界面外，VNODE还支持其他管理API。 这些API是使用JSON-RPC提供的，并且遵循与DApp API中使用的相同约定。 VNODE软件包随附一个控制台客户端，该客户端支持所有其他API。
 

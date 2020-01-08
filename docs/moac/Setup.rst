@@ -11,7 +11,8 @@ Debian/Ubuntu/CentOS
 ~~~~~~~~~~~~~~~~~~~~
 
 1. 使用 tar 来解压缩，在当前目录下运行：
- ./moac
+::
+  ./moac
 
 如果要看帮助信息, 使用help参数: ./moac --help
 
@@ -41,37 +42,37 @@ Debian/Ubuntu/CentOS
 
        >personal.newAccount()
 
-3. from console prompt, start mining by running
+3. 在命令行提示符下，开始挖矿：
 
    ::
 
        >miner.start()
 
-4. from another terminal, run moac again to attach the running node
+4. 在另一个终端上，再次运行MOAC VNODE以连接运行中的节点：
 
    ::
 
        ./moac attach
 
-5. from prompt, load script
+5. 在命令行提示符，加载脚本：
 
    ::
 
        >loadScript("mctest.js")
 
-6. check if miner has mined any moac by checking:
+6. 查看之前挖矿是否获得了mc，注意如果是连接的主网或者测试网，用户仅使用CPU挖矿的话，可能余额没有变化：
 
    ::
 
        >mc.accounts
 
-7. create another account
+7. 产生一个新账号：
 
    ::
 
        >personal.newAccount()
 
-8. try send from one account to another:
+8. 尝试从帐号0发送交易到帐号1:
 
    ::
 
@@ -80,15 +81,10 @@ Debian/Ubuntu/CentOS
 WINDOWS
 ^^^^^^^
 
-Unzip the file to a directory, under the directory, run
-moac.exe
+将文件解压缩到目录下，运行程序
+::
+  D:\moac-win>moac.exe
 
-To see the help, use moac.exe --help
-
-To enable the console, run: moac.exe console
-
-A mainnet directory will be created under  and some info
-should be seen as:
 
 2.1 查看moac帮助
 ''''''''''''''''
@@ -115,12 +111,12 @@ should be seen as:
 
     Start MOAC.... 2
     NAME:
-     moac - the MOAC-core command line interface
-     Copyright 2017 The MOAC Authors
+     moac - the MOAC-vnode command line interface
+     Copyright 2017-2019 The MOAC Foundation
     USAGE:
      moac [options] command [command options] [arguments...]
     VERSION:
-     0.8.2-develop-ed4070bf
+     1.0.12-rc-2b24668f
     MOAC CORE OPTIONS:
     --config value                      TOML configuration file
     --datadir "C:\Users\[userName]\AppData\Roaming\MoacNode" Data directory for the databases and keystore
@@ -136,14 +132,13 @@ should be seen as:
 
 ::
 
-    D:\ moac-win>moac
+    D:\ moac-win>moac.exe
 
 显示如下信息：
 
 .. figure:: ../image/moac_install_win_0.png
    :alt: moac\_install\_win\_0
 
-   moac\_install\_win\_0
 
 至最后三行显示如下：
 
@@ -183,7 +178,6 @@ should be seen as:
 .. figure:: ../image/moac_install_win_1.png
    :alt: moac\_install\_win\_1
 
-   moac\_install\_win\_1
 
 该命令行不会主动滚屏，而是等待命令。
 
@@ -206,7 +200,6 @@ should be seen as:
 .. figure:: ../image/moac_install_win_2.png
    :alt: moac\_install\_win\_2
 
-   moac\_install\_win\_2
 
 系统同时会在以下目录：
 
@@ -271,14 +264,11 @@ should be seen as:
 .. figure:: ../image/moac_install_win_4.png
    :alt: moac\_install\_win\_4
 
-   moac\_install\_win\_4
 
 挖到矿之后，可以查看余额
 
 .. figure:: ../image/moac_install_win_5.png
    :alt: moac\_install\_win\_5
-
-   moac\_install\_win\_5
 
 登录MOAC区块链浏览器页面： http://explorer.moac.io。
 
@@ -346,7 +336,6 @@ Miner正是你的账号地址。
 .. figure:: ../image/moac_install_win_6.png
    :alt: moac\_install\_win\_6
 
-   moac\_install\_win\_6
 
 在系统挖矿的情况下，发送应该在下一个区块产生时完成。
 

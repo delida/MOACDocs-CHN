@@ -1,3 +1,5 @@
+.. _faq-all:
+
 FAQs
 ----
 
@@ -69,7 +71,6 @@ VNODE注册的参数是什么含义？
 检测方法二：
 重新启动SCS，并使用LogLevel配置为4：
 ::
-
     ./scsserver --verbosity 4
 
 通过Debug log信息查看相关异常如果出现上传区块错误如：
@@ -79,8 +80,7 @@ Failed to upload the blocks to proxy: 56.151.161.171:50062, performance:4
 
 下载区块错误：
 ::
-
-Failed to download the block:32, performance:4,
+    Failed to download the block:32, performance:4,
 
 每一个VnodeProxy都有一个地址，对应一个performance，若最终所有的performance都为0，说明没有可用的VnodeProx，将无法拉块，任何掉队的SCS都无法同步区块。
 

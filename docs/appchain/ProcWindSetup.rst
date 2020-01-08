@@ -28,7 +28,8 @@ userconfig.json配置：
 	VnodeServiceCfg为代理vnode地址: 192.168.10.209:50062  （对应上面部署的vnode的IP）
 	Beneficiary为收益账号
 	
-启动节点： 
+启动节点：
+::
 	scsserver-windows-4.0-amd64 --password "123456"   （生成scs keystore的密码）
 	
 验证： 
@@ -40,15 +41,24 @@ userconfig.json配置：
 各类账号
 ========
 
-可以运行concole命令:
-personal.newAccount() 创建账号； 
-mc.accounts查看账号； 
+SCS本身无法创建帐号，可以运行VNODE的命令产生。例如，进入VNODE console:
 
-按序号查询余额：mc.getBalance(mc.accounts[0])   
 
-测试环境的公共提币地址：https://faucet.moacchina.com
+创建账号：
+::
+	personal.newAccount() 
 
-注意：后续消耗gas的操作都需要执行personal.unlockAccount(mc.accounts[0]) 对应账号进行解锁				
+查看账号：
+::
+	mc.accounts
+
+按序号查询余额：
+::
+	mc.getBalance(mc.accounts[0])   
+
+MOAC测试网的测试币，可以通过公共提币地址获得：https://faucet.moacchina.com
+
+注意：后续消耗gas的操作都需要执行personal.unlockAccount() 对应账号进行解锁				
 
 准备账号列表：（示例地址参考后续的命令操作）	
 ::	
@@ -71,7 +81,7 @@ nodejs 环境及 chain3 软件库
 
 4.安装 chain3 软件库
 ::
-npm install chain3  
+	npm install chain3  
 
 验证:  
 ::
@@ -82,8 +92,8 @@ npm install chain3
 
 此外，目前应用链的合约编译仅支持solc 0.4.24版本，需要在工程目录下执行下面命令，更换solc版本
 ::
-npm uninstall solc
-npm install solc@0.4.24
+	npm uninstall solc
+	npm install solc@0.4.24
 
 
 部署VNODE节点池合约
@@ -107,7 +117,6 @@ npm install solc@0.4.24
 
 部署ChainBaseASM.sol示例，首先运行Node.js，在node命令行下:
 ::
-
 	> chain3 = require('chain3')
 	> solc = require('solc')
 	> chain3 = new chain3();
@@ -164,16 +173,24 @@ npm install solc@0.4.24
 应用链关闭注册
 =============
 
-等到两个scs都注册完毕后，即注册SCS数目大于等于应用链要求的最小数目时，调用应用链合约里的函数 registerClose关闭注册：
-
+等到两个scs都注册完毕后，即注册SCS数目大于等于应用链要求的最小数目时，调用应用链合约里的函数 registerClose关闭注册。
+根据ABI chain3.sha3("registerClose()") = 0x69f3576fc10c82561bd84b0045ee48d80d59a866174f2513fdef43d65702bf70
+取前4个字节 0x69f3576f：
 ::
-	根据ABI chain3.sha3("registerClose()") = 0x69f3576fc10c82561bd84b0045ee48d80d59a866174f2513fdef43d65702bf70
-		取前4个字节 0x69f3576f 
 	> subchainaddr = '0x1195cd9769692a69220312e95192e0dcb6a4ec09';
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
 	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: '0x69f3576f'});
 			
 验证：  SCS自身完成初始化并开始应用链运行，可观察scs的concole界面，scs开始出块即成功完成部署应用链。
+::
+		#####################################
+		### SendBkToVnode Block Number:1 ###
+		block.Hash:       0x0c8af045440ed13f2cc6e77635f1d96eeb1724c2cbd3c0640f56ec4c419e188b
+		block.ParentHash: 0x0c715842a0e53dd2956758ada1a7e270c9de85f219b161c6fbda321e52036c83
+		SubchainAddr:     0x97d4667ed5f70c4586b5b436c9bbd15eafdbfc02
+		Sender:           0x50c15fafb95968132d1a6ee3617e99cca1fcf059
+		#####################################
+		 
 
 应用链的运维
 =============
@@ -200,8 +217,7 @@ registerAdd参数:
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
 	> chain3.mc.sendTransaction( { from: chain3.mc.accounts[0], value:0, to: subchainaddr, gas: "2000000", gasPrice: chain3.mc.gasPrice, data: data});
 
-验证：scs对应日志开始同步区块，合约公共变量nodeCount更新为scs最新数量
-
+验证：scs对应日志开始同步区块，合约公共变量nodeCount更新为scs最新数量：
 ::		
 	> SubChainBase.nodeCount()
 
@@ -226,7 +242,6 @@ registerAdd参数:
 
 关闭请求发送后，需等待一轮flush后生效，相关应用链维护费用也将退回到应用链部署账号中。
 可以通过查询余额进行验证：
-
 ::		
 	> chain3.mc.getBalance('0x1195cd9769692a69220312e95192e0dcb6a4ec09')
 

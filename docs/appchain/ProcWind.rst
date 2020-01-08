@@ -68,6 +68,9 @@ ProcWind应用链的部署步骤请参考：
 
 :ref:`ProcWind 应用链推荐设置 <procwind-optimize>` 
 
+如果遇到问题，可以参考
+
+:ref:`应用链部署常见问题 <procwind-optimize>` 
 
 ProcWind Dapp开发指南
 ====================
