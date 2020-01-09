@@ -34,6 +34,12 @@ MOAC JSON-RPC 部分接口兼容 ETHEREUM JSON-RPC, 如下表所示：
 MOAC 和 ETHEREUM 相同的接口对象有net, admin, txpool 和personal. 此外，chain3 对象 mc 中的方法和 web3 中部分方法也可以互用。
 MOAC 独有的两个 JSON-RPC 对象是 VNODE 和 SCS，分别对应VNODE的部分属性和SCS接口。
 
+默认启动VNODE的时候，chain3，mc，和net是默认启动的，其它部分需要指定：
+.. code:: bash
+
+    moac --rpc --rpcapi "chain3, mc, net, txpool"
+
+可以打开txpool的JSON-RPC命令接口。
 
 JSON-RPC Endpoint
 -----------------
