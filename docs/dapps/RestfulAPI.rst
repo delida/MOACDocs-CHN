@@ -3,9 +3,17 @@
 Restful API 简介
 ^^^^^^^^^^^^^^^^
 
-为了简化DAPP的应用，MOAC以Restful API提供给用户的一种接入方式。包括了对钱包，主链，子链，各交易查询的一系列封装。
+为了简化DAPP的应用，MOAC以Restful API提供给应用链用户的一种接入方式。包括了对钱包，基础链，应用链，各交易查询的一系列封装。
 
 DAPP用户当调用客户端SDK有困难时，可以通过服务端调用的方式实现对MOAC的接入。
+
+在使用这些接口前，需要打开一个基础链节点的RPC接口和一个应用链节点的监听接口并允许外部访问。
+例如：
+基础链节点RPC接口：http://47.106.69.61:8989
+应用链节点RPC接口：http://47.106.89.22:8546
+
+为了使用应用链，需要部署好应用链，具体步骤可以参考：
+:ref:`ProcWind 应用链部署 <proc-wind-setup>` 
 
 
 URL设计
@@ -68,7 +76,7 @@ token有过期机制，目前是2小时有效。
 正式环境获取access token，请联系开发团队：moacapi@mossglobal.net。
 
 目前设计需要vnode节点的相关API，可通过参数传入地址和端口的方式指定连接的节点。
-参数传入为空的情况下，会使用平台默认的节点信息（测试环境对应testnet的默认节点，正式环境默认主网节点）。
+参数传入为空的情况下，会使用平台默认的节点信息（测试环境对应testnet的默认节点，正式环境默认基础链节点）。
 
 Restful API 接口
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -186,7 +194,7 @@ API认证
 		"privateKey": 账户私钥
 	}	
 	
-主网模块
+基础链模块
 ---------------------------
 
 
@@ -415,7 +423,7 @@ erc20转账
 		"data": 交易hash
 	}	
 	
-erc20余额
+ERC20余额
 =====================
 
 方法：getErcBalance
@@ -442,7 +450,7 @@ erc20余额
 		"data": 余额（最小精度，10进制）
 	}	
 	
-erc20授权给子链
+erc20授权给应用链
 =====================
 
 方法：ercApprove
@@ -456,7 +464,7 @@ erc20授权给子链
 	privatekey:  账号私钥（传privatekey，可忽略参数pwd和encode，不传privatekey，则必须传pwd和encode认证）
 	pwd： 账户密码
 	encode：账户加密串
-	microchainaddress			子链地址
+	microchainaddress			应用链地址
 	contractaddress:  erc20合约地址
 	token:  auth返回的授权token
 	
@@ -475,10 +483,10 @@ erc20授权给子链
 	}	
 
 
-充值子链  erc20兑换子链原生币
+充值应用链  erc20兑换应用链原生币
 =====================
 
-方法：buyErcMintToken   注：前提是erc20对应数量已经授权给子链
+方法：buyErcMintToken   注：前提是erc20对应数量已经授权给应用链
 
 参数:
 ::
@@ -488,7 +496,7 @@ erc20授权给子链
 	privatekey:  源账号私钥（传privatekey，可忽略参数pwd和encode，不传privatekey，则必须传pwd和encode认证）
 	pwd： 账户密码
 	encode：账户加密串
-	microchainaddress:  子链地址
+	microchainaddress:  应用链地址
 	method:  dapp合约方法 默认为：buyMintToken(uint256)
 	paramtypes:  dapp合约方法对应的参数类型 默认为：["uint256"]
 	paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
@@ -508,7 +516,7 @@ erc20授权给子链
 		"data": 交易hash
 	}	
 
-充值子链  moac兑换子链原生币
+充值应用链  moac兑换应用链原生币
 =====================
 
 方法：buyMoacMintToken
@@ -521,7 +529,7 @@ erc20授权给子链
 	privatekey:  源账号私钥
 	pwd： 账户密码
 	encode：账户加密串
-	microChainaddress:  子链地址
+	microChainaddress:  应用链地址
 	method:  dapp合约方法 默认为：buyMintToken(uint256)
 	paramtypes:  dapp合约方法对应的参数类型 默认为：["uint256"]
 	paramvalues:  dapp合约方法对应的参数值   比如：[100000000]
@@ -541,10 +549,11 @@ erc20授权给子链
 		"data": 交易hash
 	}		
 	
-子链模块
+应用链模块
 ---------------------------
 
-获得子链区块高度
+
+获得应用链区块高度
 =====================
 
 方法：getBlockNumber
@@ -553,7 +562,7 @@ erc20授权给子链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  子链SubChain地址
+	microchainaddress:  应用链SubChain地址
 	token:  auth返回的授权token
 	
 	
@@ -566,10 +575,10 @@ erc20授权给子链
 	{
 		"success": true,
 		"message": "",
-		"data": 子链区块高度
+		"data": 应用链区块高度
 	}	
 	
-获得子链dapp地址列表
+获得应用链dapp地址列表
 =====================
 
 方法：getDappAddrList
@@ -578,7 +587,7 @@ erc20授权给子链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  子链SubChain地址
+	microchainaddress:  应用链SubChain地址
 	token:  auth返回的授权token
 	
 	
@@ -591,10 +600,10 @@ erc20授权给子链
 	{
 		"success": true,
 		"message": "",
-		"data": 子链dapp地址列表（按合约注册次序）
+		"data": 应用链dapp地址列表（按合约注册次序）
 	}		
 	
-获取子链区块信息
+获取应用链区块信息
 =====================
 
 方法：getBlock
@@ -603,7 +612,7 @@ erc20授权给子链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  子链SubChain地址
+	microchainaddress:  应用链SubChain地址
 	blocknum:  块号
 	token:  auth返回的授权token
 	
@@ -618,10 +627,10 @@ erc20授权给子链
 	{
 		"success": true,
 		"message": "",
-		"data": 子链区块信息
+		"data": 应用链区块信息
 	}	
 	
-获得子链对应Hash的交易信息 
+获得应用链对应Hash的交易信息 
 =====================
 
 方法：getTransactionByHash
@@ -630,7 +639,7 @@ erc20授权给子链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  子链SubChain地址
+	microchainaddress:  应用链SubChain地址
 	hash:  交易hash
 	token:  auth返回的授权token
 	
@@ -645,10 +654,10 @@ erc20授权给子链
 	{
 		"success": true,
 		"message": "",
-		"data": 子链交易信息
+		"data": 应用链交易信息
 	}	
 	
-获得子链对应Hash的交易明细
+获得应用链对应Hash的交易明细
 =====================
 
 方法：getTransactionReceiptByHash
@@ -657,7 +666,7 @@ erc20授权给子链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  子链SubChain地址
+	microchainaddress:  应用链SubChain地址
 	hash:  交易hash
 	token:  auth返回的授权token
 	
@@ -672,16 +681,16 @@ erc20授权给子链
 	{
 		"success": true,
 		"message": "",
-		"data": 子链交易明细，其中主要字段描述如下：
+		"data": 应用链交易明细，其中主要字段描述如下：
 		        failed：交易是否成功  false表示成功
 				result：如执行合约方法，retrun的数据
-				transactionHash：子链hash
+				transactionHash：应用链hash
 				contractAddress：当部署合约时，返回合约地址
 				
 	}	
 		
 
-获取子链账户余额
+获取应用链账户余额
 =====================
 
 方法：getBalance
@@ -690,7 +699,7 @@ erc20授权给子链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  子链SubChain地址
+	microchainaddress:  应用链SubChain地址
 	address:  账户地址
 	token:  auth返回的授权token
 	
@@ -709,7 +718,7 @@ erc20授权给子链
 	}	
 
 	
-子链原生币转账
+应用链原生币转账
 =====================
 
 方法：transferCoin
@@ -720,8 +729,8 @@ erc20授权给子链
 	vnodeport:  vnode节点端口
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  子链SubChain地址
-	via:  子链收益账号
+	microchainaddress:  应用链SubChain地址
+	via:  应用链收益账号
 	from:  源账户地址
 	to:  目标账户地址
 	amount:  原生币数量
@@ -744,7 +753,7 @@ erc20授权给子链
 		"data": 交易hash
 	}	
 
-子链加签交易  
+应用链加签交易  
 =====================
 
 方法：sendRawTransaction   调用dapp合约涉及修改数据的方法
@@ -756,8 +765,8 @@ erc20授权给子链
 	microip:  monitor节点地址
 	microport:  monitor节点端口
 	from: 发送交易账户地址
-	microchainaddress:  子链SubChain地址
-	via:  子链收益账号
+	microchainaddress:  应用链SubChain地址
+	via:  应用链收益账号
 	amount:	 payable对应金额	
 	dappaddress:  dapp合约地址
 	method:  dapp合约方法 比如：buyMintToken(uint256)
@@ -779,10 +788,10 @@ erc20授权给子链
 	{
 		"success": true,
 		"message": "",
-		"data": 子链交易hash
+		"data": 应用链交易hash
 	}
 	
-子链合约调用 
+应用链合约调用 
 =====================
 
 方法：callContract 针对public方法和变量，不涉及数据修改
@@ -791,7 +800,7 @@ erc20授权给子链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  子链SubChain地址
+	microchainaddress:  应用链SubChain地址
 	dappaddress:  dapp合约地址
 	data:  字符串数组，如合约方法getTopicList(uint pageNum, uint pageSize)，则传入["getTopicList", "0", "20"]
 	token:  auth返回的授权token
@@ -810,7 +819,7 @@ erc20授权给子链
 		"data": 合约返回结果
 	}	
 	
-子链ERC提币 
+应用链ERC提币 
 =====================
 
 方法：redeemErcMintToken     原生币转erc20
@@ -821,9 +830,9 @@ erc20授权给子链
 	vnodeport:  vnode节点端口
 	microipHmonitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  子链SubChain地址
+	microchainaddress:  应用链SubChain地址
 	dappbaseaddress:  dappbase合约地址
-	via:  子链收益账号
+	via:  应用链收益账号
 	address:  提币账户地址
 	amount:  提取原生币数量
 	privatekey:  源账号私钥（传privatekey，可忽略参数pwd和encode，不传privatekey，则必须传pwd和encode认证）
@@ -845,7 +854,7 @@ erc20授权给子链
 		"data": 交易hash
 	}	
 	
-子链MOAC提币 
+应用链MOAC提币 
 =====================
 
 方法：redeemMoacMintToken     原生币转moac
@@ -856,9 +865,9 @@ erc20授权给子链
 	vnodeport:  vnode节点端口
 	microipHmonitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  子链SubChain地址
+	microchainaddress:  应用链SubChain地址
 	dappbaseaddress:  dappbase合约地址
-	via:  子链收益账号
+	via:  应用链收益账号
 	address:  提币账户地址
 	amount:  提取原生币数量
 	privatekey:  源账号私钥（传privatekey，可忽略参数pwd和encode，不传privatekey，则必须传pwd和encode认证）

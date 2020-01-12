@@ -3,7 +3,7 @@
 SDK 简介
 ^^^^^^^^^
 
-为了方便用户接入，MOAC官方提供nodejs 版本的SDK，官方暂不考虑提供其他版本的SDK。
+为了方便用户接入，MOAC团队提供Node.js版本的SDK，可以接入基础链或者是应用链。
 
 Node.JS SDK下载安装
 ::
@@ -63,7 +63,7 @@ Node.JS Example
 
 	addr：钱包地址
 	pwd：钱包密码
-	keyStore：keyStore
+	keyStore：keyStore字符串
 
 代码:
 ::
@@ -79,18 +79,21 @@ Node.JS Example
 	status：2 //密码错误
 
 
-主链模块接口
+基础链模块接口
 ---------------------------
 
+在使用这些接口前，需要打开一个基础链节点的RPC接口并允许外部访问。
+例如：
+http://47.106.69.61:8989
 
-实例化主链对象
+实例化基础链对象
 =========================
 
 Node.JS Example
 
 参数:
 ::
-	vnodeAddress：主链访问地址 //http://47.106.69.61:8989
+	vnodeAddress：基础链访问地址 //http://47.106.69.61:8989
 	
 代码:
 ::
@@ -98,7 +101,7 @@ Node.JS Example
 	var VnodeChain = require("moac-api").vnodeChain;
 	var vc = new VnodeChain(vnodeAddress);
 
-获取主链区块高度
+获取基础链区块高度
 ===========================================
 
 Node.JS Example
@@ -110,9 +113,9 @@ Node.JS Example
 
 返回:
 ::
-	blockNumber：主链区块高度
+	blockNumber：基础链区块高度
 	
-获取主链某一区块信息
+获取基础链某一区块信息
 ====================================
 
 Node.JS Example
@@ -129,7 +132,7 @@ Node.JS Example
 ::
 	blockInfo：某一区块信息
 
-获取主链交易详情
+获取基础链交易详情
 =====================================
 
 Node.JS Example
@@ -153,7 +156,7 @@ Node.JS Example
 
 参数:
 ::
-	microChainAddress：子链地址
+	microChainAddress：应用链地址
 	versionKey：版本号（默认0.1版本）
 
 代码:
@@ -164,7 +167,7 @@ Node.JS Example
 ::
 	data：合约实例
 	
-获取主链账户余额
+获取基础链账户余额
 =====================================
 
 Node.JS Example
@@ -179,9 +182,9 @@ Node.JS Example
 	
 返回:
 ::
-	balance：主链账户余额（单位为moac）
+	balance：基础链账户余额（单位为moac）
 
-获取主链账户ERC代币余额
+获取基础链账户ERC代币余额
 =============================================
 
 Node.JS Example
@@ -199,7 +202,7 @@ Node.JS Example
 ::
 	balance：账户ERC代币余额（erc20最小单位）
 	
-获取主链合约实例
+获取基础链合约实例
 ================================
 
 Node.JS Example
@@ -215,7 +218,7 @@ Node.JS Example
 	
 返回:
 ::
-	object：主链合约实例对象
+	object：基础链合约实例对象
 	
 获取交易Data
 =========================
@@ -234,7 +237,7 @@ Node.JS Example
 ::
 	data：data字符串
 	
-主链加签交易
+基础链加签交易
 =========================
 
 Node.JS Example
@@ -242,7 +245,7 @@ Node.JS Example
 参数:
 ::
 	from：交易发送人
-	to：交易接受者（可以为个人地址，或者主链上的合约地址）
+	to：交易接受者（可以为个人地址，或者基础链上的合约地址）
 	amount：交易金额
 	method：方法 例 "issue(address,uint256)"
 	paramTypes：paramTypes 参数类型数组 例['address','uint256']
@@ -260,7 +263,7 @@ Node.JS Example
 ::
 	hash：交易hash
 	
-主链MOAC转账
+基础链MOAC转账
 =========================
 
 参数:
@@ -280,7 +283,7 @@ Node.JS Example
 ::
 	hash：交易hash
 	
-主链ERC代币转账
+基础链ERC20代币转账
 ==============================
 
 参数:
@@ -301,7 +304,7 @@ Node.JS Example
 ::
 	hash：交易hash
 	
-调用主链合约
+调用基础链合约
 =========================
 
 参数:
@@ -326,7 +329,7 @@ ERC20充值
 ::
 	addr：钱包地址
 	privateKey：钱包私钥
-	microChainAddress：子链地址
+	microChainAddress：应用链地址
 	method：方法 "issue(address,uint256)"
 	paramTypes：paramTypes 参数类型数组 ['address','uint256']
 	paramValues：paramValues 参数值数组 ['0x.....',10000]（需要传金额的入参为erc20最小单位）
@@ -348,7 +351,7 @@ MOAC充值
 ::
 	addr：钱包地址
 	privateKey：钱包私钥
-	microChainAddress：子链地址
+	microChainAddress：应用链地址
 	method：方法 "issue(address,uint256)"
 	paramTypes：paramTypes 参数类型数组 ['address','uint256']
 	paramValues：paramValues 参数值数组 ['0x.....',10000]（金额单位为moac）
@@ -363,27 +366,35 @@ MOAC充值
 ::
 	hash：交易hash
 	
-子链模块接口
+应用链模块接口
 ---------------------------
 
-实例化子链对象
+在使用这些接口前，需要打开一个基础链节点的RPC接口和一个应用链节点的监听接口并允许外部访问。
+例如：
+基础链节点RPC接口：http://47.106.69.61:8989
+应用链节点RPC接口：http://47.106.89.22:8546
+
+为了使用应用链，需要部署好应用链，具体步骤可以参考：
+:ref:`ProcWind 应用链部署 <proc-wind-setup>` 
+
+实例化应用链对象
 =================================
 
 Node.JS Example
 
 参数:
 ::
-	vnodeAddress：主链访问地址 //http://47.106.69.61:8989
-	monitorAddress：子链访问地址 //http://47.106.89.22:8546
-	microChainAddress：子链地址
-	via：子链via
+	vnodeAddress：基础链访问地址 //http://47.106.69.61:8989
+	monitorAddress：应用链访问地址 //http://47.106.89.22:8546
+	microChainAddress：应用链地址
+	via：应用链via
 
 代码:
 ::
 	var MicroChain = require("moac-api").microChain;
 	var mc = new MicroChain(vnodeAddress, monitorAddress, microChainAddress, via);
 
-获取子链区块高度
+获取应用链区块高度
 =========================
 
 Node.JS Example
@@ -396,7 +407,7 @@ Node.JS Example
 
 返回:
 ::
-	blockNumber：子链区块高度
+	blockNumber：应用链区块高度
 	
 获取某一区间内的多个区块信息
 =================================================
@@ -418,7 +429,7 @@ Node.JS Example
 ::
 	blockListInfo：区块信息List
 	
-获取子链某一区块信息
+获取应用链某一区块信息
 ==========================================
 
 Node.JS Example
@@ -437,7 +448,7 @@ Node.JS Example
 ::
 	blockInfo：某一区块信息
 	
-获取子链交易详情
+获取应用链交易详情
 =========================
 
 Node.JS Example
@@ -456,7 +467,7 @@ Node.JS Example
 ::
 	transactionInfo：交易详情
 	
-获取子链账户余额
+获取应用链账户余额
 =========================
 
 Node.JS Example
@@ -473,9 +484,9 @@ Node.JS Example
 
 返回:
 ::
-	data：子链账户余额（erc20最小单位）
+	data：应用链账户余额（erc20最小单位）
 	
-获取子链详细信息
+获取应用链详细信息
 =========================
 
 Node.JS Example
@@ -488,9 +499,9 @@ Node.JS Example
 
 返回:
 ::
-	microChainInfo：子链信息
+	microChainInfo：应用链信息
 	
-获取子链DAPP状态
+获取应用链DAPP状态
 =========================
 
 Node.JS Example
@@ -525,7 +536,7 @@ Node.JS Example
 ::
 	nonce：得到的nonce
 	
-获取子链DAPP合约实例
+获取应用链DAPP合约实例
 ============================================
 
 参数:
@@ -559,7 +570,7 @@ Node.JS Example
 	data：data字符串
 
 
-子链加签交易
+应用链加签交易
 =========================
 
 Node.JS Example
@@ -567,7 +578,7 @@ Node.JS Example
 参数:
 ::
 	from：发送方的钱包地址
-	microChainAddress：子链地址
+	microChainAddress：应用链地址
 	amount：交易金额
 	dappAddress：dapp地址
 	method：方法 例 "issue(address,uint256)"
@@ -585,7 +596,7 @@ Node.JS Example
 ::
 	hash：交易hash
 	
-子链转账
+应用链转账
 =========
 
 Node.JS Example
@@ -608,7 +619,7 @@ Node.JS Example
 ::
 	hash：交易hash
 	
-调用子链合约
+调用应用链合约
 =============
 
 参数:

@@ -65,26 +65,17 @@ MOAC平台里面使用mc作为母链系统运行的燃料（gas），类似比�
 Gas 费用和 mc 之间的关系
 =============================
 
-如被认为是网络资源/利用的不变成本。您希望发送交易的实际成本始终是相同的，因此您不能真正预期将发行天然气，而总体而言，货币是易变的。
+Gas被认为是使用网络资源的固定成本。对于用户而言，会希望发送交易的实际成本始终是相对固定的。而如果使用发行的货币来做Gas，由于Gas价格的变化，就不能真正预期将消耗多少Gas。
 
-因此，我们发行的mc的价值应该有所不同，但还要根据MOAC实施汽油价格。如果mc的价格上涨，以mc表示的天然气价格应下降，以使天然气的实际成本保持不变。
+因此，虽然发行的mc的价格会有所不同，但Gas价格应该根据mc价格变化。如果mc的价格上涨，以mc表示的Gas价格应下降，以使Gas的实际成本保持不变。
 
-gas（燃料）具有多个相关术语：燃料价格（），燃料成本（Gas​​ Cost），燃料限额（Gas Limit）和燃料费用（Gas Fees）。 
+Gas（燃料）具有多个相关术语：燃料价格（Gas Price），燃料成本（Gas​​ Cost），燃料限额（Gas Limit）和燃料费用（Gas Fees）。 
 Gas背后的原理是对于MOAC网络上的交易或计算成本有稳定的价值。
 
 
 * Gas Price是指以另一种货币或代币（如MOAC）表示的天然气成本。为了稳定天然气的价格，天然气价格是一个浮动值，这样，如果代币或货币的价格波动，天然气价格就会变化以保持相同的实际价值。天然气价格由平衡价格决定，该平衡价格是用户愿意花费多少，节点愿意接受多少。
 * Gas​​ Cost 是关于Gas的计算成本的静态值，其目的是Gas的实际值永远不变，因此该成本应始终保持稳定。
 * Gas​​ Limit 是每个块可以使用的最大Gas量，被视为最大计算负荷，交易量或一个块的块大小，矿工可以随着时间的推移慢慢更改此值。
-* Gas Fees 实际上是运行特定交易或程序（称为合同）所需支付的燃料量。区块的Gas Fees可用于暗示区块的计算量，交易量或大小。Gas Fees也是支付给母链矿工的验证费用。
+* Gas Fees 实际上是运行特定交易或程序（称为智能合约）所需支付的燃料量。区块的Gas Fees可用于暗示区块的计算量，交易量或大小。Gas Fees也是支付给母链矿工的验证费用。
 
-Gas is supposed to be the constant cost of network resources/utilisation. You want the real cost of sending a transaction to always be the same, so you can't really expect Gas to be issued, currencies in general are volatile.
 
-So instead, we issue mc whose value is supposed to vary, but also implement a Gas Price in terms of MOAC. If the price of mc goes up, the Gas Price in terms of mc should go down to keep the real cost of Gas the same.
-
-Gas has multiple associated terms with it: Gas Prices, Gas Cost, Gas Limit, and Gas Fees. The principle behind Gas is to have a stable value for how much a transaction or computation costs on the Ethereum network.
-
-* Gas Cost is a static value for how much a computation costs in terms of Gas, and the intent is that the real value of the Gas never changes, so this cost should always stay stable over time.
-* Gas Price is how much Gas costs in terms of another currency or token like MOAC. To stabilise the value of gas, the Gas Price is a floating value such that if the cost of tokens or currency fluctuates, the Gas Price changes to keep the same real value. The Gas Price is set by the equilibrium price of how much users are willing to spend, and how much processing nodes are willing to accept.
-* Gas Limit is the maximum amount of Gas that can be used per block, it is considered the maximum computational load, transaction volume, or block size of a block, and miners can slowly change this value over time.
-* Gas Fee is effectively the amount of Gas needed to be paid to run a particular transaction or program (called a contract). The Gas Fees of a block can be used to imply the computational load, transaction volume, or size of a block. The gas fees are paid to the miners (or bonded contractors in PoS).
