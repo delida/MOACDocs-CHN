@@ -6,6 +6,7 @@ ProcWind Dapp开发指南
 同基础链相同，应用链上业务逻辑的实现也通过智能合约的方式。
 
 在1.0.8及之后的版本中，应用链已经支持多合约的部署，建议用户使用nuwa 1.0.8 以后的SCS节点来构建应用链并部署合约。
+在1.0.12及之后的版本，应用链可以支持solidity EVM 0.5.x，但需要部署相应DappBase.sol，参见 :ref:`ProcWind 支持solidity 0.5.X <procwind-dappbase0.5.x>`.。
 
 
 多合约部署准备工作
@@ -35,7 +36,7 @@ DAPP智能合约也通过主链的sendTransaction发送交易到 proxy vnode 的
 STEP1：在应用链上部署多合约基础合约 DappBase.sol， 在 nuwa1.0.10 中可能是 DappBasePrivate.sol 或者 DappBasePublic.sol，两者的不同是
 DappBasePublic 允许除应用链拥有者(owner)之外的用户在应用链上部署DAPPs。之前默认的都是仅有应用链owner才能部署DAPP。
 
-!!!特别注意!!!：目前应用链原生币支持moac和erc20两种兑换方式，交易values分别对应subchainbase的tokensupply和erc20的totalsupply，这个值必须对应，否则将会导致dappbase部署失败。细节详见母应用链货币交互章节
+!!!特别注意!!!：目前应用链原生币支持moac和erc20两种兑换方式，交易values分别对应subchainbase的tokensupply和erc20的totalsupply，这个值必须对应，否则将会导致dappbase部署失败。细节详见 :ref:`ProcWind 应用链货币交互 <proc-wind-as>`.
 
 部署示例（以下在nodeJs console中进行）：
 ::
@@ -115,3 +116,35 @@ STEP4： 调用dappbase中的registerDapp方法来注册dapp1
 STEP5： 调用dappbase中的registerDapp方法来注册dapp2
 
 STEPX： 调用dapp1或dapp2中的业务逻辑
+
+.. _procwind-dappbase0.5.x:
+
+支持solidity 0.5.x智能合约的部署
+------------------------------
+
+在部署完应用链合约后，可以通过部署新的应用链控制合约来完成对solidity 0.5.x版本的支持。
+
+可以在MOAC的发布网站或者开发包中找到以下两个文件：
+
+`ASM DappBasePrivate <https://github.com/MOACChain/moac-core/blob/master/procwind/asm/DappBasePrivate_0.5.sol>`_
+
+`ASM DappBasePublic <https://github.com/MOACChain/moac-core/blob/master/procwind/asm/DappBasePublic_0.5.sol>`_
+
+`AST DappBasePrivate <https://github.com/MOACChain/moac-core/blob/master/procwind/ast/DappBasePrivate_0.5.sol>`_
+
+`AST DappBasePublic <https://github.com/MOACChain/moac-core/blob/master/procwind/ast/DappBasePublic_0.5.sol>`_
+
+
+注意，如果是从源文件编译合约，solidity 编译器需要使用相应版本，在Node.Js里面是需要solcjs版本大于0.5.0。
+
+这些合约的部署过程也是通过主链的sendTransaction发送交易到 proxy vnode 的方式进行部署。具体可以参考 :ref:`应用链控制合约部署 <procwind-dappbase>`。
+
+参数：
+::
+  to: 应用链控制合约subchainbase的地址
+  gas: 不需要消耗gas费用，传值：0
+  shardingflag：表示操作应用链， 传值：0x3，请注意，多合约版本部署任何合约shardingflag都为0x3  
+  via: 对应 proxy vnode 的收益地址
+  
+
+
