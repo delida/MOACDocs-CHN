@@ -6,7 +6,7 @@ ProcWind 应用链
 ProcWind 共识
 ====================
 
-ProcWind是采用PoS共识，支持多合约部署的应用链节点。
+ProcWind应用链是指采用PoS共识，支持多合约部署的MOAC应用链，由应用链验证节点SCS和应用链合约（ChainBase.sol）组成。
 目前ProcWind也支持两种原子跨链交换，可以完成母链原生通证或者ERC20通证和应用链原生通证之间的互换。
 
 采取股权证明共识的ProcWind，依赖网络中的验证节点来检验交易，而不像严格的工作量证明(PoW)那样需要处理大量数据。在股权证明共识中，下一个区块的创建者是根据诸如持币量或币龄等因素（即股份）的随机算法来选择的。
@@ -52,15 +52,74 @@ ProcWind 应用链支持应用链上的原生通证（TOKEN），其发行方式
 ProcWind 跨链
 ====================
 
-应用链通证可以和母链的原生货币或者ERC20代币直接进行兑换，
+应用链通证可以和母链的原生货币或者ERC20代币直接进行兑换，只需要部署不同的应用链合约并执行相应功能调用即可完成。
+具有与母链原生货币（moac）进行跨链交换功能合约的名称为ASM（Atomic Swap of Moac）。
+具有与母链ERC20代币进行跨链交换功能合约的名称为AST（Atomic Swap of Token）。
 具体做法可以参考：
 
 :doc:`ProcWindExchange`
 
-ProcWind 应用链的部署
-====================
+ProcWind 应用链的参数和设置
+=========================
 
-ProcWind应用链的部署步骤请参考：
+目前采用ProcWind共识的应用链主要分为两种：ASM和AST。
+在MOAC发布可以看到合约内容。
+ASM的合约构建函数为：
+:: 
+    function ChainBaseASM(
+    address proto, 
+    address vnodeProtocolBaseAddr, 
+    uint min, 
+    uint max, 
+    uint thousandth, 
+    uint flushRound, 
+    uint256 tokensupply, 
+    uint256 exchangerate)
+
+其中的参数含义为：
+
+* address proto - SCS节点池地址；
+* address vnodeProtocolBaseAddr - Vnode节点池合约地址；
+* uint min - 应用链需要SCS的最小数量，需要从如下值中选择：1，3，5，7；
+* uint max - 应用链需要SCS的最大数量，需要从如下值中选择：11，21，31，51，99
+* uint thousandth - 控制选择scs的概率，建议设为1，对于大型应用链节点池才有效；
+* uint flushRound - 应用链刷新周期  单位是主链block生成对应数量的时间，当前的取值范围是40-99；
+* uint256 tokensupply - 应用链的原生货币数量；
+* uint256 exchangerate - 应用链原生货币和母链moac的兑换比例；
+
+注意，这里输入参数tokensupply和应用链的BALANCE相对映，
+BALANCE = tokensupply * 1e18
+例如，tokensupply = 1000，结果的BALANCE应该是10的21次方。
+
+AST的合约构建函数为：
+:: 
+    function ChainBaseAST(
+    address proto, 
+    address vnodeProtocolBaseAddr, 
+    address ercAddr,  
+    uint ercRate,
+    uint min, 
+    uint max, 
+    uint thousandth, 
+    uint flushRound)
+
+其中的参数含义为：
+
+* address proto - SCS节点池地址；
+* address vnodeProtocolBaseAddr - Vnode节点池合约地址；
+* address ercAddr - 基础链ERC20合约地址；
+* uint ercRate - 应用链原生货币和基础链ERC20 token的兑换比例；
+* uint min - 应用链需要SCS的最小数量，需要从如下值中选择：1，3，5，7；
+* uint max - 应用链需要SCS的最大数量，需要从如下值中选择：11，21，31，51，99
+* uint thousandth - 控制选择scs的概率，建议设为1，对于大型应用链节点池才有效；
+* uint flushRound - 应用链刷新周期  单位是主链block生成对应数量的时间，当前的取值范围是40-99；
+* uint256 tokensupply - 应用链的原生货币数量；
+* uint256 exchangerate - 应用链原生货币和母链moac的兑换比例；
+
+注意，AST应用链的BALANCE是由ERC20 token里面totalSupply相对映，
+BALANCE = tokenSupply * ERCRate * (10 ** (ERCDecimals));
+
+用户可以根据需要调试输入参数，之后的应用链部署步骤请参考：
 
 :doc:`ProcWindSetup`
 

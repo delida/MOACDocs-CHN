@@ -136,7 +136,7 @@ nodejs 环境及 chain3 软件库
 	> SubChainBase = SubChainBaseContract.new( proto, vnodeProtocolBaseAddr, min, max, thousandth, flushRound,{ from: chain3.mc.accounts[0],  data: '0x' + bin,  gas:'9000000'} , function (e, contract){console.log('Contract address: ' + contract.address + ' transactionHash: ' + contract.transactionHash); });
 	
 		
-部署完毕后, 获得应用链合约地址  0x1195cd9769692a69220312e95192e0dcb6a4ec09
+部署完毕后, 获得应用链合约地址，如：0x1195cd9769692a69220312e95192e0dcb6a4ec09
 		
 
 	
@@ -197,8 +197,6 @@ nodejs 环境及 chain3 软件库
 
 部署完成应用链后，可以手工加入SCS节点或者去除SCS节点，也可以加入监听节点:
 
-应用链节点添加
-----------------------
 
 应用链合约提供了registerAdd方法来支持应用链添加，必须由应用链部署账号来发送交易请求。
 

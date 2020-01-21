@@ -104,7 +104,7 @@ USAGE:
 
 VERSION:
 
-1.0.9-stable-f98b7fea
+1.0.11-stable-f98b7fea
 
 COMMANDS:
 ^^^^^^^^^
@@ -295,4 +295,4 @@ COPYRIGHT:
 
 ::
 
-       Copyright 2017-2019 MOAC Authors
+       Copyright 2017-2020 MOAC Authors

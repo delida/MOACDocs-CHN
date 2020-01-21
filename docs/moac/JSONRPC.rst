@@ -2227,7 +2227,6 @@ Example
     true
 
 --------------
-
 **admin\_datadir**
 
 .. _admin_datadir:
@@ -2281,6 +2280,7 @@ Example
     {"jsonrpc":"2.0","id":101,"result":{"id":"a6f486af99679e00ec1a2bf77304e8c7f183987c8138a7c515a08ee42c5bebbda9f01474d43ba7176f891989dbdb78a6cbade67a941e6c2d5a83751039adba36","name":"Moac/v1.0.11-rc-2b24668f/darwin-amd64/go1.13.1","enode":"enode://a6f486af99679e00ec1a2bf77304e8c7f183987c8138a7c515a08ee42c5bebbda9f01474d43ba7176f891989dbdb78a6cbade67a941e6c2d5a83751039adba36@71.166.46.131:30336?servicecfgport=:50062\u0026showtopublic=true\u0026beneficialaddress=0xD814F2ac2c4cA49b33066582E4e97EBae02F2aB9\u0026ip=","ip":"71.166.46.131","ports":{"discovery":30336,"listener":30336},"listenAddr":"[::]:30336","protocols":{"mc":{"network":101,"difficulty":1476985363965,"genesis":"0x4e2972df43453f5b658656de1f2af40866b6d86b4e11b0c49eb1fc1a854d9796","head":"0x941bb3a1c9a8a26e0bc2f747c2a7ea805135e1e995464957aa7e09814a1575d7"}}}}
 
 --------------
+
 **admin\_peers**
 
 .. _admin_peers:
@@ -2309,6 +2309,7 @@ Example
     true
 
 --------------
+
 **admin\_startRPC**
 
 .. _admin_startRPC:
