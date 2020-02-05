@@ -653,6 +653,7 @@ erc20授权给子链
 	from:  源账户地址
 	to:  目标账户地址
 	amount:  原生币数量
+	memo: 备注 （交易的Input Data会由目标账户地址+memo内容组成）
 	privatekey:  源账号私钥（传privatekey，可忽略参数pwd和encode，不传privatekey，则必须传pwd和encode认证）
 	pwd： 账户密码
 	encode：账户加密串
