@@ -642,6 +642,8 @@ erc20授权给子链
 
 方法：transferCoin
 
+注意，这个方法中用户有两种方法授权，一种是直接发送私钥（private key），简单但是有泄露风险；另一种是使用账户密码和账户加密串，需要调用帐号模块来生成后使用。
+
 参数:
 ::
 	vnodeip:  vnode节点地址
@@ -664,7 +666,10 @@ erc20授权给子链
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api/micro/v1.0/transferCoin
+	// Send Private Key
 	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&via=0x**&from=0x**&to=0x**&amount=**&memo=&privatekey=0x***&token=*****
+    // or Send pwd and encode
+	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&via=0x**&from=0x**&to=0x**&amount=**&memo=&pwd=***&encode=***&token=*****
 
 返回数据示例	
 ::	

@@ -562,7 +562,7 @@ erc20授权给应用链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	token:  auth返回的授权token
 	
 	
@@ -587,7 +587,7 @@ erc20授权给应用链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	token:  auth返回的授权token
 	
 	
@@ -612,7 +612,7 @@ erc20授权给应用链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	blocknum:  块号
 	token:  auth返回的授权token
 	
@@ -639,7 +639,7 @@ erc20授权给应用链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	hash:  交易hash
 	token:  auth返回的授权token
 	
@@ -666,7 +666,7 @@ erc20授权给应用链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	hash:  交易hash
 	token:  auth返回的授权token
 	
@@ -699,7 +699,7 @@ erc20授权给应用链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	address:  账户地址
 	token:  auth返回的授权token
 	
@@ -723,27 +723,49 @@ erc20授权给应用链
 
 方法：transferCoin
 
+注意，这个方法中用户有两种方法授权，一种是直接发送私钥（private key），简单但是有泄露风险；另一种是使用账户密码和账户加密串，需要调用帐号模块来生成后使用。
+
 参数:
 ::
 	vnodeip:  vnode节点地址
 	vnodeport:  vnode节点端口
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	via:  应用链收益账号
 	from:  源账户地址
 	to:  目标账户地址
 	amount:  原生币数量
-	privatekey:  源账号私钥（传privatekey，可忽略参数pwd和encode，不传privatekey，则必须传pwd和encode认证）
-	pwd： 账户密码
-	encode：账户加密串
+	privatekey:  源账号私钥（传privatekey，可忽略参数pwd和encode）
 	token:  auth返回的授权token
 	
-	
+或者：
+::
+	vnodeip:  vnode节点地址
+	vnodeport:  vnode节点端口
+	microip:  monitor节点地址
+	microport:  monitor节点端口
+	microchainaddress:  应用链MicroChain地址
+	via:  应用链收益账号
+	from:  源账户地址
+	to:  目标账户地址
+	amount:  原生币数量
+	pwd： 账户密码 （传参数pwd和encode，不用传privatekey）
+	encode：账户加密串
+	token:  auth返回的授权token
+
+
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api/micro/v1.0/transferCoin
+	// Send Private Key
 	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&via=0x**&from=0x**&to=0x**&amount=**&privatekey=0x***&token=*****
+
+或者：
+::
+    POST: http://139.198.126.104:8080/api/micro/v1.0/transferCoin
+    // Send pwd and encode
+    BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&via=0x**&from=0x**&to=0x**&amount=**&memo=&pwd=***&encode=***&token=*****
 
 返回数据示例	
 ::	
@@ -765,7 +787,7 @@ erc20授权给应用链
 	microip:  monitor节点地址
 	microport:  monitor节点端口
 	from: 发送交易账户地址
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	via:  应用链收益账号
 	amount:	 payable对应金额	
 	dappaddress:  dapp合约地址
@@ -800,7 +822,7 @@ erc20授权给应用链
 ::
 	microip:  monitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	dappaddress:  dapp合约地址
 	data:  字符串数组，如合约方法getTopicList(uint pageNum, uint pageSize)，则传入["getTopicList", "0", "20"]
 	token:  auth返回的授权token
@@ -830,7 +852,7 @@ erc20授权给应用链
 	vnodeport:  vnode节点端口
 	microipHmonitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	dappbaseaddress:  dappbase合约地址
 	via:  应用链收益账号
 	address:  提币账户地址
@@ -865,7 +887,7 @@ erc20授权给应用链
 	vnodeport:  vnode节点端口
 	microipHmonitor节点地址
 	microport:  monitor节点端口
-	microchainaddress:  应用链SubChain地址
+	microchainaddress:  应用链MicroChain地址
 	dappbaseaddress:  dappbase合约地址
 	via:  应用链收益账号
 	address:  提币账户地址
