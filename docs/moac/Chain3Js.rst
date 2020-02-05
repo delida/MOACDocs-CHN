@@ -7,7 +7,7 @@ Chain3 JavaScript 软件库 0.1.x
 Chain3 JavaScript 软件库是MOAC开发的一套javascript库，目的是让应用程序能够使用简便的方式与MOAC节点进行通信。
 注意，这里有两层，moac启动了一个MOAC母链节点，console参数开启了一个javascript的控制台，这个控制台注入了chain3.js这个库，以使我们可以通过chain3对象与MOAC节点的JSON-RPC接口做交互。
 
-目前Chain3的JavaScript 软件库有两个版本，分别参考以太坊的web3 0.20 和 1.0版本。这里面讲解的是基于0.20版本完成的Chain3，
+目前Chain3的JavaScript 软件库有两个版本，分别参考以太坊的web3 0.20 和 1.0版本。这里面讲解的是基于0.20版本完成的Chain3 0.1.x版本，
 最新版本号是0.1.22。
 
 开发者可以通过``chain3``对象来对DApp的函数进行调用。chain3 通过 `RPC
