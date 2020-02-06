@@ -738,6 +738,7 @@ erc20授权给应用链
 	amount:  原生币数量
 	privatekey:  源账号私钥（传privatekey，可忽略参数pwd和encode）
 	token:  auth返回的授权token
+	memo: 备注 （交易的Input Data会由目标账户地址+memo内容组成）
 	
 或者：
 ::
@@ -753,19 +754,20 @@ erc20授权给应用链
 	pwd： 账户密码 （传参数pwd和encode，不用传privatekey）
 	encode：账户加密串
 	token:  auth返回的授权token
+	memo: 备注 （交易的Input Data会由目标账户地址+memo内容组成）
 
 
 调用示例：
 ::
 	POST: http://139.198.126.104:8080/api/micro/v1.0/transferCoin
 	// Send Private Key
-	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&via=0x**&from=0x**&to=0x**&amount=**&privatekey=0x***&token=*****
+	BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&via=0x**&from=0x**&to=0x**&amount=**&memo=***&privatekey=0x***&token=*****
 
 或者：
 ::
     POST: http://139.198.126.104:8080/api/micro/v1.0/transferCoin
     // Send pwd and encode
-    BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&via=0x**&from=0x**&to=0x**&amount=**&memo=&pwd=***&encode=***&token=*****
+    BODY：vnodeip=&vnodeport=&microip=127.0.0.1&microport=8546&microchainaddress=0x**&via=0x**&from=0x**&to=0x**&amount=**&memo=***&pwd=***&encode=***&token=*****
 
 返回数据示例	
 ::	
