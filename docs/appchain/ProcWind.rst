@@ -48,6 +48,31 @@ ProcWind 应用链支持应用链上的原生通证（TOKEN），其发行方式
 详细介绍请参考：
 :ref:`ProcWind 应用链的部署<proc-wind-setup>` 
 
+关于ProcWind上通证的转移，是采用shardingFlag=2的方式，例子如下：
+::
+    //sendshardingflagtx(baseaddr,basename,subchain,amount,recive,'0x2',n)
+    //baseaddr转出地址  basename转出地址的密码 subchain子链地址 amount转账金额 recive转入的地址 n转入地址的nonce
+
+    function sendshardingflagtx(baseaddr,basename,subchainaddr,amount,code,sf,n)
+    {       
+            chain3.personal.unlockAccount(baseaddr,basename,0);
+            //vias=['0xd344716b819fc0e8bb5935756e6ed8da6b3077b9','0xd344716b819fc0e8bb5935756e6ed8da6b3077b9']
+            chain3.mc.sendTransaction(
+                    {       
+                            from: baseaddr,
+                      //      value:amount,
+                            value:chain3.toSha(amount,'mc'),
+                            to: subchainaddr,
+                            gas: '0',//'200000',
+                            gasPrice: '0',//chain3.mc.gasPrice,
+                            ShardingFlag: sf,
+                            data: code,
+                            nonce: n,
+                            via:via,
+                    });
+                    
+            console.log('sending from:' + baseaddr + ' to:' + subchainaddr  + ' with nonce:' + n);
+    }
 
 ProcWind 跨链
 ====================

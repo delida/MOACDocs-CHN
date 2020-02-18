@@ -34,7 +34,6 @@ ProcWind 应用链支持有币应用链，并且提供母链货币和应用链�
 
 ProcWind的ASM应用链合约在官方网站上可以下载，需要在目录下的SubChainBase.sol里面设置tokensupply和exchangerate两个参数。
 在基础链上部署SubChainBase.sol的步骤示例如下:
-
 ::
 	> chain3 = require('chain3')
 	> solc = require('solc')
@@ -211,8 +210,6 @@ erc20 部署
 
 ProcWind的AST应用链合约在官方网站上可以下载，需要在目录下的SubChainBase.sol里面设置ERC20合约地址和exchangerate两个参数。
 在基础链上部署SubChainBase.sol的步骤示例如下:
-
-
 ::
 	> chain3 = require('chain3')
 	> solc = require('solc')
