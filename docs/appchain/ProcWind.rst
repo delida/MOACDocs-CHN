@@ -50,29 +50,39 @@ ProcWind 应用链支持应用链上的原生通证（TOKEN），其发行方式
 
 关于ProcWind上通证的转移，是采用shardingFlag=2的方式，例子如下：
 ::
-    //sendshardingflagtx(baseaddr,basename,subchain,amount,recive,'0x2',n)
-    //baseaddr转出地址  basename转出地址的密码 subchain子链地址 amount转账金额 recive转入的地址 n转入地址的nonce
-
-    function sendshardingflagtx(baseaddr,basename,subchainaddr,amount,code,sf,n)
+    //Example to transfer the AppChain tokens
+    function sendAppChainToken(baseaddr,basepsd,appchainaddr,amount,code,sf,n)
     {       
-            chain3.personal.unlockAccount(baseaddr,basename,0);
-            //vias=['0xd344716b819fc0e8bb5935756e6ed8da6b3077b9','0xd344716b819fc0e8bb5935756e6ed8da6b3077b9']
-            chain3.mc.sendTransaction(
-                    {       
-                            from: baseaddr,
-                      //      value:amount,
-                            value:chain3.toSha(amount,'mc'),
-                            to: subchainaddr,
-                            gas: '0',//'200000',
-                            gasPrice: '0',//chain3.mc.gasPrice,
-                            ShardingFlag: sf,
-                            data: code,
-                            nonce: n,
-                            via:via,
-                    });
-                    
-            console.log('sending from:' + baseaddr + ' to:' + subchainaddr  + ' with nonce:' + n);
+        //unlock the 
+        chain3.personal.unlockAccount(baseaddr,basepsd,0);
+
+        //transfer the appchain token
+        chain3.mc.sendTransaction(
+        {       
+                from: baseaddr,
+                value:chain3.toSha(amount,'mc'), // note this value is the appchain token value, not mc
+                to: appchainaddr,
+                gas: '0',//'200000',
+                gasPrice: '0',//chain3.mc.gasPrice,
+                ShardingFlag: sf,
+                data: code,
+                nonce: n,
+                via:via,
+        });
+                
+        console.log('sending from:' + baseaddr + ' to:' + appchainaddr  + ' with nonce:' + n);
     }
+    // Call the function to transafer
+    var amount = 1;
+    //函数输入参数说明
+    //baseaddr:转出地址  
+    //basepsd：转出地址的密码 
+    //appchainaddr:应用链地址 
+    //amount:转账金额 
+    //receive: 转入的地址 
+    //'0x2'： shardingFlag 设为2为应用链原生货币转换
+    //n: 转出地址的nonce
+    sendAppChainToken(baseaddr,basename,appchainaddr,amount,receive,'0x2',n)
 
 ProcWind 跨链
 ====================
