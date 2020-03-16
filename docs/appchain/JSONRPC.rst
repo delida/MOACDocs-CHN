@@ -262,7 +262,6 @@ Returns information about the balance of the input account on the AppChain by bl
 
 Example
 
-
 .. code:: js
 
     // Request
@@ -283,10 +282,8 @@ Returns information about a block on the AppChain by block number.
 
 
 1. ``String`` - the address of the AppChain that Dapp is on.
-2. ``QUANTITY|TAG`` - integer of a block number, or the string
-   ``"earliest"`` or ``"latest"``, as in the `default block
-   parameter <#the-default-block-parameter>`. Note, scs\_getBlock does
-   not support ``"pending"``.
+2. ``QUANTITY|TAG`` - integer of a block number, at the most release v1.0.0, SCS does not support the strings,
+   ``"earliest"`` or ``"latest"````"pending"``.
 
 *Returns*
 
@@ -441,7 +438,7 @@ Returns the requested AppChain information on the connecting SCS. This informati
 
 *Returns*
 
-``Object`` A Micro Chain information object as defined in the AppChain contract:
+``Object`` A AppChain information object as defined in the AppChain contract:
 
 -  ``balance``: ``Number`` - the native token amount in the AppChain.
 -  ``blockReward``: ``Number`` - the reward amount at each block for the AppChain, unit is in Sha = 1e-18 moac.
@@ -788,7 +785,7 @@ Example
 
 .. _scs_getExchangeByAddress:
 
-Returns the Withdraw/Deposit exchange records between AppChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
+Returns the Withdraw/Deposit exchange records between AppChain and BaseChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
 
 
 *Parameters*
@@ -827,7 +824,7 @@ Example
 
 .. _scs_getExchangeInfo:
 
-Returns the Withdraw/Deposit exchange records between AppChain and MotherChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
+Returns the Withdraw/Deposit exchange records between AppChain and BaseChain for a certain address. This command returns both the ongoing exchanges and processed exchanges. To check all the ongoing exchanges, please use scs_getExchangeInfo. 
 
 
 *Parameters*
@@ -898,7 +895,7 @@ RPCDEBUG
 
 .. _rpcdebug_GetNonce:
 
-获得应用链的nonce，这是调用应用链DAPP合约的必要参数之一，每当应用链交易发送后会自动加1
+获得应用链上帐号的nonce，这是调用应用链DAPP合约的必要参数之一，每当应用链交易发送后会自动加1
 
 *Parameters*
 
@@ -914,7 +911,7 @@ Example:
 .. code:: js
 
   // Curl Request
-  curl -X POST --header "Content-Type:application/json" --header "Accept:application/json" --data '{"jsonrpc":"2.0","method":"ScsRPCMethod.GetScsId","params":{},"id":101}' 127.0.0.1:8548/rpc
+  curl -X POST --header "Content-Type:application/json" --header "Accept:application/json" --data '{"jsonrpc":"2.0","method":"ScsRPCMethod.GetNonce","params":{},"id":101}' 127.0.0.1:8548/rpc
 
   // Request
   Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetNonce",
@@ -925,7 +922,7 @@ Example:
 
   // Result
 
-  {"jsonrpc":"2.0","id":100,"result":{"pending":{},"queued":{}}}
+  {"jsonrpc":"2.0","id":100,"result":3}
 
 
 **ScsRPCMethod.GetBalance**
@@ -969,7 +966,7 @@ Example：
 *输入参数*
 
 1. ``String`` - 应用链合约地址.
-2. ``QUANTITY|TAG`` - integer of a block number, or the string "earliest" or "latest", as in the default block parameter. Note, scs_getBlock does not support "pending".
+2. ``QUANTITY|TAG`` - integer of a block number, does not support string "earliest" or "latest", as in the default block parameter.
 
 *输出结果*
 

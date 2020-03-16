@@ -13,10 +13,12 @@
    Introduction
    Setup
    JSONRPC
+   Console
    Chain3Js
    VnodePool
    ScsPool
    ProcWind
+   RandDrop
    FileStorm
    glossary
    FAQs

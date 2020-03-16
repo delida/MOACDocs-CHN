@@ -1,35 +1,33 @@
-.. _proc-wind:
+.. _rand-drop:
 
-ProcWind 应用链
+RandDrop 应用链
 --------------
 
-ProcWind 共识
+RandDrop 共识
 ====================
 
-ProcWind应用链是指采用PoS共识，支持多合约部署的MOAC应用链，由应用链验证节点SCS和应用链合约（ChainBase.sol）组成。
-目前ProcWind也支持两种原子跨链交换，可以完成母链原生通证或者ERC20通证和应用链原生通证之间的互换。
+RandDrop应用链是指采用BLS签名，支持多合约部署的MOAC应用链。。
+目前RandDrop也支持两种原子跨链交换，可以完成母链原生通证或者ERC20通证和应用链原生通证之间的互换。
 
-采取股权证明共识的ProcWind，依赖网络中的验证节点来检验交易，而不像严格的工作量证明(PoW)那样需要处理大量数据。在股权证明共识中，下一个区块的创建者是根据诸如持币量或币龄等因素（即股份）的随机算法来选择的。
+RandDrop采用BLS签名，从共识层支持多个节点的签名片段进行合并得到阈值签名，以此为基础产生随机数。随机数可以在RandDrop的智能合约里面直接调用。RandDrop随机数的优点是可以杜绝单个节点对最终签名的可操作性，更加安全可靠。同时，RandDrop的信息量是O(n)，比其他类似的随机数区块链具有较大的优势。
 
-股权证明系统的优点在于它可以完全扩展到企业量级的交易、能效高并支持多种交易。随着网络中的节点数量增加，其验证能力也会同步提升，在无需不断地访问母链的情况下，允许DApp应用链开展小额交易。
-
-应用链的验证过程由应用链客户端（SCS）完成，SCS节点随机组合，支持动态增减。
-
-应用链支持分片，每个分片都能独立完成业务逻辑。
+RandDrop应用链的验证过程由支持RandDrop应用链的客户端（SCS）完成，ProcWind和RandDrop的SCS节点不能混用。
 
 应用链本身是以智能合约的方式部署到MOAC平台上，其共识方式、节点组成和业务逻辑都在应用链合约中定义。
 
-* 应用链节点控制合约（AppChainProtocolBase），用于定义SCS节点共识方式和如何包括SCS节点矿工加入应用链;
+* 应用链节点控制合约（ScsProtocolBase），用于定义SCS节点共识方式和如何包括SCS节点矿工加入应用链;
+* 可验证秘密共享（VssBase）合约，构造函数需要提供１个threshold参数，该参数表示阀值签名的阀值。部署后，记录下vssbase合约的部署地址vssbaseAddress;
 * 应用链逻辑控制合约（AppChainBase）：用于应用链控制逻辑，应用链生成前和生成后的一系列控制逻辑;
 * 应用链合约控制（DappBase）：用于控制合约在应用链上的部署，一条应用链可以部署多个合约；目前有两类控制合约，一类是仅允许应用链的部署帐号，即拥有者（owner）在应用链上部署合约，而另一类则没有这个限制;
 * 应用链DAPP智能合约：用于部署应用链业务逻辑的合约，每个应用链可以部署多个DAPP合约;
 
 
-ProcWind 验证节点
+RandDrop 验证节点
 ================
 
-客户端，原称智能合约服务器 Smart Contract Server(SCS) 是支持应用链运行的节点软件。
-SCS通过VNODE代理节点接入MOAC母链，每个运行的SCS可以支持多条应用链，也可以动态接入不同VNODE。
+RandDrop节点客户端与ProcWind不同，称智能合约服务器 Smart Contract Server(SCS-VSS) 是支持BLS共识的节点软件。
+SCS-VSS也通过VNODE代理节点接入MOAC母链，每个运行的SCS可以支持多条应用链，也可以动态接入不同VNODE。
+目前有两种应用链客户端，分别支持对应的应用链ProcWind和RandDrop。
 
 当前，按在应用链中的功能分，有如下几种SCS节点类型：
 * 参与业务逻辑的SCS
@@ -40,14 +38,14 @@ SCS通过VNODE代理节点接入MOAC母链，每个运行的SCS可以支持多�
 
 :doc:`Setup`
 
-ProcWind 通证
+RandDrop 通证
 ====================
 
-ProcWind 应用链支持应用链上的原生通证（TOKEN），其发行方式是在应用链合约中设定，
+RandDrop 应用链也支持应用链上的原生通证（TOKEN），其发行方式是在应用链合约中设定，这点和ProcWind相同，
 详细介绍请参考：
 :ref:`ProcWind 应用链的部署<proc-wind-setup>` 
 
-关于ProcWind上通证的转移，是采用shardingFlag=2的方式，例子如下：
+关于RandDrop上通证的转移，也是采用shardingFlag=2的方式，例子如下：
 ::
     //Example to transfer the AppChain tokens
     function sendAppChainToken(baseaddr,basepsd,appchainaddr,amount,code,sf,n)
@@ -83,7 +81,7 @@ ProcWind 应用链支持应用链上的原生通证（TOKEN），其发行方式
     //n: 转出地址的nonce
     sendAppChainToken(baseaddr,basename,appchainaddr,amount,receive,'0x2',n)
 
-ProcWind 跨链
+RandDrop 跨链
 ====================
 
 应用链通证可以和母链的原生货币或者ERC20代币直接进行兑换，只需要部署不同的应用链合约并执行相应功能调用即可完成。
@@ -93,10 +91,10 @@ ProcWind 跨链
 
 :doc:`ProcWindExchange`
 
-ProcWind 应用链的参数和设置
+RandDrop 应用链的参数和设置
 =========================
 
-目前采用ProcWind共识的应用链主要分为两种：ASM和AST。
+目前采用RandDrop共识的应用也分为两种：ASM和AST。
 在MOAC发布可以看到合约内容。
 ASM的合约构建函数为：
 :: 
@@ -155,20 +153,20 @@ BALANCE = tokenSupply * ERCRate * (10 ** (ERCDecimals));
 
 用户可以根据需要调试输入参数，之后的应用链部署步骤请参考：
 
-:doc:`ProcWindSetup`
+:doc:`RandDropSetup`
 
 建议初学者重点参考以下内容：
 
-:ref:`ProcWind 应用链推荐设置 <procwind-optimize>` 
+:ref:`RandDrop 应用链推荐设置 <procwind-optimize>` 
 
 如果遇到问题，可以参考
 
 :ref:`应用链部署常见问题 <faq-all>` 
 
-ProcWind Dapp开发指南
+RandDrop Dapp开发指南
 ====================
 
-当部署完应用链后，可以在上面开发DAPP，
+RandDrop应用链的开发基本与ProcWind相同，
 详细介绍可参看这篇：
 
 :ref:`ProcWind Dapp开发指南 <proc-wind-dapps>` 
