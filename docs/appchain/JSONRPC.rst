@@ -1,4 +1,4 @@
-.. _scs_chain3js01x:
+.. _scs_chain3RPC:
 
 JSON RPC 接口命令
 ----------------
