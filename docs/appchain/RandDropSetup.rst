@@ -144,6 +144,9 @@ threshold参数用来决定随机数的阈值，即需要的阈值签名数量�
 	> max = 11;		// 应用链需要SCS的最大数量，当前需要从如下值中选择：11，21，31，51，99
 	> thousandth = 1 ;			// 千分之几，控制选择scs的概率，对于大型应用链节点池才有效
 	> flushRound = 40 ;     	// 应用链刷新周期  单位是主链block生成对应数量的时间，当前的取值范围是40-99
+	> tokenSupply = 1000000 ;	// ASM应用链货币总量
+	> exchangeRate = 100 ;		// ASM系统链应用链兑换比率
+	> vssbaseAddr = '0x' ;		// VSS合约地址
 	> SubChainBaseContract = chain3.mc.contract(JSON.parse(abi));  
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
 	> SubChainBase = SubChainBaseContract.new( proto, vnodeProtocolBaseAddr, min, max, thousandth, flushRound,{ from: chain3.mc.accounts[0],  data: '0x' + bin,  gas:'9000000'} , function (e, contract){console.log('Contract address: ' + contract.address + ' transactionHash: ' + contract.transactionHash); });
@@ -269,7 +272,7 @@ registerAdd参数:
 应用链的优化部署
 ===============
 
-ProcWind 应用链对网络要求比较高，如果用于商业项目在所有节点可控的情况下建议进行的优化部署。
+RandDrop 应用链对网络要求比较高，如果用于商业项目在所有节点可控的情况下建议进行的优化部署。
 推荐采用云服务器：
 
 VNODE 最低要求配置：4核4G，推荐4核8G；
@@ -302,7 +305,7 @@ SCS 最低要求配置：2核4G；（注意：scs配置建议型号统一）；
 
 * 1V-3S, 1 VNODE 连接 3 SCSs
 
-在运行ProcWind的时候，需要将所有验证节点的机器时钟调成一致，保证在节点通讯时的时间标记是同步的。如果验证节点之间的时钟不同，那么验证过程的执行可能会被打乱，导致节点无法同步。
+在运行RandDrop的时候，需要将所有验证节点的机器时钟调成一致，保证在节点通讯时的时间标记是同步的。如果验证节点之间的时钟不同，那么验证过程的执行可能会被打乱，导致节点无法同步。
 建议使用NTP服务来保证SCS之间的时间一致性。可以使用一台SCS机器做NTP时间服务器，同时这台机器本身与外网标准的其它时间服务器同步，其它服务器以这台SCS作为校对即可，当然其它方案也可以，只要保证SCS之间的时间是一致的，即可保证应用链节点的同步。
 
 首先给所有的机器安装nfp软件，可以参考这篇`文章 <https://www.cnblogs.com/wxxjianchi/p/10531582.html>`__来做相关的NTP服务。
@@ -310,3 +313,12 @@ SCS 最低要求配置：2核4G；（注意：scs配置建议型号统一）；
 
 在各个VNODE节点启动之后，最好加入相邻的节点，使用AddPeer把节点直接相连，可以优化通信。
 如果需要调试应用链，可以使用系统日志，参考 :ref:`SCS 日志设置 <setup-logfile>` 。
+
+在VNODE console终端中调用admin.addSubnetP2P方法，参数为subchainbase地址，未来区块高度
+例如当前区块为20000
+::		
+	> admin.addSubnetP2P(subchainbase.address, 20100)
+未来块最好比当前块高一百个块左右，让其有时间将自己的网络调整到位
+
+
+
