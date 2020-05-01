@@ -138,8 +138,8 @@ threshold参数用来决定随机数的阈值，即需要的阈值签名数量�
 	> output = solc.compile({sources: input}, 1);			
 	> abi = output.contracts[':SubChainBase'].interface;
 	> bin = output.contracts[':SubChainBase'].bytecode;
-	> proto = '0xe42f4f566aedc3b6dd61ea4f70cc78d396130fac' ;    // 应用链节点池合约 
-	> vnodeProtocolBaseAddr = '0x22f141dcc59850707708bc90e256318a5fe0b928' ;       // Vnode节点池合约 
+	> proto = '0x ' ;    // 应用链节点池合约 
+	> vnodeProtocolBaseAddr = '0x ' ;       // Vnode节点池合约 
 	> min = 1 ;			// 应用链需要SCS的最小数量，当前需要从如下值中选择：1，3，5，7
 	> max = 11;		// 应用链需要SCS的最大数量，当前需要从如下值中选择：11，21，31，51，99
 	> thousandth = 1 ;			// 千分之几，控制选择scs的概率，对于大型应用链节点池才有效
@@ -149,16 +149,17 @@ threshold参数用来决定随机数的阈值，即需要的阈值签名数量�
 	> vssbaseAddr = '0x' ;		// VSS合约地址
 	> SubChainBaseContract = chain3.mc.contract(JSON.parse(abi));  
 	> chain3.personal.unlockAccount(chain3.mc.accounts[0], '123456');
-	> SubChainBase = SubChainBaseContract.new( proto, vnodeProtocolBaseAddr, min, max, thousandth, flushRound,{ from: chain3.mc.accounts[0],  data: '0x' + bin,  gas:'9000000'} , function (e, contract){console.log('Contract address: ' + contract.address + ' transactionHash: ' + contract.transactionHash); });
+	> SubChainBase = SubChainBaseContract.new( proto, vnodeProtocolBaseAddr, min, max, thousandth, flushRound, vssbaseAddr
+	{ from: chain3.mc.accounts[0],  data: '0x' + bin,  gas:'9000000'} , function (e, contract){console.log('Contract address: ' + contract.address + ' transactionHash: ' + contract.transactionHash); });
 	
-		
+
 部署完毕后, 获得应用链合约地址，如：0x1195cd9769692a69220312e95192e0dcb6a4ec09
 		
 
 设定应用链使用VSS服务
 ===================
 
-在vnode系统链上，调用vssbase合约的setCaller方法，传入subchainbaseAddress。
+在基础链上，调用vssbase合约的setCaller方法，传入之前的RandDrop合约地址 subchainbaseAddress。
 此方法调用后，保证了vssbase合约的部分关键函数只能由subchainbase合约调用，而无法由外部普通账户调用。
 setCaller函数签名如下：
 function setCaller(address callerAddr) public
@@ -223,7 +224,7 @@ function setCaller(address callerAddr) public
 
 应用链合约提供了registerAdd方法来支持应用链添加，必须由应用链部署账号来发送交易请求。
 
-需要对应SubChainProtocolBase节点池合约有等待加入的scs节点。
+需要对应SubChainProtocolBase(SCSProtolBase.sol)节点池合约有等待加入的scs节点。
 
 应用链收到请求后，在节点池合约选取scs，开始同步应用链区块，等一轮flush后生效，正式加入应用链。
 
@@ -267,7 +268,7 @@ registerAdd参数:
 	> chain3.mc.getBalance('0x1195cd9769692a69220312e95192e0dcb6a4ec09')
 
 
-.. _procwind-optimize:
+.. _randdrop-optimize:
 
 应用链的优化部署
 ===============
@@ -314,7 +315,7 @@ SCS 最低要求配置：2核4G；（注意：scs配置建议型号统一）；
 在各个VNODE节点启动之后，最好加入相邻的节点，使用AddPeer把节点直接相连，可以优化通信。
 如果需要调试应用链，可以使用系统日志，参考 :ref:`SCS 日志设置 <setup-logfile>` 。
 
-在VNODE console终端中调用admin.addSubnetP2P方法，参数为subchainbase地址，未来区块高度
+在VNODE console终端中调用admin.addSubnetP2P方法，第一个参数为应用链合约地址，即subchainbase地址，第二个参数为加入的区块高度，建议设为当前区块高度+100。
 例如当前区块为20000
 ::		
 	> admin.addSubnetP2P(subchainbase.address, 20100)

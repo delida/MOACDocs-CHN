@@ -21,6 +21,9 @@ RandDrop应用链的验证过程由支持RandDrop应用链的客户端（SCS）�
 * 应用链合约控制（DappBase）：用于控制合约在应用链上的部署，一条应用链可以部署多个合约；目前有两类控制合约，一类是仅允许应用链的部署帐号，即拥有者（owner）在应用链上部署合约，而另一类则没有这个限制;
 * 应用链DAPP智能合约：用于部署应用链业务逻辑的合约，每个应用链可以部署多个DAPP合约;
 
+与ProcWind不同的是，在部署完VssBase和RandDropChainBase的合约后，需要在基础链上，调用VssBase合约的setCaller方法，
+传入之前的RandDrop合约地址 subchainbaseAddress。
+此方法调用后，保证了VssBase合约的部分关键函数只能由subchainbase合约调用，而无法由外部普通账户调用。
 
 RandDrop 验证节点
 ================
@@ -30,6 +33,7 @@ SCS-VSS也通过VNODE代理节点接入MOAC母链，每个运行的SCS可以支�
 目前有两种应用链客户端，分别支持对应的应用链ProcWind和RandDrop。
 
 当前，按在应用链中的功能分，有如下几种SCS节点类型：
+
 * 参与业务逻辑的SCS
 * 用于业务监控的SCS
 * 准备参与业务逻辑的SCS
@@ -43,7 +47,7 @@ RandDrop 通证
 
 RandDrop 应用链也支持应用链上的原生通证（TOKEN），其发行方式是在应用链合约中设定，这点和ProcWind相同，
 详细介绍请参考：
-:ref:`ProcWind 应用链的部署<proc-wind-setup>` 
+:ref:`RandDrop 应用链的部署<rand-drop-setup>` 
 
 关于RandDrop上通证的转移，也是采用shardingFlag=2的方式，例子如下：
 ::
@@ -95,22 +99,25 @@ RandDrop 应用链的参数和设置
 =========================
 
 目前采用RandDrop共识的应用也分为两种：ASM和AST。
-在MOAC发布可以看到合约内容。
+在MOAC发布的目录可以看到合约内容，主要的不同是需要加入VssBase.sol的部署地址。
+
 ASM的合约构建函数为：
 :: 
     function ChainBaseASM(
-    address proto, 
+    address scsPoolAddr, 
     address vnodeProtocolBaseAddr, 
     uint min, 
     uint max, 
     uint thousandth, 
     uint flushRound, 
     uint256 tokensupply, 
-    uint256 exchangerate)
+    uint256 exchangerate,
+    address vssBaseAddr
+    )
 
 其中的参数含义为：
 
-* address proto - SCS节点池地址；
+* address scsPoolAddr - SCS节点池地址；
 * address vnodeProtocolBaseAddr - Vnode节点池合约地址；
 * uint min - 应用链需要SCS的最小数量，需要从如下值中选择：1，3，5，7；
 * uint max - 应用链需要SCS的最大数量，需要从如下值中选择：11，21，31，51，99
@@ -118,6 +125,7 @@ ASM的合约构建函数为：
 * uint flushRound - 应用链刷新周期  单位是主链block生成对应数量的时间，当前的取值范围是40-99；
 * uint256 tokensupply - 应用链的原生货币数量；
 * uint256 exchangerate - 应用链原生货币和母链moac的兑换比例；
+* address vssBaseAddr - VSSBase的部署地址；
 
 注意，这里输入参数tokensupply和应用链的BALANCE相对映，
 BALANCE = tokensupply * 1e18
@@ -126,14 +134,17 @@ BALANCE = tokensupply * 1e18
 AST的合约构建函数为：
 :: 
     function ChainBaseAST(
-    address proto, 
+    address scsPoolAddr, 
     address vnodeProtocolBaseAddr, 
     address ercAddr,  
     uint ercRate,
     uint min, 
     uint max, 
     uint thousandth, 
-    uint flushRound)
+    uint flushRound,
+    uint256 exchangerate,
+    address vssBaseAddr
+    )
 
 其中的参数含义为：
 
@@ -145,19 +156,17 @@ AST的合约构建函数为：
 * uint max - 应用链需要SCS的最大数量，需要从如下值中选择：11，21，31，51，99
 * uint thousandth - 控制选择scs的概率，建议设为1，对于大型应用链节点池才有效；
 * uint flushRound - 应用链刷新周期  单位是主链block生成对应数量的时间，当前的取值范围是40-99；
-* uint256 tokensupply - 应用链的原生货币数量；
 * uint256 exchangerate - 应用链原生货币和母链moac的兑换比例；
+* address vssBaseAddr - VSSBase的部署地址；
 
-注意，AST应用链的BALANCE是由ERC20 token里面totalSupply相对映，
+注意，AST应用链的BALANCE不能设定，而是由ERC20 token里面totalSupply所决定的，
 BALANCE = tokenSupply * ERCRate * (10 ** (ERCDecimals));
 
 用户可以根据需要调试输入参数，之后的应用链部署步骤请参考：
 
 :doc:`RandDropSetup`
 
-建议初学者重点参考以下内容：
-
-:ref:`RandDrop 应用链推荐设置 <procwind-optimize>` 
+:ref:`RandDrop 应用链推荐设置 <randdrop-optimize>` 
 
 如果遇到问题，可以参考
 
