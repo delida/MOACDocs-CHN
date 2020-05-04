@@ -20,7 +20,7 @@ RandDrop应用链的验证过程由支持RandDrop应用链的客户端（SCS）�
 应用链本身是以智能合约的方式部署到MOAC平台上，其共识方式、节点组成和业务逻辑都在应用链合约中定义。
 
 * 应用链节点控制合约（ScsProtocolBase），用于定义SCS节点共识方式和如何包括SCS节点矿工加入应用链;
-* 可验证秘密共享（VssBase）合约，构造函数需要提供１个threshold参数，该参数表示阀值签名的阀值。部署后，记录下vssbase合约的部署地址vssbaseAddress;
+* 可验证秘密共享（VssBase）合约，构造函数需要提供１个threshold参数，该参数表示阈值签名的阈值。部署后，记录下vssbase合约的部署地址vssbaseAddress;
 * 应用链逻辑控制合约（AppChainBase）：用于应用链控制逻辑，应用链生成前和生成后的一系列控制逻辑;
 * 应用链合约控制（DappBase）：用于控制合约在应用链上的部署，一条应用链可以部署多个合约；目前有两类控制合约，一类是仅允许应用链的部署帐号，即拥有者（owner）在应用链上部署合约，而另一类则没有这个限制;
 * 应用链DAPP智能合约：用于部署应用链业务逻辑的合约，每个应用链可以部署多个DAPP合约;
@@ -28,6 +28,66 @@ RandDrop应用链的验证过程由支持RandDrop应用链的客户端（SCS）�
 与ProcWind不同的是，在部署完VssBase和RandDropChainBase的合约后，需要在基础链上，调用VssBase合约的setCaller方法，
 传入之前的RandDrop合约地址 subchainbaseAddress。
 此方法调用后，保证了VssBase合约的部分关键函数只能由subchainbase合约调用，而无法由外部普通账户调用。
+
+RandDrop 中随机数的使用
+======================
+
+RandDrop应用链可以产生随机数。随机数可以在RandDrop的智能合约里面直接调用。
+::
+    pragma solidity ^0.4.8;
+
+    contract precompileBLS {
+        function f() public returns(bytes32);
+    }
+
+    contract Lottery {
+      mapping (uint8 => address[]) playersByNumber ;
+      address owner;
+      enum LotteryState { Accepting, Finished }
+      LotteryState state;
+
+      function Lottery() public {
+          owner = msg.sender;
+          state = LotteryState.Accepting;
+      }
+
+      function enter(uint8 number) public payable {
+          require(number<=255);
+          require(state == LotteryState.Accepting);
+          playersByNumber[number].push(msg.sender);
+      }
+
+      function determineWinner() public {
+          require(msg.sender == owner);
+          state = LotteryState.Finished;
+          uint8 winningNumber = random();
+          distributeFunds(winningNumber);
+      }
+
+      function resetLotteryState() public {
+          require(msg.sender == owner);
+          state = LotteryState.Accepting;
+      }
+
+      function distributeFunds(uint8 winningNumber) private returns(uint256) {
+          uint256 winnerCount = playersByNumber[winningNumber].length;
+          uint256 balanceToDistribute = this.balance/(2*winnerCount);
+          for (uint i = 0; i<winnerCount; i++) {
+              playersByNumber[winningNumber][i].transfer(balanceToDistribute);
+          }
+
+          return this.balance;
+      }
+
+      function random() private view returns (uint8) {
+          precompileBLS bls = precompileBLS(0x20);
+          // get the 256-bit random number
+          bytes32 r = bls.f();
+          // return its first 8 bits, range from 0-255
+          return uint8(r[0]);
+      }
+    }    
+       
 
 RandDrop 验证节点
 ================
