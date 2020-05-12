@@ -7,6 +7,39 @@ VNODE节点快速上手指南
 最新的MOAC VNODE软件可以从官方的发布地址下载 `release
 link <https://github.com/MOACChain/moac-core/releases>`__
 
+配置文件
+-------
+
+解压后，其中有vnodeconfig.json文件，主要为配置应用链通讯所用，其内容如下
+
+.. code:: js
+
+  {
+   "ip":"127.0.0.1",
+    "ShowToPublic": true,
+    "VnodeServiceCfg": "127.0.0.1:50062"
+    "SCSservice": true,
+    "VnodeBeneficialAddress" : "0xD814F2ac2c4cA49b33066582E4e97EBae02F2aB9"
+  }
+
+其中参数说明如下：
+
+"ip":
+  VNODE端的IP，默认为127.0.0.1；
+
+"VnodeServiceCfg":
+  与AppChain的服务器SCS通讯的VNODE端的IP和端口，默认为localhost：50062，其它SCS通过这个接口与VNODE相连；
+
+"ShowToPublic": 
+  是否在，默认为“./scsdata”；
+
+"SCSservice": 
+  是否允许VNODE提供AppChain信息传递服务，默认为 false；
+
+"VnodeBeneficialAddress":
+  从AppChain获得奖励的存入帐户地址，可以和VNODE的miner/Account[0]地址不同；
+
+
 Debian/Ubuntu/CentOS
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -79,14 +112,14 @@ Debian/Ubuntu/CentOS
        >Send(mc.accounts[0], '', mc.accounts[1], 0.1)
 
 WINDOWS
-^^^^^^^
+~~~~~~~
 
 将文件解压缩到目录下，运行程序
 ::
   D:\moac-win>moac.exe
 
 
-2.1 查看moac帮助
+1 查看moac帮助
 ''''''''''''''''
 
 打开命令（cmd）终端，转到MOAC解压目录，在命令行中执行：
@@ -125,7 +158,7 @@ WINDOWS
     --networkid value                   Network identifier (integer, 1=Pangu, 2=Testnet) (default: 1)
     --testnet                          MOAC test network: pre-configured proof-of-work test network
 
-2.2 运行节点
+2 运行节点
 ''''''''''''
 
 打开命令（cmd）终端，转到MOAC当前目录，在命令行中执行：
@@ -158,7 +191,7 @@ WINDOWS
 
 该目录下包含两个文件夹：moac和keystore。
 
-2.3 进入MOAC console界面
+3 进入MOAC console界面
 ''''''''''''''''''''''''
 
 系统关机或主动关闭运行中的节点后，如果需要重新启动节点，在命令行中执行：
@@ -181,11 +214,11 @@ WINDOWS
 
 该命令行不会主动滚屏，而是等待命令。
 
-3. 挖矿
-^^^^^^^
+4. 挖矿
+''''''''''''''''
 
-3.1 建立新账户
-''''''''''''''
+4.1 建立新账户
+
 
 挖矿前必须建立一个自己的账户。
 
@@ -209,8 +242,8 @@ WINDOWS
 
 记录一个账号文件。请保存好该文件，并牢记密码，之后用于解密帐号和操作。
 
-3.2 查看账户
-''''''''''''
+4.2 查看账户
+
 
 进入MOAC console界面，执行命令：
 
@@ -220,8 +253,8 @@ WINDOWS
 
 可以查看本节点下的所有账号。
 
-3.3 查看账户余额
-''''''''''''''''
+4.3 查看账户余额
+
 
 进入MOAC console界面，执行命令：
 
@@ -239,8 +272,8 @@ WINDOWS
 
 该命令用于查看当前节点所有账号的余额。
 
-3.4 查看挖矿状态
-''''''''''''''''
+4.4 查看挖矿状态
+
 
 进入MOAC console界面，执行命令：
 
@@ -250,8 +283,8 @@ WINDOWS
 
 返回true表明节点正在挖矿，false表明节点没有挖矿。
 
-3.5 开始挖矿
-''''''''''''
+4.5 开始挖矿
+
 
 进入MOAC console界面，执行命令：
 
@@ -286,8 +319,7 @@ Miner正是你的账号地址。
 .. figure:: ../image/moacExplorerBlock.png
 
 
-3.6 停止挖矿
-''''''''''''
+4.6 停止挖矿
 
 进入MOAC console界面，执行命令：
 
@@ -295,11 +327,10 @@ Miner正是你的账号地址。
 
     > miner.stop()
 
-4. 交易
-^^^^^^^
+5. 交易
+'''''''
 
-4.1 读入测试函数
-''''''''''''''''
+5.1 读入测试函数
 
 部分功能程序存储在mctest.js里。
 
@@ -309,7 +340,7 @@ Miner正是你的账号地址。
 
     > loadScript("mctest.js")
 
-4.2 交易条件
+5.2 交易条件
 ''''''''''''
 
 为执行交易，需要至少两个帐号，其中一个有足够的mc。
@@ -322,7 +353,7 @@ Miner正是你的账号地址。
 
 显示当前节点中存储的账号，应该至少有一个挖矿账号。
 
-4.3 交易
+5.3 交易
 ''''''''
 
 进入MOAC console界面，执行命令：
