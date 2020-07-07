@@ -3,13 +3,17 @@
 RandDrop 应用链的部署
 --------------------
 
-RandDrop的部署与ProcWind类似，都需要
+RandDrop的部署与ProcWind类似，目前提供快速部署的脚本支持，可以在RandDrop的发布目录：
+https://github.com/MOACChain/moac-core/tree/master/randdrop
+中的ASM或者AST目录下，找到对应的deployAll.js。
+其中的合约源代码已经使用solidity 0.4.24编译并存储在mcByteCodes.js中便于用户使用。
+
 
 Vnode节点软件
 =============
 MOAC主网节点  版本来源: https://github.com/MOACChain/moac-core/releases/
 
-此文档采用的版本： 1.0.9    环境：windows   testnet浏览器： http://testnet.moac.io/home
+此文档采用的版本： 1.1.0    环境：windows   testnet浏览器： http://testnet.moac.io/home
 
 在测试环境testnet启动节点： 
 	moac-windows-4.0-amd64.exe --testnet --rpc --rpcapi "chain3,mc,net,db,personal,admin,miner"
