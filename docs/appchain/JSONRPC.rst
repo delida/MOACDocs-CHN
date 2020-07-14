@@ -1064,7 +1064,7 @@ Example：
 **ScsRPCMethod.GetDappAddrList**
 
 通过应用链地址获取应用链内所有多合约的地址列表，需要应用链业务逻辑合约调用基础合约registerDapp方法后才能生效，
-具体请参见 :ref:`ProcWind 跨链指南<proc-wind-as>` 中的示例
+具体请参见 :ref:`应用链跨链指南<cross-chain>` 中的示例
 ::
   SubChainAddr: 应用链合约地址
   Body: {"jsonrpc":"2.0","id":0,"method":"ScsRPCMethod.GetDappAddrList",

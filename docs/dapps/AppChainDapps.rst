@@ -36,7 +36,7 @@ DAPP智能合约也通过主链的sendTransaction发送交易到 proxy vnode 的
 STEP1：在应用链上部署多合约基础合约 DappBase.sol， 在 nuwa1.0.10 中可能是 DappBasePrivate.sol 或者 DappBasePublic.sol，两者的不同是
 DappBasePublic 允许除应用链拥有者(owner)之外的用户在应用链上部署DAPPs。之前默认的都是仅有应用链owner才能部署DAPP。
 
-!!!特别注意!!!：目前应用链原生币支持moac和erc20两种兑换方式，交易values分别对应subchainbase的tokensupply和erc20的totalsupply，这个值必须对应，否则将会导致dappbase部署失败。细节详见 :ref:`ProcWind 应用链货币交互 <proc-wind-as>`.
+!!!特别注意!!!：目前应用链原生币支持moac和erc20两种兑换方式，交易values分别对应subchainbase的tokensupply和erc20的totalsupply，这个值必须对应，否则将会导致dappbase部署失败。细节详见 :ref:`应用链货币交互 <cross-chain>`.
 
 部署示例（以下在nodeJs console中进行）：
 ::

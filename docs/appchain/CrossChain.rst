@@ -1,16 +1,21 @@
-.. _proc-wind-as:
+.. _cross-chain:
 
-ProcWind 跨链指南
+应用链跨链指南
 ----------------
 
-ProcWind 应用链支持有币应用链，并且提供母链货币和应用链原生币之间的兑换。
+ProcWind 和 RandDrop 应用链都支持有币应用链，并且提供母链通证和应用链原生币之间的原子转换。
 
-当前，有两种类型的应用链货币交互，简称为
+为了实现这种转换，需要在部署应用链合约时候进行参数设定。
+当前，有两种类型的应用链货币交互，简称为原子化MOAC交换（Atomic Swap of Moac - ASM）和原子化通证交换（Atomic Swap of Token - AST）。
+在ASM应用链上，需要预先设定原生货币的总量，和与MOAC的兑换比例。
+在AST应用链上，原生货币的总量与母链发行通证的总量相关，所以不用设定，仅需要设定兑换比例，但要输入通证的合约地址，即ERC20地址。
+此外，为了完成互换，还需要通过ERC20通证的函数对AST应用链地址进行授权操作，允许应用链可以交易相应ERC20通证。
 
 母链MOAC和应用链原生币交互
 ========================
 
-这个是最基础的一种货币兑换。使用者可以在主链上充值MOAC，然后最早在下一个flush周期在应用链上获取应用链原生币。同理，使用者可以提出应用链原生币，并最早在下一个flush周期获得主链MOAC。
+这个是最基础的一种货币兑换。使用者可以在主链上，调用应用链充值合约，转移MOAC到应用链，然后最早在下一个flush周期自动获取应用链原生币。
+而提币过程正好相反，使用者可以把帐号里面的应用链原生币，通过提币（WithDraw）过程转回应用链合约，并最早在下一个flush周期获得主链MOAC。
 
 对应release中的ASM版本包
 
@@ -32,7 +37,8 @@ ProcWind 应用链支持有币应用链，并且提供母链货币和应用链�
 应用链合约ASM部署
 ================
 
-ProcWind的ASM应用链合约在官方网站上可以下载，需要在目录下的SubChainBase.sol里面设置tokensupply和exchangerate两个参数。
+ProcWind和RandDrop的ASM应用链合约在官方网站上可以下载，需要在目录下的SubChainBase.sol里面设置tokensupply和exchangerate两个参数。
+
 在基础链上部署SubChainBase.sol的步骤示例如下:
 ::
 	> chain3 = require('chain3')
@@ -107,7 +113,7 @@ dappbase合约部署
 dapp 充值
 =========
 	
-调用 subchainbase 的 buyMintToken方法充值， 用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
+充值过程并不是简单的交易，而必须调用 subchainbase 的 buyMintToken方法充值， 用户账号为发出sendTransaction的账号 数量为sendTransaction的amount参数
  
 
 调用示例：
@@ -156,7 +162,7 @@ dapp 提币
  
  
 母链ERC20和应用链原生币交互
--------------------------
+========================
 这是非常通用的一种货币兑换。使用者可以使用预先已经部署好的ERC20，或者当场部署一个主链ERC20，和应用链的原生币进行兑换。
 
 对应release中的AST版本包
@@ -328,7 +334,3 @@ ProcWind的AST应用链合约在官方网站上可以下载，需要在目录下
  | 检查账号的erc20 token是否增加100:    调用erc20合约的balanceOf方法
  | 等待一轮flush后，检查应用链对应账号的原生币是否减少10000000000000000000:  调用monitor的方法 ScsRPCMethod.GetBalance
 
-
-ATO方式
-----------------------
-TODO

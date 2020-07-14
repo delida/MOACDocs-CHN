@@ -172,10 +172,10 @@ RandDrop 跨链
 应用链通证可以和母链的原生货币或者ERC20代币直接进行兑换，只需要部署不同的应用链合约并执行相应功能调用即可完成。
 具有与母链原生货币（moac）进行跨链交换功能合约的名称为ASM（Atomic Swap of Moac）。
 具有与母链ERC20代币进行跨链交换功能合约的名称为AST（Atomic Swap of Token）。
-在发布目录中，也有脚本调用的例子，crossChainASM.js。
+在发布目录中，也有脚本调用的例子，crossChainASM.js 和 crossChainAST.js。
 具体做法可以参考：
 
-:doc:`ProcWindExchange`
+:doc:`CrossChain`
 
 RandDrop 应用链的参数和设置
 =========================

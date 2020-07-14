@@ -91,7 +91,7 @@ ProcWind 跨链
 具有与母链ERC20代币进行跨链交换功能合约的名称为AST（Atomic Swap of Token）。
 具体做法可以参考：
 
-:doc:`ProcWindExchange`
+:doc:`CrossChain`
 
 ProcWind 应用链的参数和设置
 =========================
