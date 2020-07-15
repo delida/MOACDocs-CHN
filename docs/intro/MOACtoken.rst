@@ -39,7 +39,12 @@ MOAC具有用作mc单位的计量系统。 mc的最小单位，又称为基本�
 如何获取MOAC通证
 ================================================================================
 
-用户可以通过交易所交换MOAC，目前主要交易所在这里可以找 `here <https://coinmarketcap.com/currencies/moac/#markets>`_.；
+用户可以通过交易所交换MOAC：
+
+1. 主要中心化交易所: `MOAC交易所列表 <https://coinmarketcap.com/currencies/moac/#markets>`_.；
+2. 去中心化交易所，如 `威链 <https://weidex.vip>`_.;
+3. 钱包工具，如 `TP 钱包 <https://www.tokenpocket.pro/>`_.;
+
 或者使用矿机参与MOAC主网母链挖矿、应用链挖矿，也可以通过参与MOAC子链的活动；
 
 交易MOAC
