@@ -220,6 +220,9 @@ JSON-RPC 命令
    -  :ref:`admin\_peers <admin_peers>`
    -  :ref:`admin\_stopRPC <admin_stopRPC>`
    -  :ref:`admin\_startRPC <admin_startRPC>`
+   -  :ref:`admin\_addSubnetP2P <admin_addSubnetP2P>`
+   -  :ref:`admin\_removeSubnetP2P <admin_removeSubnetP2P>`
+   -  :ref:`admin\_getSubnetP2PList <admin_getSubnetP2PList>`
 
 -  txpool
 
@@ -2352,8 +2355,7 @@ The stopRPC administrative method closes the currently open HTTP RPC endpoint. A
 
 *Parameters*
 
-``string``: ``url``, 20 Bytes - address from which the VNODE settings
-in the vnodeconfig.json file.
+ none
 
 *Returns*
 
@@ -2369,6 +2371,104 @@ Example
 
     // Result
     true
+
+--------------
+
+**admin\_addSubnetP2P**
+
+.. _admin_addSubnetP2P:
+
+The addSubnetP2P is adding the Vnode to subnet's dedicated p2p network
+as a result, this node can join multiple p2p networks including the mainnet one.
+
+*Parameters*
+
+``string``: ``Address``, 20 Bytes - address of the AppChain/SubChain the VNODE need to connect.
+
+``number``: ``Block number``, the block number that when the Vnode will join the network, suggest to be current blocknumber +100.
+
+*Returns*
+
+``null`` - returns ``null`` if the operation is successfully
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"method": "admin_addSubnetP2P", "params": ["0xD814F2ac2c4cA49b33066582E4e97EBae02F2aB9",1999], "id":101}' localhost:8545
+
+    // Result
+    null
+
+--------------
+
+**admin\_removeSubnetP2P**
+
+.. _admin_removeSubnetP2P:
+
+The removeSubnetP2P administrative method remove the Vnode from the P2P network of the AppChain.
+
+*Parameters*
+
+``string``: ``Address``, 20 Bytes - address of the AppChain/SubChain the VNODE need to connect.
+
+``number``: ``Block number``, the block number that when the Vnode will join the network, suggest to be current blocknumber +100.
+
+*Returns*
+
+``Boolean`` - returns ``true`` if the operation is successfully, otherwise ``false``.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"method": "admin_removeSubnetP2P", "params": ["0xD814F2ac2c4cA49b33066582E4e97EBae02F2aB9",1999], "id":101}' localhost:8545
+
+    // Result
+    true
+
+--------------
+
+**admin\_getSubnetP2PList**
+
+.. _admin_getSubnetP2PList:
+
+List the Subnet P2P network currently joining.
+
+*Parameters*
+
+none
+
+*Returns*
+
+``array`` - returns a list of the netowrks.
+
+Example
+
+
+.. code:: js
+
+    // Request
+    curl -X POST --data '{"method": "admin_getSubnetP2PList"}' localhost:8545
+
+    // Result
+        // Result
+    {
+      "id":101,
+      "jsonrpc":"2.0",
+      "result": [{
+        "blockEnd": "0x1b4", // 436
+        "blockStart":"0x1", // 1
+        "peers": "0",
+        "subnet": "0x16c5785ac562ff41e2dcfdf829c5a142f1fccd7d"
+        },{
+          ...
+        }]
+    }
 
 --------------
 
